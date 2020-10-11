@@ -10,11 +10,27 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var logoImage: UIImageView!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var appleLogo: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        logoImage.image = UIImage(named: "logo")
+        appleLogo.image = UIImage(named: "appleLogo")
+        
+        //loginButton Style
+        loginButton.layer.cornerRadius = 6
+        loginButton.layer.borderWidth = 1
+        loginButton.layer.borderColor = UIColor.red.cgColor
+
+        //registerButton Style
+        registerButton.layer.cornerRadius = 6
     }
-
-
+    
 }
+
+
 
