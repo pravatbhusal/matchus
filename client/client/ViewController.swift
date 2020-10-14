@@ -15,11 +15,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var appleLogo: UIImageView!
+    @IBOutlet weak var loginStackView: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         logoImage.image = UIImage(named: "logo")
-        appleLogo.image = UIImage(named: "appleLogo")
+//        appleLogo.image = UIImage(named: "appleLogo")
         
         //loginButton Style
         loginButton.layer.cornerRadius = 6
