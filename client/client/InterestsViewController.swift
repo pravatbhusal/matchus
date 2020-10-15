@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 public var interests:[String] = []
 
 class interestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
