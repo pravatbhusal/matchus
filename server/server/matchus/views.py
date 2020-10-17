@@ -16,7 +16,7 @@ class SignUpView(APIView):
         # create the user, login the user session, and return a success response
         user = signup_form.save()
         login(request, user)
-        success_response = { "success": f"The user with the email {user.email} has been registered."}
+        success_response = { "success": f"The user with the email {user.email} has been registered." }
         return Response(success_response)
 
 class LoginView(APIView):
