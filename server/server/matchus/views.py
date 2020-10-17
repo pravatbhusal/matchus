@@ -1,3 +1,59 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate, login, logout
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .constants import PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH
+from .models import User
+from .serializers import UserSerializer
 
-# Create your views here.
+class SignupView(APIView):
+    def post(self, request, format=None):
+        email = request.data['email']
+        password = request.data['password']
+        location = request.data['location']
+        interests = request.data['interests']
+
+        account_exists = User.objects.filter(email=email).exists()
+        if account_exists:
+            # account already exists for this email, so return a conflicted response
+            error_response = { "error": f"User already exists for the email {email}."}
+            return Response(error_response, status=status.HTTP_409_CONFLICT)
+
+        if len(password) < PASSWORD_MIN_LENGTH or len(password) > PASSWORD_MAX_LENGTH:
+            # the password is either too short or too long
+            error_response = { "error": "The password is either too short or too long."}
+            return Response(error_response, status=status.HTTP_409_CONFLICT)
+        
+        # create a user with the provided credentials and information
+        user = User.objects.create_user(email=email, password=password)
+        user.location = location
+        user.interests = interests
+        user.save()
+
+        # login the user session and return a success response
+        login(request, user)
+        success_response = { "success": f"The user with the email {email} has been registered."}
+        return Response(success_response)
+
+class LoginView(APIView):
+    def post(self, request, format=None):
+        email = request.data['email']
+        password = request.data['password']
+
+        user = authenticate(request, email=email, password=password)
+        if user is None:
+            # the authentication failed because the email and password combination was not found
+            error_response = { "error": "The email and password credentials were not found." }
+            return Response(error_response, status=status.HTTP_401_UNAUTHORIZED)
+
+        # the user has been authenticated
+        login(request, user)
+        success_response = { "success": f"Authenticated {user.email}." }
+        return Response(success_response)
+
+class LogoutView(APIView):
+    def post(self, request, format=None):
+        logout(request)
+        success_response = { "success": "Logged out the existing user and cleared the session." }
+        return Response(success_response)
