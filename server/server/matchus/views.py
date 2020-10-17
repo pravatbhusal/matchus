@@ -11,6 +11,8 @@ class SignupView(APIView):
     def post(self, request, format=None):
         email = request.data['email']
         password = request.data['password']
+        location = request.data['location']
+        interests = request.data['interests']
 
         account_exists = User.objects.filter(email=email).exists()
         if account_exists:
@@ -23,8 +25,13 @@ class SignupView(APIView):
             error_response = { "error": "The password is either too short or too long."}
             return Response(error_response, status=status.HTTP_409_CONFLICT)
         
-        # create an account with the provided credentials, then login the user
+        # create a user with the provided credentials and information
         user = User.objects.create_user(email=email, password=password)
+        user.location = location
+        user.interests = interests
+        user.save()
+
+        # login the user and return a success response
         login(request, user)
         success_response = { "success": f"The user with the email {email} has been registered."}
         return Response(success_response)

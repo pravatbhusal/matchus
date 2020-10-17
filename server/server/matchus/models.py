@@ -10,5 +10,8 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    location = models.CharField(default=None, blank=True, null=True, max_length=128)
+    interests = models.JSONField(default=None, blank=True, null=True)
+
     # manager (helper methods) for the User class
     objects = UserManager()
