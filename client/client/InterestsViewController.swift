@@ -49,9 +49,14 @@ class interestsViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBAction func addButton(_ sender: Any) {
         if interests.count < 4 {
             interests.append(interestText.text!)
+            interestText.text = ""
         }
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }

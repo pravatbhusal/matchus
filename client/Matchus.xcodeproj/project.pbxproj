@@ -1,0 +1,438 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03FE66602536C38700A4C1C2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE665F2536C38700A4C1C2 /* LoginViewController.swift */; };
+		03FE66632536CC0E00A4C1C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE66622536CC0E00A4C1C2 /* User.swift */; };
+		910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */; };
+		910C0F4A2533A55800DCDBE7 /* locationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F492533A55800DCDBE7 /* locationViewController.swift */; };
+		910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */; };
+		DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1595252BAB9D00083305 /* AppDelegate.swift */; };
+		DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1597252BAB9D00083305 /* SceneDelegate.swift */; };
+		DABA159A252BAB9D00083305 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1599252BAB9D00083305 /* ViewController.swift */; };
+		DABA159D252BAB9D00083305 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DABA159B252BAB9D00083305 /* Main.storyboard */; };
+		DABA159F252BAB9E00083305 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DABA159E252BAB9E00083305 /* Assets.xcassets */; };
+		DABA15A2252BAB9E00083305 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DABA15A0252BAB9E00083305 /* LaunchScreen.storyboard */; };
+		E1BA5AF25ACC032BC106870B /* libPods-Matchus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D9EF669AD44D56689A04DE /* libPods-Matchus.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		03FE665F2536C38700A4C1C2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		03FE66622536CC0E00A4C1C2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		03FE66672536D22100A4C1C2 /* client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = client.entitlements; sourceTree = "<group>"; };
+		08A1A836B3955ABAC3BF81A2 /* Pods-Matchus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.debug.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.debug.xcconfig"; sourceTree = "<group>"; };
+		12D9EF669AD44D56689A04DE /* libPods-Matchus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Matchus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		68BFAC16E2487A0A691C241A /* Pods-Matchus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.release.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.release.xcconfig"; sourceTree = "<group>"; };
+		910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		910C0F492533A55800DCDBE7 /* locationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locationViewController.swift; sourceTree = "<group>"; };
+		910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsViewController.swift; sourceTree = "<group>"; };
+		DABA1592252BAB9D00083305 /* Matchus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchus.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DABA1595252BAB9D00083305 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DABA1597252BAB9D00083305 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		DABA1599252BAB9D00083305 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DABA159C252BAB9D00083305 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DABA159E252BAB9E00083305 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DABA15A1252BAB9E00083305 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DABA15A3252BAB9E00083305 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DABA158F252BAB9D00083305 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1BA5AF25ACC032BC106870B /* libPods-Matchus.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		54DF053988DFC47847B4B971 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				12D9EF669AD44D56689A04DE /* libPods-Matchus.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B58098E18A3EA6FFE20B3CF0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				08A1A836B3955ABAC3BF81A2 /* Pods-Matchus.debug.xcconfig */,
+				68BFAC16E2487A0A691C241A /* Pods-Matchus.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		DABA1589252BAB9D00083305 = {
+			isa = PBXGroup;
+			children = (
+				DABA1594252BAB9D00083305 /* client */,
+				DABA1593252BAB9D00083305 /* Products */,
+				B58098E18A3EA6FFE20B3CF0 /* Pods */,
+				54DF053988DFC47847B4B971 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		DABA1593252BAB9D00083305 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DABA1592252BAB9D00083305 /* Matchus.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DABA1594252BAB9D00083305 /* client */ = {
+			isa = PBXGroup;
+			children = (
+				03FE66672536D22100A4C1C2 /* client.entitlements */,
+				DABA1595252BAB9D00083305 /* AppDelegate.swift */,
+				DABA1597252BAB9D00083305 /* SceneDelegate.swift */,
+				DABA1599252BAB9D00083305 /* ViewController.swift */,
+				03FE665F2536C38700A4C1C2 /* LoginViewController.swift */,
+				910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */,
+				910C0F492533A55800DCDBE7 /* locationViewController.swift */,
+				910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */,
+				DABA159B252BAB9D00083305 /* Main.storyboard */,
+				DABA159E252BAB9E00083305 /* Assets.xcassets */,
+				DABA15A0252BAB9E00083305 /* LaunchScreen.storyboard */,
+				DABA15A3252BAB9E00083305 /* Info.plist */,
+				03FE66622536CC0E00A4C1C2 /* User.swift */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DABA1591252BAB9D00083305 /* Matchus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DABA15A6252BAB9E00083305 /* Build configuration list for PBXNativeTarget "Matchus" */;
+			buildPhases = (
+				18BC35DE24362956344511D0 /* [CP] Check Pods Manifest.lock */,
+				DABA158E252BAB9D00083305 /* Sources */,
+				DABA158F252BAB9D00083305 /* Frameworks */,
+				DABA1590252BAB9D00083305 /* Resources */,
+				AF551FFF7F960389799C7D11 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Matchus;
+			productName = client;
+			productReference = DABA1592252BAB9D00083305 /* Matchus.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DABA158A252BAB9D00083305 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = MatchUs;
+				TargetAttributes = {
+					DABA1591252BAB9D00083305 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+				};
+			};
+			buildConfigurationList = DABA158D252BAB9D00083305 /* Build configuration list for PBXProject "Matchus" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DABA1589252BAB9D00083305;
+			productRefGroup = DABA1593252BAB9D00083305 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DABA1591252BAB9D00083305 /* Matchus */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DABA1590252BAB9D00083305 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DABA15A2252BAB9E00083305 /* LaunchScreen.storyboard in Resources */,
+				DABA159F252BAB9E00083305 /* Assets.xcassets in Resources */,
+				DABA159D252BAB9D00083305 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		18BC35DE24362956344511D0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Matchus-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF551FFF7F960389799C7D11 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Matchus/Pods-Matchus-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Matchus/Pods-Matchus-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Matchus/Pods-Matchus-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DABA158E252BAB9D00083305 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03FE66602536C38700A4C1C2 /* LoginViewController.swift in Sources */,
+				910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */,
+				DABA159A252BAB9D00083305 /* ViewController.swift in Sources */,
+				DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */,
+				03FE66632536CC0E00A4C1C2 /* User.swift in Sources */,
+				910C0F4A2533A55800DCDBE7 /* locationViewController.swift in Sources */,
+				910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */,
+				DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DABA159B252BAB9D00083305 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DABA159C252BAB9D00083305 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DABA15A0252BAB9E00083305 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DABA15A1252BAB9E00083305 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DABA15A4252BAB9E00083305 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DABA15A5252BAB9E00083305 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DABA15A7252BAB9E00083305 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08A1A836B3955ABAC3BF81A2 /* Pods-Matchus.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = client/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.matchus.client;
+				PRODUCT_NAME = Matchus;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DABA15A8252BAB9E00083305 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68BFAC16E2487A0A691C241A /* Pods-Matchus.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = client/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.matchus.client;
+				PRODUCT_NAME = Matchus;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DABA158D252BAB9D00083305 /* Build configuration list for PBXProject "Matchus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DABA15A4252BAB9E00083305 /* Debug */,
+				DABA15A5252BAB9E00083305 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DABA15A6252BAB9E00083305 /* Build configuration list for PBXNativeTarget "Matchus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DABA15A7252BAB9E00083305 /* Debug */,
+				DABA15A8252BAB9E00083305 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DABA158A252BAB9D00083305 /* Project object */;
+}
