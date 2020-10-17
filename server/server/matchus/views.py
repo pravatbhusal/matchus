@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -31,7 +31,7 @@ class SignupView(APIView):
         user.interests = interests
         user.save()
 
-        # login the user and return a success response
+        # login the user session and return a success response
         login(request, user)
         success_response = { "success": f"The user with the email {email} has been registered."}
         return Response(success_response)
@@ -42,12 +42,18 @@ class LoginView(APIView):
         password = request.data['password']
 
         user = authenticate(request, email=email, password=password)
-        if user is not None:
-            # the user has been authenticated
-            login(request, user)
-            success_response = { "success": f"Authenticated {user.email}." }
-            return Response(success_response)
+        if user is None:
+            # the authentication failed because the email and password combination was not found
+            error_response = { "error": "The email and password credentials were not found." }
+            return Response(error_response, status=status.HTTP_401_UNAUTHORIZED)
 
-        # the authentication failed because the email and password combination was not found
-        error_response = { "error": "The email and password credentials were not found." }
-        return Response(error_response, status=status.HTTP_401_UNAUTHORIZED)
+        # the user has been authenticated
+        login(request, user)
+        success_response = { "success": f"Authenticated {user.email}." }
+        return Response(success_response)
+
+class LogoutView(APIView):
+    def post(self, request, format=None):
+        logout(request)
+        success_response = { "success": "Logged out the existing user and cleared the session." }
+        return Response(success_response)
