@@ -5,7 +5,7 @@ from .managers import UserManager
 
 class User(AbstractUser):
     """
-    Overrides Django's base User model to implement custom fields and authentication.
+    Extends Django's base User model to implement custom fields and authentication.
     """
 
     # sets the email (instead of the username) as the unique identifier for the user model

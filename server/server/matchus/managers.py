@@ -2,7 +2,7 @@ from django.contrib.auth.base_user import BaseUserManager
 
 class UserManager(BaseUserManager):
     """
-    Overrides Django's base UserManager to follow the paradigm of this project's User model.
+    Extends Django's base UserManager to follow the paradigm of this project's User model.
     """
 
     use_in_migrations = True
