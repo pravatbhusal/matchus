@@ -10,7 +10,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="client" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,7 +73,7 @@
         <!--Login View Controller-->
         <scene sceneID="pxt-qh-nqx">
             <objects>
-                <viewController id="ska-e7-uJe" customClass="LoginViewController" customModule="client" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ska-e7-uJe" customClass="LoginViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="t5o-qC-NSd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -133,7 +133,7 @@
         <!--Register View Controller-->
         <scene sceneID="dmh-kn-xui">
             <objects>
-                <viewController id="iyf-J1-zYc" customClass="RegisterViewController" customModule="client" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="iyf-J1-zYc" customClass="RegisterViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="v41-jl-P7k">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -205,7 +205,7 @@
         <!--Location View Controller-->
         <scene sceneID="2RV-S2-1Vv">
             <objects>
-                <viewController id="95q-9c-MaG" customClass="locationViewController" customModule="client" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="95q-9c-MaG" customClass="locationViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Z6C-pF-1b7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -217,14 +217,14 @@
                                 <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="enter a location.." borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nbL-Th-Aa6">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nbL-Th-Aa6">
                                 <rect key="frame" x="16" y="233" width="328" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGe-3o-KRB">
-                                <rect key="frame" x="9" y="305" width="343" height="61"/>
+                                <rect key="frame" x="16" y="343" width="343" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -235,11 +235,22 @@
                                     <segue destination="OD2-La-i0V" kind="show" id="Jd2-6J-svv"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="008-KB-s1b">
+                                <rect key="frame" x="130" y="288" width="114" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Select location..."/>
+                                <connections>
+                                    <action selector="autocompleteClicked:" destination="95q-9c-MaG" eventType="touchUpInside" id="gTi-dS-T93"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="ivy-8s-jWc"/>
                     </view>
                     <navigationItem key="navigationItem" id="r7E-L0-kfH"/>
+                    <connections>
+                        <outlet property="locationText" destination="nbL-Th-Aa6" id="g3S-55-yFA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dRt-gw-tMS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -248,7 +259,7 @@
         <!--Interests View Controller-->
         <scene sceneID="F49-bz-08z">
             <objects>
-                <viewController id="OD2-La-i0V" customClass="interestsViewController" customModule="client" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="OD2-La-i0V" customClass="interestsViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4xq-Sa-7KP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
