@@ -11,8 +11,22 @@ import AuthenticationServices
 
 class RegisterViewController: UIViewController {
 
+    @IBOutlet weak var emailText: UITextField!
+    @IBOutlet weak var passwordText: UITextField!
+    @IBOutlet weak var nextButton: UIButton!
+    
+    // code to enable tapping on the background to remove software keyboard
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        nextButton.layer.cornerRadius = 6
+        emailText.layer.borderWidth = 2
+        emailText.layer.borderColor = UIColor.black.cgColor
+        passwordText.layer.borderWidth = 2
+        passwordText.layer.borderColor = UIColor.black.cgColor
         setupProviderLoginView()
     }
     
