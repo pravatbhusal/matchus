@@ -58,8 +58,4 @@ class interestsViewController: UIViewController, UITableViewDelegate, UITableVie
             self.tableView.reloadData()
         }
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
 }

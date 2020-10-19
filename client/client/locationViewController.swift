@@ -29,25 +29,35 @@ class locationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
         manager?.desiredAccuracy = kCLLocationAccuracyBest
         manager?.requestWhenInUseAuthorization()
         
-        getLocations()
+        getCurrentLocation()
     }
     
-    func getLocations() {
+    func getCurrentLocation() {
         placesClient = GMSPlacesClient()
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.formattedAddress.rawValue) | UInt(GMSPlaceField.placeID.rawValue))
-        placesClient?.findPlaceLikelihoodsFromCurrentLocation(withPlaceFields: fields, callback: {
-            (placeLikelihoodList: Array<GMSPlaceLikelihood>?, error:Error?) in
+        
+        placesClient?.currentPlace(callback: {
+            (placeLikelihoodList, error) in
             if let error = error {
                 print("An error occurred: \(error.localizedDescription)")
                 return
             }
             
-            if let placeLikelihoodList = placeLikelihoodList {
-                let placeComponents = placeLikelihoodList[0].place.addressComponents?.filter{$0.types.contains("locality") || $0.types.contains("administrative_area_level_1")}
-                self.locationText.text = "\(placeComponents?[0].name ?? ""), \(placeComponents?[1].shortName ?? "")"
-                self.locationText.text = placeLikelihoodList[0].place.formattedAddress
-            }
+            self.placesClient?.lookUpPlaceID(placeLikelihoodList?.likelihoods[0].place.placeID ?? "", callback: {
+                placeResult, error in
+                if let error = error {
+                    print("An error occurred: \(error.localizedDescription)")
+                    return
+                }
+
+                self.setLocationText(place: placeResult!)
+            })
         })
+    }
+    
+    func setLocationText(place: GMSPlace) {
+        print(place)
+        let placeComponents = place.addressComponents?.filter{$0.types.contains("locality") || $0.types.contains("administrative_area_level_1")}
+        self.locationText.text = "\(placeComponents?[0].name ?? ""), \(placeComponents?[1].shortName ?? "")"
     }
     
     @IBAction func autocompleteClicked(_ sender: Any) {
@@ -55,7 +65,7 @@ class locationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
         autocompleteController.delegate = self
 
         // Specify the place data types to return.
-        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.addressComponents.rawValue) | UInt(GMSPlaceField.placeID.rawValue))
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.addressComponents.rawValue) | UInt(GMSPlaceField.coordinate.rawValue))
         autocompleteController.placeFields = fields
 
         // Specify a filter.
@@ -69,9 +79,7 @@ class locationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
     }
 
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        print(place)
-        let placeComponents = place.addressComponents?.filter{$0.types.contains("locality") || $0.types.contains("administrative_area_level_1")}
-        locationText.text = "\(placeComponents?[0].name ?? ""), \(placeComponents?[1].shortName ?? "")"
+        setLocationText(place: place)
         dismiss(animated: true, completion: nil)
     }
 
