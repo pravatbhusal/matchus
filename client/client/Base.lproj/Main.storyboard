@@ -315,8 +315,9 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9H-XJ-jTv">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9H-XJ-jTv">
                                 <rect key="frame" x="16" y="273" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Add"/>
                                 <connections>
                                     <action selector="addButton:" destination="OD2-La-i0V" eventType="touchUpInside" id="K6I-VL-1iL"/>
@@ -324,10 +325,6 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="U9H-XJ-jTv" firstAttribute="leading" secondItem="2jN-5N-zZa" secondAttribute="leading" constant="16" id="1DS-x6-h8O"/>
-                            <constraint firstItem="2jN-5N-zZa" firstAttribute="trailing" secondItem="U9H-XJ-jTv" secondAttribute="trailing" constant="368" id="Pf1-g9-8kS"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="2jN-5N-zZa"/>
                     </view>
                     <navigationItem key="navigationItem" id="ffs-dR-zba"/>
