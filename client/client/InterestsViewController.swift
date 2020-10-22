@@ -8,8 +8,7 @@
 
 import UIKit
 
-
-public var interests:[String] = []
+public var interests: [String] = []
 
 class InterestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -57,13 +56,34 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     @IBAction func addButton(_ sender: Any) {
-        if interests.count < maxInterests && interestText.text != nil && interestText.text != "" {
-            interests.append(interestText.text!)
-            interestText.text = ""
+        var alertTitle: String?
+        var alertMessage: String?
+        
+        if interests.count >= maxInterests {
+            alertTitle = "Too many interests"
+            alertMessage = "Please enter only \(maxInterests) interests."
+        } else if(interestText.text == nil || interestText.text == "") {
+            alertTitle = "Invalid input"
+            alertMessage = "Please enter text into the interest box."
+        }
+        
+        if alertTitle != nil {
+            let alert = UIAlertController(title: alertTitle!, message: alertMessage!, preferredStyle: UIAlertController.Style.alert)
             
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            // add an OK button to cancel the alert
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            // present the alert
+            self.present(alert, animated: true, completion: nil)
+            
+            return
+        }
+        
+        interests.append(interestText.text!)
+        interestText.text = ""
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
 }

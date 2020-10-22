@@ -67,7 +67,6 @@ extension RegisterViewController: ASAuthorizationControllerDelegate {
             /*
             performSegue(withIdentifier: "testsegue", sender: user)
             
-
             // auto-login with icloud
             case let passwordCredential as ASPasswordCredential:
 
