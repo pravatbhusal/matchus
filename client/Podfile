@@ -1,4 +1,5 @@
 platform :ios, '13.2'
 target 'Matchus' do
   pod 'GooglePlaces', '4.0.0'
+  pod 'Alamofire', '~> 5.2'
 end
