@@ -12,7 +12,6 @@
 		910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */; };
 		910C0F4A2533A55800DCDBE7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F492533A55800DCDBE7 /* LocationViewController.swift */; };
 		910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */; };
-		DA881AE425421F8F00C084AB /* InterestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA881AE325421F8F00C084AB /* InterestCell.swift */; };
 		DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1595252BAB9D00083305 /* AppDelegate.swift */; };
 		DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1597252BAB9D00083305 /* SceneDelegate.swift */; };
 		DABA159A252BAB9D00083305 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1599252BAB9D00083305 /* ViewController.swift */; };
@@ -32,7 +31,6 @@
 		910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		910C0F492533A55800DCDBE7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsViewController.swift; sourceTree = "<group>"; };
-		DA881AE325421F8F00C084AB /* InterestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InterestCell.swift; path = /Users/pbhusal/Desktop/matchus/client/client/InterestCell.swift; sourceTree = "<absolute>"; };
 		DABA1592252BAB9D00083305 /* Matchus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DABA1595252BAB9D00083305 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DABA1597252BAB9D00083305 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 				910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */,
 				910C0F492533A55800DCDBE7 /* LocationViewController.swift */,
 				910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */,
-				DA881AE325421F8F00C084AB /* InterestCell.swift */,
 				DABA159B252BAB9D00083305 /* Main.storyboard */,
 				DABA159E252BAB9E00083305 /* Assets.xcassets */,
 				DABA15A0252BAB9E00083305 /* LaunchScreen.storyboard */,
@@ -230,7 +227,6 @@
 				910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */,
 				DABA159A252BAB9D00083305 /* ViewController.swift in Sources */,
 				DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */,
-				DA881AE425421F8F00C084AB /* InterestCell.swift in Sources */,
 				03FE66632536CC0E00A4C1C2 /* User.swift in Sources */,
 				910C0F4A2533A55800DCDBE7 /* LocationViewController.swift in Sources */,
 				910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */,

@@ -16,6 +16,8 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     let maxInterests: Int = 4
     
+    let tableRowSpacing: CGFloat = 20
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var interestText: UITextField!
@@ -31,13 +33,28 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return interests.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return tableRowSpacing
+    }
+    
+    // clears out the section background color
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
 
-        let row = indexPath.row
+        let row = indexPath.section
         cell.textLabel?.text = interests[row]
         cell.contentView.layer.borderWidth = 2.0
         cell.contentView.layer.cornerRadius = 6.0
@@ -47,9 +64,9 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBAction func xButton(_ sender: Any) {
         let buttonPosition = (sender as AnyObject).convert(CGPoint.zero, to: self.tableView)
-        let indexPath = self.tableView.indexPathForRow(at:buttonPosition)
+        let indexPath = self.tableView.indexPathForRow(at: buttonPosition)
         
-        interests.remove(at: indexPath!.row)
+        interests.remove(at: indexPath!.section)
         
         DispatchQueue.main.async {
             self.tableView.reloadData()
