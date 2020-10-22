@@ -13,7 +13,9 @@ public var interests:[String] = []
 
 class InterestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let textCellIdentifier = "TextCell"
+    let textCellIdentifier: String = "TextCell"
+    
+    let maxInterests: Int = 4
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -47,18 +49,21 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBAction func xButton(_ sender: Any) {
         let buttonPosition = (sender as AnyObject).convert(CGPoint.zero, to: self.tableView)
         let indexPath = self.tableView.indexPathForRow(at:buttonPosition)
+        
         interests.remove(at: indexPath!.row)
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
     @IBAction func addButton(_ sender: Any) {
-        if interests.count < 4 {
+        if interests.count < maxInterests && interestText.text != nil && interestText.text != "" {
             interests.append(interestText.text!)
             interestText.text = ""
-        }
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
 }
