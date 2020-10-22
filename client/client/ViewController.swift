@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         logoImage.image = UIImage(named: "logo")
-//        appleLogo.image = UIImage(named: "appleLogo")
+        // appleLogo.image = UIImage(named: "appleLogo")
 
         //loginButton Style
         loginButton.layer.cornerRadius = 6

@@ -15,7 +15,6 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordText: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     
-    // code to enable tapping on the background to remove software keyboard
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -36,8 +35,7 @@ class RegisterViewController: UIViewController {
         
         authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
         view.addSubview(authorizationButton)
-        NSLayoutConstraint.activate([
-                                        authorizationButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100), authorizationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),authorizationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)])
+        NSLayoutConstraint.activate([authorizationButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100), authorizationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),authorizationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)])
     }
     
     @objc
@@ -63,16 +61,18 @@ extension RegisterViewController: ASAuthorizationControllerDelegate {
             print("id: ", user.id)
             print("name: ", user.firstName)
             print("email: ", user.email)
-//            performSegue(withIdentifier: "testsegue", sender: user)
+            
+            /*
+            performSegue(withIdentifier: "testsegue", sender: user)
             
 
-// auto-login with icloud
-//        case let passwordCredential as ASPasswordCredential:
-//
-//            // Sign in using an existing iCloud Keychain credential.
-//            let username = passwordCredential.user
-//            let password = passwordCredential.password
-//
+            // auto-login with icloud
+            case let passwordCredential as ASPasswordCredential:
+
+                // Sign in using an existing iCloud Keychain credential.
+                let username = passwordCredential.user
+                let password = passwordCredential.password
+             */
             
         default:
             break

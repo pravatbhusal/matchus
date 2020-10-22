@@ -11,14 +11,15 @@ import CoreLocation
 import GooglePlaces
 
 class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
+    
     @IBOutlet weak var locationText: UITextField!
+    
     var manager: CLLocationManager?
+    
     var placesClient: GMSPlacesClient?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,17 +65,17 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
 
-        // Specify the place data types to return.
+        // specify the place data types to return
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.addressComponents.rawValue) | UInt(GMSPlaceField.coordinate.rawValue))
         autocompleteController.placeFields = fields
 
-        // Specify a filter.
+        // specify a filter
         let filter = GMSAutocompleteFilter()
         filter.type = .city
         filter.country = "us"
         autocompleteController.autocompleteFilter = filter
 
-        // Display the autocomplete view controller.
+        // display the autocomplete view controller
         present(autocompleteController, animated: true, completion: nil)
     }
 
@@ -84,7 +85,6 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
     }
 
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-      // TODO: handle the error.
       print("Error: ", error.localizedDescription)
     }
 
