@@ -38,7 +38,6 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
 
         let row = indexPath.row
         cell.textLabel?.text = interests[row]
-        
         cell.contentView.layer.borderWidth = 2.0
         cell.contentView.layer.cornerRadius = 6.0
         

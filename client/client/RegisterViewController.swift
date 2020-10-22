@@ -12,7 +12,9 @@ import AuthenticationServices
 class RegisterViewController: UIViewController {
 
     @IBOutlet weak var emailText: UITextField!
+    
     @IBOutlet weak var passwordText: UITextField!
+    
     @IBOutlet weak var nextButton: UIButton!
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
