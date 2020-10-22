@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import GooglePlaces
 
-class locationViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
+class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
     @IBOutlet weak var locationText: UITextField!
     var manager: CLLocationManager?
     var placesClient: GMSPlacesClient?

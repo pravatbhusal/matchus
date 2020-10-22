@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		03FE66602536C38700A4C1C2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE665F2536C38700A4C1C2 /* LoginViewController.swift */; };
 		03FE66632536CC0E00A4C1C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE66622536CC0E00A4C1C2 /* User.swift */; };
 		910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */; };
-		910C0F4A2533A55800DCDBE7 /* locationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F492533A55800DCDBE7 /* locationViewController.swift */; };
+		910C0F4A2533A55800DCDBE7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F492533A55800DCDBE7 /* LocationViewController.swift */; };
 		910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */; };
 		DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1595252BAB9D00083305 /* AppDelegate.swift */; };
 		DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1597252BAB9D00083305 /* SceneDelegate.swift */; };
@@ -29,7 +29,7 @@
 		12D9EF669AD44D56689A04DE /* libPods-Matchus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Matchus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		68BFAC16E2487A0A691C241A /* Pods-Matchus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.release.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.release.xcconfig"; sourceTree = "<group>"; };
 		910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		910C0F492533A55800DCDBE7 /* locationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = locationViewController.swift; sourceTree = "<group>"; };
+		910C0F492533A55800DCDBE7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsViewController.swift; sourceTree = "<group>"; };
 		DABA1592252BAB9D00083305 /* Matchus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DABA1595252BAB9D00083305 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,7 +67,6 @@
 				08A1A836B3955ABAC3BF81A2 /* Pods-Matchus.debug.xcconfig */,
 				68BFAC16E2487A0A691C241A /* Pods-Matchus.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -98,7 +97,7 @@
 				DABA1599252BAB9D00083305 /* ViewController.swift */,
 				03FE665F2536C38700A4C1C2 /* LoginViewController.swift */,
 				910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */,
-				910C0F492533A55800DCDBE7 /* locationViewController.swift */,
+				910C0F492533A55800DCDBE7 /* LocationViewController.swift */,
 				910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */,
 				DABA159B252BAB9D00083305 /* Main.storyboard */,
 				DABA159E252BAB9E00083305 /* Assets.xcassets */,
@@ -229,7 +228,7 @@
 				DABA159A252BAB9D00083305 /* ViewController.swift in Sources */,
 				DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */,
 				03FE66632536CC0E00A4C1C2 /* User.swift in Sources */,
-				910C0F4A2533A55800DCDBE7 /* locationViewController.swift in Sources */,
+				910C0F4A2533A55800DCDBE7 /* LocationViewController.swift in Sources */,
 				910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */,
 				DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */,
 			);
