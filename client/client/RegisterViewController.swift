@@ -10,6 +10,8 @@ import UIKit
 import AuthenticationServices
 
 class RegisterViewController: UIViewController {
+    
+    let locationSegueIdentifier: String = "LocationSegue"
 
     @IBOutlet weak var emailText: UITextField!
     
@@ -52,6 +54,29 @@ class RegisterViewController: UIViewController {
         authorizationController.performRequests()
     }
     
+    @IBAction func nextPressed(_ sender: RegisterViewController) {
+        if emailText.text != nil && emailText.text != "" && passwordText.text != nil && passwordText.text != "" {
+            performSegue(withIdentifier: locationSegueIdentifier, sender: sender)
+        } else {
+            let alert = UIAlertController(title: "Enter credentials", message: "Please enter a valid email and password into the fields.", preferredStyle: UIAlertController.Style.alert)
+            
+            // add an OK button to cancel the alert
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            // present the alert
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == locationSegueIdentifier {
+            if let locationVC = segue.destination as? LocationViewController {
+                // pass over the register view controller's variables
+                locationVC.email = emailText.text!
+                locationVC.password = passwordText.text!
+            }
+        }
+    }
 }
 
 extension RegisterViewController: ASAuthorizationControllerDelegate {

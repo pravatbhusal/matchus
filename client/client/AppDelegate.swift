@@ -9,15 +9,22 @@
 import UIKit
 import GooglePlaces
 
+struct Constants {
+    
+    static let gmsPlacesAPIKey: String = "AIzaSyDp2K1mkC9_73l2kAq3okvRIc_WKxIMLtk"
+    
+    static let serverURI: String = "http://127.0.0.1:8000"
+    
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    let gmsPlacesAPIKey: String = "AIzaSyDp2K1mkC9_73l2kAq3okvRIc_WKxIMLtk"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        // TODO: move API key
-        GMSPlacesClient.provideAPIKey("AIzaSyDp2K1mkC9_73l2kAq3okvRIc_WKxIMLtk")
+        GMSPlacesClient.provideAPIKey(Constants.gmsPlacesAPIKey)
         return true
     }
 

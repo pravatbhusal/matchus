@@ -8,6 +8,7 @@
 
 import UIKit
 import AuthenticationServices
+import Alamofire
 
 class LoginViewController: UIViewController {
 
@@ -52,6 +53,50 @@ class LoginViewController: UIViewController {
         authorizationController.performRequests()
     }
     
+    func loginUser(email: String, password: String) {
+        let loginURL: String = "\(Constants.serverURI)/login/"
+        let parameters = ["email": email, "password": password]
+        
+        AF.request(URL.init(string: loginURL)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                switch response.response?.statusCode {
+                    case 200?:
+                        if let json = response.value {
+                            let success = json as! [String: AnyObject]
+                            let successMessage: String? = success["success"] as? String
+                            
+                            // create a successfully logged-in alert
+                            let alert = UIAlertController(title: "Logged-in!", message: successMessage, preferredStyle: UIAlertController.Style.alert)
+                            
+                            // add an OK button to cancel the alert
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            
+                            // present the alert
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        break
+                    default:
+                        if let json = response.value {
+                            let error = json as! [String: AnyObject]
+                            let errorArray: [String]? = error["__all__"] as? [String]
+                            let errorMessage: String? = errorArray?[0]
+                            
+                            // create a failure logged-in alert
+                            let alert = UIAlertController(title: "Login Failed", message: errorMessage, preferredStyle: UIAlertController.Style.alert)
+                            
+                            // add an OK button to cancel the alert
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            
+                            // present the alert
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        break
+                }
+        }
+    }
+    
+    @IBAction func loginPressed(_ sender: Any) {
+        loginUser(email: emailText.text ?? "", password: passwordText.text ?? "")
+    }
 }
 
 extension LoginViewController: ASAuthorizationControllerDelegate {

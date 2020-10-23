@@ -12,6 +12,12 @@ import GooglePlaces
 
 class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
     
+    var email: String = ""
+    
+    var password: String = ""
+    
+    let interestsSegueIdentifier: String = "InterestsSegue"
+    
     @IBOutlet weak var locationText: UITextField!
     
     var manager: CLLocationManager?
@@ -79,6 +85,31 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
         present(autocompleteController, animated: true, completion: nil)
     }
 
+    @IBAction func nextPressed(_ sender: LocationViewController) {
+        if locationText.text != nil && locationText.text != "" {
+            performSegue(withIdentifier: interestsSegueIdentifier, sender: sender)
+        } else {
+            let alert = UIAlertController(title: "Enter a location", message: "Please enter a location into the field.", preferredStyle: UIAlertController.Style.alert)
+            
+            // add an OK button to cancel the alert
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            // present the alert
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == interestsSegueIdentifier {
+            if let interestsVC = segue.destination as? InterestsViewController {
+                // pass over the location view controller's variables
+                interestsVC.email = email
+                interestsVC.password = password
+                interestsVC.location = locationText.text!
+            }
+        }
+    }
+    
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         setLocationText(place: place)
         dismiss(animated: true, completion: nil)

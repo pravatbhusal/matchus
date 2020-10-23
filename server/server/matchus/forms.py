@@ -4,7 +4,7 @@ from .models import User
 
 class SignUpForm(forms.Form):
     email = forms.EmailField(required=True, min_length=4, max_length=128)
-    password = forms.CharField(required=True, min_length=8, max_length=128)
+    password = forms.CharField(required=True, min_length=4, max_length=128)
     location = forms.CharField(required=True, max_length=128)
     interests = forms.JSONField(required=True)
 
@@ -31,7 +31,7 @@ class SignUpForm(forms.Form):
 
 class LoginForm(forms.Form):
     email = forms.EmailField(required=True, min_length=4, max_length=128)
-    password = forms.CharField(required=True, min_length=8, max_length=128)
+    password = forms.CharField(required=True, min_length=4, max_length=128)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
