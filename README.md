@@ -1,6 +1,8 @@
 # MatchUS (Alpha)
 An IOS app that matches people based on preferences and interests.
 
+Please run the application on IPhone 11 Pro Max for testing.
+
 ### Tech Stack
 Front-end uses Swift.  
 Back-end uses Django.  
