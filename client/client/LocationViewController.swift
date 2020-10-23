@@ -10,15 +10,22 @@ import UIKit
 import CoreLocation
 import GooglePlaces
 
-class locationViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
+class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
+    
+    var email: String = ""
+    
+    var password: String = ""
+    
+    let interestsSegueIdentifier: String = "InterestsSegue"
+    
     @IBOutlet weak var locationText: UITextField!
+    
     var manager: CLLocationManager?
+    
     var placesClient: GMSPlacesClient?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,27 +71,51 @@ class locationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = self
 
-        // Specify the place data types to return.
+        // specify the place data types to return
         let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.addressComponents.rawValue) | UInt(GMSPlaceField.coordinate.rawValue))
         autocompleteController.placeFields = fields
 
-        // Specify a filter.
+        // specify a filter
         let filter = GMSAutocompleteFilter()
         filter.type = .city
         filter.country = "us"
         autocompleteController.autocompleteFilter = filter
 
-        // Display the autocomplete view controller.
+        // display the autocomplete view controller
         present(autocompleteController, animated: true, completion: nil)
     }
 
+    @IBAction func nextPressed(_ sender: LocationViewController) {
+        if locationText.text != nil && locationText.text != "" {
+            performSegue(withIdentifier: interestsSegueIdentifier, sender: sender)
+        } else {
+            let alert = UIAlertController(title: "Enter a location", message: "Please enter a location into the field.", preferredStyle: UIAlertController.Style.alert)
+            
+            // add an OK button to cancel the alert
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            // present the alert
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == interestsSegueIdentifier {
+            if let interestsVC = segue.destination as? InterestsViewController {
+                // pass over the location view controller's variables
+                interestsVC.email = email
+                interestsVC.password = password
+                interestsVC.location = locationText.text!
+            }
+        }
+    }
+    
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         setLocationText(place: place)
         dismiss(animated: true, completion: nil)
     }
 
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-      // TODO: handle the error.
       print("Error: ", error.localizedDescription)
     }
 

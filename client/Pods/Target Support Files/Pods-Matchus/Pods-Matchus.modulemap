@@ -1,0 +1,6 @@
+module Pods_Matchus {
+  umbrella header "Pods-Matchus-umbrella.h"
+
+  export *
+  module * { export * }
+}

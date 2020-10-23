@@ -8,14 +8,16 @@
 
 import UIKit
 import AuthenticationServices
+import Alamofire
 
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var emailText: UITextField!
+    
     @IBOutlet weak var passwordText: UITextField!
+    
     @IBOutlet weak var loginButton: UIButton!
     
-    // code to enable tapping on the background to remove software keyboard
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -36,8 +38,7 @@ class LoginViewController: UIViewController {
         
         authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
         view.addSubview(authorizationButton)
-        NSLayoutConstraint.activate([
-                                        authorizationButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100), authorizationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),authorizationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)])
+        NSLayoutConstraint.activate([authorizationButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100), authorizationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),authorizationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)])
     }
     
     @objc
@@ -52,6 +53,50 @@ class LoginViewController: UIViewController {
         authorizationController.performRequests()
     }
     
+    func loginUser(email: String, password: String) {
+        let loginURL: String = "\(Constants.serverURI)/login/"
+        let parameters = ["email": email, "password": password]
+        
+        AF.request(URL.init(string: loginURL)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                switch response.response?.statusCode {
+                    case 200?:
+                        if let json = response.value {
+                            let success = json as! [String: AnyObject]
+                            let successMessage: String? = success["success"] as? String
+                            
+                            // create a successfully logged-in alert
+                            let alert = UIAlertController(title: "Logged-in!", message: successMessage, preferredStyle: UIAlertController.Style.alert)
+                            
+                            // add an OK button to cancel the alert
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            
+                            // present the alert
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        break
+                    default:
+                        if let json = response.value {
+                            let error = json as! [String: AnyObject]
+                            let errorArray: [String]? = error["__all__"] as? [String]
+                            let errorMessage: String? = errorArray?[0]
+                            
+                            // create a failure logged-in alert
+                            let alert = UIAlertController(title: "Login Failed", message: errorMessage, preferredStyle: UIAlertController.Style.alert)
+                            
+                            // add an OK button to cancel the alert
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            
+                            // present the alert
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        break
+                }
+        }
+    }
+    
+    @IBAction func loginPressed(_ sender: Any) {
+        loginUser(email: emailText.text ?? "", password: passwordText.text ?? "")
+    }
 }
 
 extension LoginViewController: ASAuthorizationControllerDelegate {
@@ -59,21 +104,22 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let user = User(credentials: appleIDCredential)
+            let user: User = User(credentials: appleIDCredential)
             print("id: ", user.id)
             print("name: ", user.firstName)
             print("email: ", user.email)
-//            performSegue(withIdentifier: "testsegue", sender: user)
             
+            /*
+            performSegue(withIdentifier: "testsegue", sender: user)
 
-// auto-login with icloud
-//        case let passwordCredential as ASPasswordCredential:
-//        
-//            // Sign in using an existing iCloud Keychain credential.
-//            let username = passwordCredential.user
-//            let password = passwordCredential.password
-//            
-            
+            // auto-login with icloud
+            case let passwordCredential as ASPasswordCredential:
+        
+                // Sign in using an existing iCloud Keychain credential.
+                let username = passwordCredential.user
+                let password = passwordCredential.password
+            */
+
         default:
             break
         }
