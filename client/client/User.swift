@@ -20,6 +20,5 @@ class User {
         self.firstName = credentials.fullName?.givenName ?? ""
         self.lastName = credentials.fullName?.familyName ?? ""
         self.email = credentials.email ?? ""
-        
     }
 }

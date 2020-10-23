@@ -54,8 +54,18 @@ class RegisterViewController: UIViewController {
         authorizationController.performRequests()
     }
     
+    /**
+     Return if an email string is a valid email format.
+     */
+    func isValidEmail(_ email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: email)
+    }
+    
     @IBAction func nextPressed(_ sender: RegisterViewController) {
-        if emailText.text != nil && emailText.text != "" && passwordText.text != nil && passwordText.text != "" {
+        if emailText.text != nil && isValidEmail(emailText.text!) && passwordText.text != nil && passwordText.text != "" {
             performSegue(withIdentifier: locationSegueIdentifier, sender: sender)
         } else {
             let alert = UIAlertController(title: "Enter credentials", message: "Please enter a valid email and password into the fields.", preferredStyle: UIAlertController.Style.alert)
@@ -84,7 +94,7 @@ extension RegisterViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let user = User(credentials: appleIDCredential)
+            let user: User = User(credentials: appleIDCredential)
             print("id: ", user.id)
             print("name: ", user.firstName)
             print("email: ", user.email)

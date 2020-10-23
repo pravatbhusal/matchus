@@ -104,7 +104,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let user = User(credentials: appleIDCredential)
+            let user: User = User(credentials: appleIDCredential)
             print("id: ", user.id)
             print("name: ", user.firstName)
             print("email: ", user.email)

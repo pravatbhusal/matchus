@@ -9,14 +9,6 @@
 import UIKit
 import GooglePlaces
 
-struct Constants {
-    
-    static let gmsPlacesAPIKey: String = "AIzaSyDp2K1mkC9_73l2kAq3okvRIc_WKxIMLtk"
-    
-    static let serverURI: String = "http://127.0.0.1:8000"
-    
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
