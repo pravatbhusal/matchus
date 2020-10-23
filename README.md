@@ -35,5 +35,5 @@ Please read the README.md file in the server folder to understand how to start t
 
 # Deviations
 - Planned to allow the Apple login/registration to connect with the backend, but since this was a unique way of doing OAuth we found it difficult. This is planned to be done for the Beta release using another API endpoint to register Apple users.
-- Planned on authenticating user in the registration view controller, but instead it was performed by the end of the onboarding (at the interests view controller). This is planned to be done for the Beta release using an API endpoint.
+- Planned on authenticating user in the registration view controller, but instead the user was authenticated at the end of the onboarding (at the interests view controller). This is planned to be changed for the Beta release using a new API endpoint.
 - Planned on having the X button in the interests view controller table cell outside of the cell background, but we pivoted the design to include the button inside to simplify the design
