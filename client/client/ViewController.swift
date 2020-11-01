@@ -9,8 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    @IBOutlet weak var logoImage: UIImageView!
     
     @IBOutlet weak var loginButton: UIButton!
     
@@ -18,9 +16,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        logoImage.image = UIImage(named: "logo")
-        // appleLogo.image = UIImage(named: "appleLogo")
-
+        
         // loginButton Style
         loginButton.layer.cornerRadius = 6
         loginButton.layer.borderWidth = 2
