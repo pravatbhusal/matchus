@@ -65,17 +65,15 @@ class RegisterViewController: UIViewController {
         return emailPred.evaluate(with: email)
     }
     
-    
-    
-    @IBAction func nextPressed(_ sender: RegisterViewController) {
+    func verifyCredentials(email: String, password: String) {
         let verifyCredentialsURL: String = "\(Constants.serverURI)/verify-credentials/"
-        let parameters = ["email": emailText.text, "password": passwordText.text]
+        let parameters = ["email": email, "password": password]
         
         AF.request(URL.init(string: verifyCredentialsURL)!, method: .post, parameters: parameters as Parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
                         // the credentials were fine, so allow the user to begin the onboarding
-                        self.performSegue(withIdentifier: self.locationSegueIdentifier, sender: sender)
+                        self.performSegue(withIdentifier: self.locationSegueIdentifier, sender: self)
                         break
                     default:
                         if let json = response.value {
@@ -93,6 +91,10 @@ class RegisterViewController: UIViewController {
                         break
                 }
         }
+    }
+    
+    @IBAction func nextPressed(_ sender: RegisterViewController) {
+        verifyCredentials(email: emailText.text ?? "", password: passwordText.text ?? "")
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
