@@ -11,7 +11,7 @@ class VerifyCredentialsView(APIView):
     def post(self, request, format=None):
         verify_credentials_form = VerifyCredentialsForm(request.data)
         if not verify_credentials_form.is_valid():
-            return Response(verify_credentials_form.errors, status=status.HTTP_409_CONFLICT)
+            return Response(verify_credentials_form.errors, status=status.HTTP_412_PRECONDITION_FAILED)
 
         return Response()
 
@@ -19,7 +19,7 @@ class SignUpView(APIView):
     def post(self, request, format=None):
         signup_form = SignUpForm(request.data)
         if not signup_form.is_valid():
-            return Response(signup_form.errors, status=status.HTTP_409_CONFLICT)
+            return Response(signup_form.errors, status=status.HTTP_412_PRECONDITION_FAILED)
 
         # create the user, login the user session, and return a success response
         user = signup_form.save()
@@ -36,7 +36,7 @@ class LoginView(APIView):
         # the user has been authenticated, so login the user session
         user = login_form.save()
         success_response = { "success": f"Authenticated and logged-in {user.email}." }
-        return Response(success_response)
+        return Response(success_response, status=status.HTTP_201_CREATED)
 
 class LogoutView(APIView):
     def post(self, request, format=None):

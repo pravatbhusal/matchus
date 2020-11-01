@@ -61,8 +61,7 @@ class LoginViewController: UIViewController {
                 switch response.response?.statusCode {
                     case 200?:
                         if let json = response.value {
-                            let success = json as! [String: AnyObject]
-                            let successMessage: String? = success["success"] as? String
+                            let successMessage: String? = ResponseSerializer.getSuccessMessage(json: json)
                             
                             // create a successfully logged-in alert
                             let alert = UIAlertController(title: "Logged-in!", message: successMessage, preferredStyle: UIAlertController.Style.alert)
@@ -76,9 +75,7 @@ class LoginViewController: UIViewController {
                         break
                     default:
                         if let json = response.value {
-                            let error = json as! [String: AnyObject]
-                            let errorArray: [String]? = error["__all__"] as? [String]
-                            let errorMessage: String? = errorArray?[0]
+                            let errorMessage: String? = ResponseSerializer.getErrorMessage(json: json)
                             
                             // create a failure logged-in alert
                             let alert = UIAlertController(title: "Login Failed", message: errorMessage, preferredStyle: UIAlertController.Style.alert)

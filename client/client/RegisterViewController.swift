@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 import AuthenticationServices
 
 class RegisterViewController: UIViewController {
@@ -64,17 +65,33 @@ class RegisterViewController: UIViewController {
         return emailPred.evaluate(with: email)
     }
     
+    
+    
     @IBAction func nextPressed(_ sender: RegisterViewController) {
-        if emailText.text != nil && isValidEmail(emailText.text!) && passwordText.text != nil && passwordText.text != "" {
-            performSegue(withIdentifier: locationSegueIdentifier, sender: sender)
-        } else {
-            let alert = UIAlertController(title: "Enter credentials", message: "Please enter a valid email and password into the fields.", preferredStyle: UIAlertController.Style.alert)
-            
-            // add an OK button to cancel the alert
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            
-            // present the alert
-            self.present(alert, animated: true, completion: nil)
+        let verifyCredentialsURL: String = "\(Constants.serverURI)/verify-credentials/"
+        let parameters = ["email": emailText.text, "password": passwordText.text]
+        
+        AF.request(URL.init(string: verifyCredentialsURL)!, method: .post, parameters: parameters as Parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+                switch response.response?.statusCode {
+                    case 200?:
+                        // the credentials were fine, so allow the user to begin the onboarding
+                        self.performSegue(withIdentifier: self.locationSegueIdentifier, sender: sender)
+                        break
+                    default:
+                        if let json = response.value {
+                            let errorMessage: String? = ResponseSerializer.getErrorMessage(json: json)
+                            
+                            // create a failure register alert
+                            let alert = UIAlertController(title: "Registration Failed", message: errorMessage, preferredStyle: UIAlertController.Style.alert)
+                            
+                            // add an OK button to cancel the alert
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            
+                            // present the alert
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        break
+                }
         }
     }
     

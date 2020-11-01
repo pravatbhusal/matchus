@@ -4,7 +4,9 @@ from .models import User
 
 class VerifyCredentialsForm(forms.Form):
     email = forms.EmailField(required=True, min_length=4, max_length=128)
-    password = forms.CharField(required=True, min_length=4, max_length=128)
+    password = forms.CharField(required=True, min_length=4, max_length=128, error_messages={
+        "min_length": "The password is not strong enough."
+    })
 
     def clean_email(self):
         email = self.data['email'].lower()
@@ -17,8 +19,12 @@ class VerifyCredentialsForm(forms.Form):
         return email
 
 class SignUpForm(VerifyCredentialsForm):
-    location = forms.CharField(required=True, max_length=128)
-    interests = forms.JSONField(required=True)
+    location = forms.CharField(required=True, max_length=128, error_messages={
+        "required": "Please input a location field."
+    })
+    interests = forms.JSONField(required=True, error_messages={
+        "required": "Please input interests fields."
+    })
 
     def save(self):
         """
@@ -33,7 +39,9 @@ class SignUpForm(VerifyCredentialsForm):
 
 class LoginForm(forms.Form):
     email = forms.EmailField(required=True, min_length=4, max_length=128)
-    password = forms.CharField(required=True, min_length=4, max_length=128)
+    password = forms.CharField(required=True, min_length=4, max_length=128, error_messages={
+        "min_length": "The password is not strong enough."
+    })
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)

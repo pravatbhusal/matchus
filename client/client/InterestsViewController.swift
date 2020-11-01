@@ -117,10 +117,9 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         AF.request(URL.init(string: registerURL)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
                 switch response.response?.statusCode {
-                    case 200?:
+                    case 201?:
                         if let json = response.value {
-                            let success = json as! [String: AnyObject]
-                            let successMessage: String? = success["success"] as? String
+                            let successMessage: String? = ResponseSerializer.getSuccessMessage(json: json)
                             
                             // create a successfully register alert
                             let alert = UIAlertController(title: "Registered!", message: successMessage, preferredStyle: UIAlertController.Style.alert)
@@ -134,17 +133,7 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
                         break
                     default:
                         if let json = response.value {
-                            let error = json as! [String: AnyObject]
-                            let errorArray: [String]? = error["__all__"] as? [String]
-                            let emailErrorArray: [String]? = error["email"] as? [String]
-                            
-                            // receive the type of error message that this error orignated from
-                            var errorMessage: String?
-                            if errorArray != nil {
-                                errorMessage = emailErrorArray?[0]
-                            } else if emailErrorArray != nil {
-                                errorMessage = emailErrorArray?[0]
-                            }
+                            let errorMessage: String? = ResponseSerializer.getErrorMessage(json: json)
                             
                             // create a failure register alert
                             let alert = UIAlertController(title: "Registration Failed", message: errorMessage, preferredStyle: UIAlertController.Style.alert)
