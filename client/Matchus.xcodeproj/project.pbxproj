@@ -12,6 +12,10 @@
 		910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */; };
 		910C0F4A2533A55800DCDBE7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F492533A55800DCDBE7 /* LocationViewController.swift */; };
 		910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */; };
+		913FC533254E1E3D008881C6 /* StatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC532254E1E3C008881C6 /* StatusBarViewController.swift */; };
+		913FC538254E29CF008881C6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC537254E29CF008881C6 /* ProfileViewController.swift */; };
+		913FC53C254E2AF2008881C6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC53B254E2AF2008881C6 /* ChatViewController.swift */; };
+		913FC540254E2C87008881C6 /* IndividualChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC53F254E2C87008881C6 /* IndividualChatViewController.swift */; };
 		DA16E23A2542712900F179F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16E2392542712900F179F0 /* Constants.swift */; };
 		DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1595252BAB9D00083305 /* AppDelegate.swift */; };
 		DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1597252BAB9D00083305 /* SceneDelegate.swift */; };
@@ -32,6 +36,10 @@
 		910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		910C0F492533A55800DCDBE7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsViewController.swift; sourceTree = "<group>"; };
+		913FC532254E1E3C008881C6 /* StatusBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarViewController.swift; sourceTree = "<group>"; };
+		913FC537254E29CF008881C6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		913FC53B254E2AF2008881C6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		913FC53F254E2C87008881C6 /* IndividualChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualChatViewController.swift; sourceTree = "<group>"; };
 		DA16E2392542712900F179F0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DABA1592252BAB9D00083305 /* Matchus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DABA1595252BAB9D00083305 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +111,10 @@
 				910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */,
 				910C0F492533A55800DCDBE7 /* LocationViewController.swift */,
 				910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */,
+				913FC532254E1E3C008881C6 /* StatusBarViewController.swift */,
+				913FC537254E29CF008881C6 /* ProfileViewController.swift */,
+				913FC53B254E2AF2008881C6 /* ChatViewController.swift */,
+				913FC53F254E2C87008881C6 /* IndividualChatViewController.swift */,
 				DABA159B252BAB9D00083305 /* Main.storyboard */,
 				DABA159E252BAB9E00083305 /* Assets.xcassets */,
 				DABA15A0252BAB9E00083305 /* LaunchScreen.storyboard */,
@@ -230,10 +242,14 @@
 				910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */,
 				DABA159A252BAB9D00083305 /* ViewController.swift in Sources */,
 				DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */,
+				913FC540254E2C87008881C6 /* IndividualChatViewController.swift in Sources */,
+				913FC533254E1E3D008881C6 /* StatusBarViewController.swift in Sources */,
 				03FE66632536CC0E00A4C1C2 /* User.swift in Sources */,
+				913FC538254E29CF008881C6 /* ProfileViewController.swift in Sources */,
 				910C0F4A2533A55800DCDBE7 /* LocationViewController.swift in Sources */,
 				910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */,
 				DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */,
+				913FC53C254E2AF2008881C6 /* ChatViewController.swift in Sources */,
 				DA16E23A2542712900F179F0 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
