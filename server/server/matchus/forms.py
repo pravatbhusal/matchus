@@ -2,11 +2,9 @@ from django import forms
 from django.contrib.auth import authenticate, login
 from .models import User
 
-class SignUpForm(forms.Form):
+class VerifyCredentialsForm(forms.Form):
     email = forms.EmailField(required=True, min_length=4, max_length=128)
     password = forms.CharField(required=True, min_length=4, max_length=128)
-    location = forms.CharField(required=True, max_length=128)
-    interests = forms.JSONField(required=True)
 
     def clean_email(self):
         email = self.data['email'].lower()
@@ -17,6 +15,10 @@ class SignUpForm(forms.Form):
             raise forms.ValidationError(f"User already exists with the email {email}.")
             
         return email
+
+class SignUpForm(VerifyCredentialsForm):
+    location = forms.CharField(required=True, max_length=128)
+    interests = forms.JSONField(required=True)
 
     def save(self):
         """

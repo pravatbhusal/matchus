@@ -4,8 +4,16 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import User
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, VerifyCredentialsForm
 from .serializers import UserSerializer
+
+class VerifyCredentialsView(APIView):
+    def post(self, request, format=None):
+        verify_credentials_form = VerifyCredentialsForm(request.data)
+        if not verify_credentials_form.is_valid():
+            return Response(verify_credentials_form.errors, status=status.HTTP_409_CONFLICT)
+
+        return Response()
 
 class SignUpView(APIView):
     def post(self, request, format=None):
