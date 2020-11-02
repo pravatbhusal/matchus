@@ -30,4 +30,39 @@ class ResponseSerializer {
         return errorMessage
     }
     
+    static func getProfilePicture(json: Any?) -> String? {
+        let photo = json as! [String: AnyObject]
+        let profilePhotoURL: String? = photo["profilePhoto"] as? String
+        
+        return profilePhotoURL
+    }
+    
+    static func getProfileName(json: Any?) -> String? {
+        let name = json as! [String: AnyObject]
+        let profileName: String? = name["name"] as? String
+        
+        return profileName
+    }
+    
+    static func getMatchRate(json: Any?) -> String? {
+        let match = json as! [String: AnyObject]
+        let matchRate: Int? = match["match"] as? Int
+        
+        return String(matchRate!)
+    }
+    
+    static func getFeaturedPhotoURLs(json: Any?) -> [String]? {
+        let urls = json as! [String: AnyObject]
+        let photoArray: [String]? = urls["photos"] as? [String]
+        
+        return photoArray
+    }
+    
+    static func getInterestsList(json: Any?) -> [String]? {
+        let interests = json as! [String: AnyObject]
+        let interestsArray: [String]? = interests["interests"] as? [String]
+        
+        return interestsArray
+    }
+    
 }
