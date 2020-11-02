@@ -113,22 +113,21 @@ extension RegisterViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
             case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                let user: User = User(credentials: appleIDCredential)
-                print("id: ", user.id)
-                print("name: ", user.firstName)
-                print("email: ", user.email)
-                
+                let email: String = appleIDCredential.email ?? ""
+                let password: String = appleIDCredential.user
+                print(email, password)
+
                 /*
-                performSegue(withIdentifier: "testsegue", sender: user)
-                
-                // auto-login with icloud
-                case let passwordCredential as ASPasswordCredential:
+                    performSegue(withIdentifier: "testsegue", sender: user)
+
+                    // auto-login with icloud
+                    case let passwordCredential as ASPasswordCredential:
 
                     // Sign in using an existing iCloud Keychain credential.
                     let username = passwordCredential.user
                     let password = passwordCredential.password
-                 */
-                
+                */
+
             default:
                 break
         }

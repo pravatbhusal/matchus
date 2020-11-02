@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		03FE66602536C38700A4C1C2 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE665F2536C38700A4C1C2 /* LoginViewController.swift */; };
-		03FE66632536CC0E00A4C1C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03FE66622536CC0E00A4C1C2 /* User.swift */; };
 		910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */; };
 		910C0F4A2533A55800DCDBE7 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F492533A55800DCDBE7 /* LocationViewController.swift */; };
 		910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */; };
@@ -29,7 +28,6 @@
 
 /* Begin PBXFileReference section */
 		03FE665F2536C38700A4C1C2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		03FE66622536CC0E00A4C1C2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		03FE66672536D22100A4C1C2 /* client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = client.entitlements; sourceTree = "<group>"; };
 		08A1A836B3955ABAC3BF81A2 /* Pods-Matchus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.debug.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.debug.xcconfig"; sourceTree = "<group>"; };
 		12D9EF669AD44D56689A04DE /* libPods-Matchus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Matchus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,7 +102,6 @@
 			isa = PBXGroup;
 			children = (
 				03FE66672536D22100A4C1C2 /* client.entitlements */,
-				03FE66622536CC0E00A4C1C2 /* User.swift */,
 				DA16E2392542712900F179F0 /* Constants.swift */,
 				DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */,
 				DABA1595252BAB9D00083305 /* AppDelegate.swift */,
@@ -248,7 +245,6 @@
 				913FC540254E2C87008881C6 /* IndividualChatViewController.swift in Sources */,
 				913FC533254E1E3D008881C6 /* StatusBarViewController.swift in Sources */,
 				DA6537DA254F628C0085ED03 /* ResponseSerializer.swift in Sources */,
-				03FE66632536CC0E00A4C1C2 /* User.swift in Sources */,
 				913FC538254E29CF008881C6 /* ProfileViewController.swift in Sources */,
 				910C0F4A2533A55800DCDBE7 /* LocationViewController.swift in Sources */,
 				910C0F482533A42000DCDBE7 /* RegisterViewController.swift in Sources */,
