@@ -17,6 +17,7 @@
 		913FC540254E2C87008881C6 /* IndividualChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC53F254E2C87008881C6 /* IndividualChatViewController.swift */; };
 		DA16E23A2542712900F179F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16E2392542712900F179F0 /* Constants.swift */; };
 		DA6537DA254F628C0085ED03 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */; };
+		DA6537DD254F9A9A0085ED03 /* User.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA6537DB254F9A9A0085ED03 /* User.xcdatamodeld */; };
 		DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1595252BAB9D00083305 /* AppDelegate.swift */; };
 		DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1597252BAB9D00083305 /* SceneDelegate.swift */; };
 		DABA159A252BAB9D00083305 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1599252BAB9D00083305 /* ViewController.swift */; };
@@ -41,6 +42,7 @@
 		913FC53F254E2C87008881C6 /* IndividualChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualChatViewController.swift; sourceTree = "<group>"; };
 		DA16E2392542712900F179F0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializer.swift; sourceTree = "<group>"; };
+		DA6537DC254F9A9A0085ED03 /* User.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = User.xcdatamodel; sourceTree = "<group>"; };
 		DABA1592252BAB9D00083305 /* Matchus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DABA1595252BAB9D00083305 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DABA1597252BAB9D00083305 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				913FC53F254E2C87008881C6 /* IndividualChatViewController.swift */,
 				DABA159B252BAB9D00083305 /* Main.storyboard */,
 				DABA15A0252BAB9E00083305 /* LaunchScreen.storyboard */,
+				DA6537DB254F9A9A0085ED03 /* User.xcdatamodeld */,
 				03FE66672536D22100A4C1C2 /* client.entitlements */,
 				DABA15A3252BAB9E00083305 /* Info.plist */,
 			);
@@ -242,6 +245,7 @@
 				910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */,
 				DABA159A252BAB9D00083305 /* ViewController.swift in Sources */,
 				DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */,
+				DA6537DD254F9A9A0085ED03 /* User.xcdatamodeld in Sources */,
 				913FC540254E2C87008881C6 /* IndividualChatViewController.swift in Sources */,
 				913FC533254E1E3D008881C6 /* StatusBarViewController.swift in Sources */,
 				DA6537DA254F628C0085ED03 /* ResponseSerializer.swift in Sources */,
@@ -452,6 +456,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DA6537DB254F9A9A0085ED03 /* User.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DA6537DC254F9A9A0085ED03 /* User.xcdatamodel */,
+			);
+			currentVersion = DA6537DC254F9A9A0085ED03 /* User.xcdatamodel */;
+			path = User.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DABA158A252BAB9D00083305 /* Project object */;
 }
