@@ -84,6 +84,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                             // populate chats array here
                             
                             let chatProfiles: [ChatProfile] = ResponseSerializer.getChatProfiles(json: json)!
+                            self.chats = chatProfiles
+                            self.tableView.reloadData()
                             
                         }
                            

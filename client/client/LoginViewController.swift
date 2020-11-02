@@ -82,6 +82,8 @@ class LoginViewController: UIViewController {
         loginUser(email: emailText.text ?? "", password: passwordText.text ?? "")
     }
     
+    // https://developers.google.com/identity/sign-in/ios/start-integrating
+    
     @IBAction func googleSignIn(_ sender: Any) {
         GIDSignIn.sharedInstance()?.signIn()
         if let user = GIDSignIn.sharedInstance()?.currentUser {

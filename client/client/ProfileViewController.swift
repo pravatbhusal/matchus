@@ -46,21 +46,22 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                    switch response.result {
                        case .success:
                         if let json = response.value {
+                            // add download profilephoto from url and set the imageview image
                             let profilePhotoURL: String = ResponseSerializer.getProfilePicture(json: json)!
                             self.downloadImage(from: URL(string: profilePhotoURL)!, to: self.profilePhoto)
-                            
+                            // set profile name
                             let profileName: String = ResponseSerializer.getProfileName(json: json)!
                             self.profileName.text = profileName
                             
                             let matchRate: String = ResponseSerializer.getMatchRate(json: json)!
                             self.matchLabel.text = "Match Rate: \(matchRate)%"
-                            
+                            // get all photo urls, then download them and add to the scrollview
                             let featuredPhotoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
                             
                             for photoUrl in featuredPhotoURLs {
                                 self.stackView.addArrangedSubview(self.image(filename: photoUrl))
                             }
-                            
+                            // add interests to the array (data source for the table) then reload to reflect changes
                             let interestsData: [String] = ResponseSerializer.getInterestsList(json: json)!
                             self.interests = interestsData
                             self.interestsTableView.reloadData()
@@ -86,6 +87,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    // logic taken from below
+    // https://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
+    // always download images asynchronously...?
+    
     func image(filename: String) -> UIImageView {
         let imgView = UIImageView()
         downloadImage(from: URL(string: filename)!, to: imgView)
@@ -95,7 +100,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             
         let imgWidth = imgView.image!.size.width
         let imgHeight = imgView.image!.size.height
-        height = height*(imgHeight/imgWidth)
+        height = height * (imgHeight / imgWidth)
             
         imgView.widthAnchor.constraint(equalToConstant: width).isActive = true
         imgView.heightAnchor.constraint(equalToConstant: height).isActive = true
