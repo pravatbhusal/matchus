@@ -112,30 +112,30 @@ extension RegisterViewController: ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let user: User = User(credentials: appleIDCredential)
-            print("id: ", user.id)
-            print("name: ", user.firstName)
-            print("email: ", user.email)
-            
-            /*
-            performSegue(withIdentifier: "testsegue", sender: user)
-            
-            // auto-login with icloud
-            case let passwordCredential as ASPasswordCredential:
+            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                let user: User = User(credentials: appleIDCredential)
+                print("id: ", user.id)
+                print("name: ", user.firstName)
+                print("email: ", user.email)
+                
+                /*
+                performSegue(withIdentifier: "testsegue", sender: user)
+                
+                // auto-login with icloud
+                case let passwordCredential as ASPasswordCredential:
 
-                // Sign in using an existing iCloud Keychain credential.
-                let username = passwordCredential.user
-                let password = passwordCredential.password
-             */
-            
-        default:
-            break
+                    // Sign in using an existing iCloud Keychain credential.
+                    let username = passwordCredential.user
+                    let password = passwordCredential.password
+                 */
+                
+            default:
+                break
         }
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Login error", error)
+        print("Apple Registration Error", error)
     }
 }
 

@@ -100,30 +100,30 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
-        case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let user: User = User(credentials: appleIDCredential)
-            print("id: ", user.id)
-            print("name: ", user.firstName)
-            print("email: ", user.email)
+            case let appleIDCredential as ASAuthorizationAppleIDCredential:
+                let user: User = User(credentials: appleIDCredential)
+                print("id: ", user.id)
+                print("name: ", user.firstName)
+                print("email: ", user.email)
+                
+                /*
+                performSegue(withIdentifier: "testsegue", sender: user)
+
+                // auto-login with icloud
+                case let passwordCredential as ASPasswordCredential:
             
-            /*
-            performSegue(withIdentifier: "testsegue", sender: user)
+                    // Sign in using an existing iCloud Keychain credential.
+                    let username = passwordCredential.user
+                    let password = passwordCredential.password
+                */
 
-            // auto-login with icloud
-            case let passwordCredential as ASPasswordCredential:
-        
-                // Sign in using an existing iCloud Keychain credential.
-                let username = passwordCredential.user
-                let password = passwordCredential.password
-            */
-
-        default:
-            break
+            default:
+                break
         }
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Login error", error)
+        print("Apple Login Error", error)
     }
 }
 
