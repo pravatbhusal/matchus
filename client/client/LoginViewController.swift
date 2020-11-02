@@ -54,14 +54,15 @@ class LoginViewController: UIViewController {
     }
     
     func loginUser(email: String, password: String) {
-        let loginURL: String = "\(Constants.serverURI)/login/"
         let parameters = ["email": email, "password": password]
         
-        AF.request(URL.init(string: loginURL)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        AF.request(URL.init(string: APIs.login)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
                         if let json = response.value {
+                            // store the user's token in the device's memory
                             let token: String? = ResponseSerializer.getToken(json: json)
+                            UserDefaults.standard.set(token, forKey: User.token)
                             
                             // create a successfully logged-in alert
                             let alert = UIAlertController(title: "Logged-in!", message: token, preferredStyle: UIAlertController.Style.alert)

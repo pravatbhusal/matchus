@@ -6,10 +6,26 @@
 //  Copyright © 2020 MatchUs. All rights reserved.
 //
 
-struct Constants {
+struct APIKeys {
     
     static let gmsPlacesAPIKey: String = "AIzaSyDp2K1mkC9_73l2kAq3okvRIc_WKxIMLtk"
     
-    static let serverURI: String = "http://127.0.0.1:8000"
+}
 
+struct APIs {
+    
+    static let serverURI: String = "http://127.0.0.1:8000"
+    
+    static let login: String = "\(serverURI)/login/"
+    
+    static let signup: String = "\(serverURI)/signup/"
+    
+    static let verifyCredentials: String = "\(serverURI)/verify-credentials/"
+    
+}
+
+struct User {
+    
+    static let token: String = "Token"
+    
 }

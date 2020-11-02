@@ -25,8 +25,6 @@ class ResponseSerializer {
     static func getErrorMessage(json: Any?) -> String? {
         let error = json as! [String: AnyObject]
         let errorArray: [String]? = Array(error)[0].value as? [String]
-        
-        // receive the type of error message that this error orignated from
         let errorMessage: String? = errorArray?[0]
         
         return errorMessage

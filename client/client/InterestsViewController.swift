@@ -112,10 +112,9 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func registerUser(email: String, password: String, location: String, interests: [String]) {
-        let registerURL: String = "\(Constants.serverURI)/signup/"
         let parameters = ["email": email, "password": password, "location": location, "interests": interests] as [String : Any]
         
-        AF.request(URL.init(string: registerURL)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        AF.request(URL.init(string: APIs.signup)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 201?:
                         if let json = response.value {
