@@ -101,7 +101,7 @@
 		DABA1594252BAB9D00083305 /* client */ = {
 			isa = PBXGroup;
 			children = (
-				03FE66672536D22100A4C1C2 /* client.entitlements */,
+				DABA159E252BAB9E00083305 /* Assets.xcassets */,
 				DA16E2392542712900F179F0 /* Constants.swift */,
 				DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */,
 				DABA1595252BAB9D00083305 /* AppDelegate.swift */,
@@ -116,8 +116,8 @@
 				913FC53B254E2AF2008881C6 /* ChatViewController.swift */,
 				913FC53F254E2C87008881C6 /* IndividualChatViewController.swift */,
 				DABA159B252BAB9D00083305 /* Main.storyboard */,
-				DABA159E252BAB9E00083305 /* Assets.xcassets */,
 				DABA15A0252BAB9E00083305 /* LaunchScreen.storyboard */,
+				03FE66672536D22100A4C1C2 /* client.entitlements */,
 				DABA15A3252BAB9E00083305 /* Info.plist */,
 			);
 			path = client;
