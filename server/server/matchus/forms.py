@@ -26,6 +26,10 @@ class SignUpForm(VerifyCredentialsForm):
         "required": "Please input interests fields."
     })
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(LoginForm, self).__init__(*args, **kwargs)
+
     def save(self):
         """
         Creates a user with the provided form information.
@@ -35,6 +39,7 @@ class SignUpForm(VerifyCredentialsForm):
         user.location = self.cleaned_data['location']
         user.interests = self.cleaned_data['interests']
         user.save()
+        login(self.request, user)
         return user
 
 class LoginForm(forms.Form):
