@@ -55,16 +55,6 @@ class RegisterViewController: UIViewController {
         authorizationController.performRequests()
     }
     
-    /**
-     Return if an email string is a valid email format.
-     */
-    func isValidEmail(_ email: String) -> Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-        return emailPred.evaluate(with: email)
-    }
-    
     func verifyCredentials(email: String, password: String) {
         let verifyCredentialsURL: String = "\(Constants.serverURI)/verify-credentials/"
         let parameters = ["email": email, "password": password]
@@ -115,19 +105,7 @@ extension RegisterViewController: ASAuthorizationControllerDelegate {
             case let appleIDCredential as ASAuthorizationAppleIDCredential:
                 let email: String = appleIDCredential.email ?? ""
                 let password: String = appleIDCredential.user
-                print(email, password)
-
-                /*
-                    performSegue(withIdentifier: "testsegue", sender: user)
-
-                    // auto-login with icloud
-                    case let passwordCredential as ASPasswordCredential:
-
-                    // Sign in using an existing iCloud Keychain credential.
-                    let username = passwordCredential.user
-                    let password = passwordCredential.password
-                */
-
+                verifyCredentials(email: email, password: password)
             default:
                 break
         }

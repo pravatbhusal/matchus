@@ -103,19 +103,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             case let appleIDCredential as ASAuthorizationAppleIDCredential:
                 let email: String = appleIDCredential.email ?? ""
                 let password: String = appleIDCredential.user
-                print(email, password)
-
-                /*
-                    performSegue(withIdentifier: "testsegue", sender: user)
-
-                    // auto-login with icloud
-                    case let passwordCredential as ASPasswordCredential:
-
-                    // Sign in using an existing iCloud Keychain credential.
-                    let username = passwordCredential.user
-                    let password = passwordCredential.password
-                */
-
+                loginUser(email: email, password: password)
             default:
                 break
         }
