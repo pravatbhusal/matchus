@@ -42,5 +42,4 @@ class LoginView(APIView):
 class LogoutView(APIView):
     def post(self, request, format=None):
         logout(request)
-        success_response = { "success": "Logged out the existing user and cleared the session." }
-        return Response(success_response)
+        return Response()
