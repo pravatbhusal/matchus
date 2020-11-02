@@ -5,7 +5,7 @@
 //  Created by pbhusal on 11/1/20.
 //  Copyright © 2020 MatchUs. All rights reserved.
 //
-
+import Foundation
 class ResponseSerializer {
     
     static func getToken(json: Any?) -> String? {
@@ -64,5 +64,23 @@ class ResponseSerializer {
         
         return interestsArray
     }
+    
+    static func getChatProfiles(json: Any?) -> [ChatProfile]? {
+        let profiles = json as! [String: AnyObject]
+        let profileArray: [ChatProfile] = []
+        
+        // append profiles to profile array
+        
+        return profileArray
+    }
+    
+//    static func getChatMessages(json: Any?) -> [Chat]? {
+//        let chats = json as! [String: AnyObject]
+//        let profiles = chats["profiles"] as! [String: AnyObject]
+//        let messages = chats["chats"] as! [String: AnyObject]
+//
+//        // do stuff with profiles and return messages array
+//
+//    }
     
 }

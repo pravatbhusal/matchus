@@ -32,8 +32,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         // Do any additional setup after loading the view.
         plusButton.layer.cornerRadius = 18
-        interestsTableView.delegate = self;
-        interestsTableView.dataSource = self;
+        interestsTableView.delegate = self
+        interestsTableView.dataSource = self
         
         getProfile()
     }
