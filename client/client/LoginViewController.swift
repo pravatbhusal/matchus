@@ -61,10 +61,10 @@ class LoginViewController: UIViewController {
                 switch response.response?.statusCode {
                     case 200?:
                         if let json = response.value {
-                            let successMessage: String? = ResponseSerializer.getSuccessMessage(json: json)
+                            let token: String? = ResponseSerializer.getToken(json: json)
                             
                             // create a successfully logged-in alert
-                            let alert = UIAlertController(title: "Logged-in!", message: successMessage, preferredStyle: UIAlertController.Style.alert)
+                            let alert = UIAlertController(title: "Logged-in!", message: token, preferredStyle: UIAlertController.Style.alert)
                             
                             // add an OK button to cancel the alert
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))

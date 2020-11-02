@@ -119,10 +119,10 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
                 switch response.response?.statusCode {
                     case 201?:
                         if let json = response.value {
-                            let successMessage: String? = ResponseSerializer.getSuccessMessage(json: json)
+                            let token: String? = ResponseSerializer.getToken(json: json)
                             
                             // create a successfully register alert
-                            let alert = UIAlertController(title: "Registered!", message: successMessage, preferredStyle: UIAlertController.Style.alert)
+                            let alert = UIAlertController(title: "Registered!", message: token, preferredStyle: UIAlertController.Style.alert)
                             
                             // add an OK button to cancel the alert
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))

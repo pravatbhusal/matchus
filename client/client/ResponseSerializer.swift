@@ -8,6 +8,13 @@
 
 class ResponseSerializer {
     
+    static func getToken(json: Any?) -> String? {
+        let token = json as! [String: AnyObject]
+        let authToken: String? = token["token"] as? String
+        
+        return authToken
+    }
+    
     static func getSuccessMessage(json: Any?) -> String? {
         let success = json as! [String: AnyObject]
         let successMessage: String? = success["success"] as? String
@@ -24,4 +31,5 @@ class ResponseSerializer {
         
         return errorMessage
     }
+    
 }
