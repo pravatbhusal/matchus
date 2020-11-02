@@ -9,6 +9,7 @@
 import UIKit
 import AuthenticationServices
 import Alamofire
+import GoogleSignIn
 
 class LoginViewController: UIViewController {
 
@@ -17,6 +18,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passwordText: UITextField!
     
     @IBOutlet weak var loginButton: UIButton!
+    
+    @IBOutlet weak var googleSignInButton: UIButton!
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -29,29 +32,12 @@ class LoginViewController: UIViewController {
         emailText.layer.borderColor = UIColor.black.cgColor
         passwordText.layer.borderWidth = 2
         passwordText.layer.borderColor = UIColor.black.cgColor
-        setupProviderLoginView()
+        googleSignInButton.layer.cornerRadius = 6
+        
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
     }
     
-    func setupProviderLoginView() {
-        let authorizationButton = ASAuthorizationAppleIDButton()
-        authorizationButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        authorizationButton.addTarget(self, action: #selector(handleAuthorizationAppleIDButtonPress), for: .touchUpInside)
-        view.addSubview(authorizationButton)
-        NSLayoutConstraint.activate([authorizationButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 100), authorizationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),authorizationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)])
-    }
-    
-    @objc
-    func handleAuthorizationAppleIDButtonPress() {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
-        
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
-    }
     
     func loginUser(email: String, password: String) {
         let parameters = ["email": email, "password": password]
@@ -95,29 +81,15 @@ class LoginViewController: UIViewController {
     @IBAction func loginPressed(_ sender: Any) {
         loginUser(email: emailText.text ?? "", password: passwordText.text ?? "")
     }
-}
-
-extension LoginViewController: ASAuthorizationControllerDelegate {
     
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        switch authorization.credential {
-            case let appleIDCredential as ASAuthorizationAppleIDCredential:
-                let email: String = appleIDCredential.email ?? ""
-                let password: String = appleIDCredential.user
-                loginUser(email: email, password: password)
-            default:
-                break
+    @IBAction func googleSignIn(_ sender: Any) {
+        GIDSignIn.sharedInstance()?.signIn()
+        if let user = GIDSignIn.sharedInstance()?.currentUser {
+            let email: String = user.profile.email
+            let password: String = user.authentication.idToken
+//            print("Email: ", email)
+//            print("Password: ", password)
+            loginUser(email: email, password: password)
         }
     }
-    
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Apple Login Error", error)
-    }
 }
-
-extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return self.view.window!
-    }
-}
-
