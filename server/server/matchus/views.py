@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
-from rest_framework import authentication, permissions, status
+from rest_framework import authentication, parsers, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -62,13 +62,26 @@ class ProfileView(APIView):
 
     def patch(self, request, format=None, *args, **kwargs):
         # update the relevant fields based on the request's body
-        user = request.user
         for prop in request.data:
-            setattr(user, prop, request.data[prop])
-        user.save()
+            setattr(request.user, prop, request.data[prop])
+        request.user.save()
         
-        serializer = UserSerializer(user)
+        serializer = UserSerializer(request.user)
         return JsonResponse(serializer.data)
+
+    class ProfilePhotoView(APIView):
+        parser_classes = [parsers.JSONParser, parsers.MultiPartParser]
+
+        def put(self, request, format=None):
+            print("yay")
+            return Response()
+
+    class PhotosView(APIView):
+        parser_classes = [parsers.JSONParser, parsers.MultiPartParser]
+        
+        def get(self, request, format=None):
+            print("yay")
+            return Response()
 
 class LogoutView(APIView):
     def post(self, request, format=None):
