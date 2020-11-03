@@ -17,7 +17,7 @@ class User(AbstractUser):
     name = models.CharField(default="No Name", max_length=128)
     location = models.CharField(default="", max_length=128)
     interests = models.JSONField(default=list)
-    profilePhoto = models.ImageField(upload_to='media')
+    profile_photo = models.ImageField(upload_to='media')
 
     # helper methods for the User class
     objects = UserManager()

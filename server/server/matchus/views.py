@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .models import User
 from .serializers import UserSerializer
-from .forms import LoginForm, SignUpForm, VerifyCredentialsForm
+from .forms import LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
 from notebook.matchus import similarity_matrix
 
 class VerifyCredentialsView(APIView):
@@ -71,14 +71,25 @@ class ProfileView(APIView):
 
     class ProfilePhotoView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
+        permission_classes = [permissions.IsAuthenticated]
 
-        def put(self, request, format=None):
-            return Response()
+        def post(self, request, format=None):
+            photo_form = PhotoForm(request.POST, request.FILES)
+            
+            if not photo_form.is_valid():
+                return Response(photo_form.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+            # set this user's photo to the form's photo
+            request.user.profile_photo = photo_form.cleaned_data['photo']
+            request.user.save()
+
+            serializer = UserSerializer.UserPhotoSerializer(request.user)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
 
     class PhotosView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
 
-        def get(self, request, format=None):
+        def post(self, request, format=None):
             return Response()
 
 class LogoutView(APIView):
