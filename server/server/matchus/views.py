@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+from django.http import JsonResponse
 from rest_framework import authentication, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -26,7 +27,7 @@ class SignUpView(APIView):
         user = signup_form.save()
         token, _ = Token.objects.get_or_create(user=user)
         success_response = { "token": token.key }
-        return Response(success_response, status=status.HTTP_201_CREATED)
+        return JsonResponse(success_response, status=status.HTTP_201_CREATED)
 
 class LoginView(APIView):
     def post(self, request, format=None):
@@ -38,7 +39,7 @@ class LoginView(APIView):
         user = login_form.save()
         token, _ = Token.objects.get_or_create(user=user)
         success_response = { "token": token.key }
-        return Response(success_response)
+        return JsonResponse(success_response)
 
 class ProfileView(APIView):
     def get(self, request, format=None, *args, **kwargs):
@@ -49,6 +50,19 @@ class ProfileView(APIView):
         if not user:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        serializer = UserSerializer(user)
+        return JsonResponse(serializer.data)
+
+    def patch(self, request, format=None, *args, **kwargs):
+        # receive the user of the profile id provided in the URL
+        user_id = int(kwargs.get('id', 0))
+        user = User.objects.filter(id=user_id).first()
+
+        # update the relevant fields based on the request's body
+        for prop in request.data:
+            setattr(user, prop, request.data[prop])
+        user.save()
+        
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
