@@ -14,8 +14,11 @@ class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    location = models.CharField(default=None, blank=True, null=True, max_length=128)
-    interests = models.JSONField(default=None, blank=True, null=True)
+    name = models.CharField(default="", max_length=128)
+    location = models.CharField(default="", max_length=128)
+    interests = models.JSONField(default=list)
+    profilePhoto = models.CharField(default="", max_length=256)
+    photos = models.JSONField(default=list)
 
     # manager (helper methods) for the User class
     objects = UserManager()

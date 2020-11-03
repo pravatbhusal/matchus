@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .models import User
+from .serializers import UserSerializer
 from .forms import LoginForm, SignUpForm, VerifyCredentialsForm
 
 class VerifyCredentialsView(APIView):
@@ -38,6 +39,18 @@ class LoginView(APIView):
         token, _ = Token.objects.get_or_create(user=user)
         success_response = { "token": token.key }
         return Response(success_response)
+
+class ProfileView(APIView):
+    def get(self, request, format=None, *args, **kwargs):
+        # receive the user of the profile id provided in the URL
+        user_id = int(kwargs.get('id', 0))
+        user = User.objects.filter(id=user_id).first()
+
+        if not user:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 class LogoutView(APIView):
     def post(self, request, format=None):
