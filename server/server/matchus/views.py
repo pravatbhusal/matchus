@@ -5,13 +5,13 @@ from rest_framework import authentication, parsers, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from .models import User
-from .serializers import UserSerializer
+from .models import media_dir, Photo, User
+from .serializers import UserSerializer, PhotoSerializer
 from .forms import LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
 from notebook.matchus import similarity_matrix
 
 class VerifyCredentialsView(APIView):
-    def post(self, request, format=None):
+    def post(self, request):
         verify_credentials_form = VerifyCredentialsForm(request.data)
         if not verify_credentials_form.is_valid():
             return Response(verify_credentials_form.errors, status=status.HTTP_412_PRECONDITION_FAILED)
@@ -19,7 +19,7 @@ class VerifyCredentialsView(APIView):
         return Response()
 
 class SignUpView(APIView):
-    def post(self, request, format=None):
+    def post(self, request):
         signup_form = SignUpForm(request.data, request=request)
         if not signup_form.is_valid():
             return Response(signup_form.errors, status=status.HTTP_412_PRECONDITION_FAILED)
@@ -31,7 +31,7 @@ class SignUpView(APIView):
         return JsonResponse(success_response, status=status.HTTP_201_CREATED)
 
 class LoginView(APIView):
-    def post(self, request, format=None):
+    def post(self, request):
         login_form = LoginForm(request.data, request=request)
         if not login_form.is_valid():
             return Response(login_form.errors, status=status.HTTP_412_PRECONDITION_FAILED)
@@ -45,7 +45,7 @@ class LoginView(APIView):
 class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, format=None, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         # receive the user of the profile id provided in the URL
         user_id = int(kwargs.get('id', 0))
         user = User.objects.filter(id=user_id).first()
@@ -57,10 +57,10 @@ class ProfileView(APIView):
         similarity = similarity_matrix(request.user.interests, user.interests)
         match = { "match": similarity[0]["similarity"] }
 
-        serializer = UserSerializer(user)
+        user_serializer = UserSerializer(user)
         return JsonResponse(dict(serializer.data, **match))
 
-    def patch(self, request, format=None, *args, **kwargs):
+    def patch(self, request, *args, **kwargs):
         # update the relevant fields based on the request's body
         for prop in request.data:
             setattr(request.user, prop, request.data[prop])
@@ -73,7 +73,7 @@ class ProfileView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
         permission_classes = [permissions.IsAuthenticated]
 
-        def post(self, request, format=None):
+        def post(self, request):
             photo_form = PhotoForm(request.POST, request.FILES)
             
             if not photo_form.is_valid():
@@ -83,16 +83,36 @@ class ProfileView(APIView):
             request.user.profile_photo = photo_form.cleaned_data['photo']
             request.user.save()
 
-            serializer = UserSerializer.UserPhotoSerializer(request.user)
-            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_201_CREATED)
 
     class PhotosView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
+        permission_classes = [permissions.IsAuthenticated]
 
-        def post(self, request, format=None):
+        def post(self, request):
+            photo_form = PhotoForm(request.POST, request.FILES)
+
+            if not photo_form.is_valid():
+                return Response(photo_form.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+            # add this photo into the user's photos
+            photo = Photo.objects.create(photo=photo_form.cleaned_data['photo'], user=request.user)
+            return Response(status=status.HTTP_201_CREATED)
+
+        def delete(self, request, *args, **kwargs):
+            # receive the photo of the photo name provided in the URL
+            photo_name = str(kwargs.get('name', ''))
+            photo_name = media_dir + photo_name
+            photo = Photo.objects.filter(user=request.user).filter(photo=photo_name)
+
+            if not photo:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+            # delete the photo
+            photo.delete()
             return Response()
 
 class LogoutView(APIView):
-    def post(self, request, format=None):
+    def post(self, request):
         logout(request)
         return Response()

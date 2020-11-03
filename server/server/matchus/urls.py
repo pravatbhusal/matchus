@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile/<int:id>', views.ProfileView.as_view()),
     path('profile/profile-photo', views.ProfileView.ProfilePhotoView.as_view()),
     path('profile/photos', views.ProfileView.PhotosView.as_view()),
+    path('profile/photos/<str:name>', views.ProfileView.PhotosView.as_view()),
     path('logout', views.LogoutView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
