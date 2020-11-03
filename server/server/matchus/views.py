@@ -70,17 +70,15 @@ class ProfileView(APIView):
         return JsonResponse(serializer.data)
 
     class ProfilePhotoView(APIView):
-        parser_classes = [parsers.JSONParser, parsers.MultiPartParser]
+        parser_classes = [parsers.FormParser, parsers.MultiPartParser]
 
         def put(self, request, format=None):
-            print("yay")
             return Response()
 
     class PhotosView(APIView):
-        parser_classes = [parsers.JSONParser, parsers.MultiPartParser]
-        
+        parser_classes = [parsers.FormParser, parsers.MultiPartParser]
+
         def get(self, request, format=None):
-            print("yay")
             return Response()
 
 class LogoutView(APIView):
