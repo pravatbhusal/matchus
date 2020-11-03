@@ -8,6 +8,7 @@ from rest_framework.authtoken.models import Token
 from .models import User
 from .serializers import UserSerializer
 from .forms import LoginForm, SignUpForm, VerifyCredentialsForm
+from notebook.matchus import similarity_matrix
 
 class VerifyCredentialsView(APIView):
     def post(self, request, format=None):
@@ -42,6 +43,8 @@ class LoginView(APIView):
         return JsonResponse(success_response)
 
 class ProfileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request, format=None, *args, **kwargs):
         # receive the user of the profile id provided in the URL
         user_id = int(kwargs.get('id', 0))
@@ -50,8 +53,12 @@ class ProfileView(APIView):
         if not user:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
+        # receive the similarity between the logged-in user and the requested user
+        similarity = similarity_matrix(request.user.interests, user.interests)
+        match = { "match": similarity[0]["similarity"] }
+
         serializer = UserSerializer(user)
-        return JsonResponse(serializer.data)
+        return JsonResponse(dict(serializer.data, **match))
 
     def patch(self, request, format=None, *args, **kwargs):
         # receive the user of the profile id provided in the URL
@@ -64,7 +71,7 @@ class ProfileView(APIView):
         user.save()
         
         serializer = UserSerializer(user)
-        return Response(serializer.data)
+        return JsonResponse(serializer.data)
 
 class LogoutView(APIView):
     def post(self, request, format=None):
