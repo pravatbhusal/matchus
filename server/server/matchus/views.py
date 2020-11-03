@@ -61,11 +61,8 @@ class ProfileView(APIView):
         return JsonResponse(dict(serializer.data, **match))
 
     def patch(self, request, format=None, *args, **kwargs):
-        # receive the user of the profile id provided in the URL
-        user_id = int(kwargs.get('id', 0))
-        user = User.objects.filter(id=user_id).first()
-
         # update the relevant fields based on the request's body
+        user = request.user
         for prop in request.data:
             setattr(user, prop, request.data[prop])
         user.save()
