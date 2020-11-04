@@ -46,10 +46,26 @@ class LoginView(APIView):
 class DashboardView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request):
-        users = get_users_nearby(0, 0).exclude(email=request.user.email)
+    def get(self, request, *args, **kwargs):
+        # receive the page number provided in the URL
+        page = int(kwargs.get('page', 1))
+
+        # get the users nearby this user
+        latitude = float(request.user.latitude)
+        longitude = float(request.user.longitude)
+        max_distance_km = 10000
+        users = get_users_nearby(latitude, longitude, max_distance_km).exclude(email=request.user.email)
+
+        # receive the users of this page
+        users_per_page = 10
+        start_of_page = (page - 1) * users_per_page
+        end_of_page = page * users_per_page
+        users = list(users)[start_of_page : end_of_page]
+
+        # sort the users by best match to this user
         serializer = UserSerializer.MatchSerializer(users, context={ "user": request.user }, many=True)
-        return Response(serializer.data)
+        sorted_users = sorted(serializer.data, key=lambda user : user["match"], reverse=True)
+        return Response(sorted_users)
 
 class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
