@@ -8,12 +8,12 @@ Original file is located at
 """
 
 import nltk
-nltk.download('punkt')
+# nltk.download('punkt')
 
 from nltk.tokenize import sent_tokenize
 import warnings
 
-warnings.filterwarnings(action = 'ignore')
+warnings.filterwarnings(action='ignore')
 
 import gensim
 from gensim.models import Word2Vec
@@ -39,7 +39,7 @@ def similarity(user_A, user_B):
   https://stackoverflow.com/questions/38287772/cbow-v-s-skip-gram-why-invert-context-and-target-words
   """
   data = [user_A, user_B]
-  model = gensim.models.Word2Vec(data, min_count = 1, size = 100, window = 5, sg = 1)
+  model = gensim.models.Word2Vec(data, min_count=1, size=100, window=5, sg=1)
 
   total_similarity = 0
 
@@ -54,8 +54,8 @@ def similarity(user_A, user_B):
 
     total_similarity += largest_similarity
 
-    # return the mean similarity between the two users
-    return total_similarity / len(user_A)
+  # return the mean similarity between the two users
+  return total_similarity / len(user_A)
 
 """# Multi-Threaded Process
 We need to multi-thread the process of comparing user A with other users.
@@ -93,11 +93,4 @@ def similarity_matrix(user_A, *compare_users):
     return 1 if a["similarity"] < b["similarity"] else -1
 
   return sorted(similarity_matrix, key=cmp_to_key(cmp_similarity))
-
-user_A = ["I like to code.", "I like to hike.", "I like to cook."]
-user_B = ["I like to program.", "I like to bike.", "I like to eat."]
-user_C = ["Running", "Talking with people", "Movies"]
-user_D = ["Sports", "Cooking", "Video Games"]
-
-similarity_matrix(user_A, user_B, user_C, user_D)
 
