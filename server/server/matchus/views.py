@@ -133,7 +133,7 @@ class ProfileView(APIView):
             if interest_index == -1:
                 return Response(status=status.HTTP_404_NOT_FOUND)
 
-            # add this interest into the user's interests
+            # delete this interest from the user's interests
             del request.user.interests[interest_index]
             request.user.save()
             return Response()
