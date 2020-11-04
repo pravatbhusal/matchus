@@ -58,7 +58,7 @@ class ProfileView(APIView):
         similarity = similarity_matrix(request.user.interests, user.interests)
         match = { "match": similarity[0]["similarity"] }
 
-        user_serializer = UserSerializer(user)
+        serializer = UserSerializer(user)
         return JsonResponse(dict(serializer.data, **match))
 
     class ProfilePhotoView(APIView):
@@ -133,7 +133,7 @@ class ProfileView(APIView):
             if interest_index == -1:
                 return Response(status=status.HTTP_404_NOT_FOUND)
 
-            # add this interest into the user's interests
+            # delete this interest from the user's interests
             del request.user.interests[interest_index]
             request.user.save()
             return Response()
