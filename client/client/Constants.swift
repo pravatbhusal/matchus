@@ -16,11 +16,11 @@ struct APIs {
     
     static let serverURI: String = "http://127.0.0.1:8000"
     
-    static let login: String = "\(serverURI)/login/"
+    static let login: String = "\(serverURI)/login"
     
-    static let signup: String = "\(serverURI)/signup/"
+    static let signup: String = "\(serverURI)/signup"
     
-    static let verifyCredentials: String = "\(serverURI)/verify-credentials/"
+    static let verifyCredentials: String = "\(serverURI)/verify-credentials"
     
     static let profile: String = "\(serverURI)/profile/"
     

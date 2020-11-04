@@ -19,6 +19,10 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var location: String = ""
     
+    var longitude: Double = 0
+    
+    var latitude: Double = 0
+    
     let textCellIdentifier: String = "TextCell"
     
     let maxInterests: Int = 4
@@ -112,22 +116,14 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func registerUser(email: String, password: String, location: String, interests: [String]) {
-        let parameters = ["email": email, "password": password, "location": location, "interests": interests] as [String : Any]
+        let parameters = ["email": email, "password": password, "location": location, "longitude": longitude, "latitude": latitude, "interests": interests] as [String : Any]
         
         AF.request(URL.init(string: APIs.signup)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 201?:
                         if let json = response.value {
                             let token: String? = ResponseSerializer.getToken(json: json)
-                            
-                            // create a successfully register alert
-                            let alert = UIAlertController(title: "Registered!", message: token, preferredStyle: UIAlertController.Style.alert)
-                            
-                            // add an OK button to cancel the alert
-                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                            
-                            // present the alert
-                            self.present(alert, animated: true, completion: nil)
+                            UserDefaults.standard.set(token, forKey: User.token)
                         }
                         break
                     default:
