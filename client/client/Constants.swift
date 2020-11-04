@@ -22,6 +22,10 @@ struct APIs {
     
     static let verifyCredentials: String = "\(serverURI)/verify-credentials"
     
+    static let profile: String = "\(serverURI)/profile/"
+    
+    static let chats: String = "\(serverURI)/chats/"
+    
 }
 
 struct User {
