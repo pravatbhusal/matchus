@@ -60,15 +60,6 @@ class ProfileView(APIView):
         user_serializer = UserSerializer(user)
         return JsonResponse(dict(serializer.data, **match))
 
-    def patch(self, request, *args, **kwargs):
-        # update the relevant fields based on the request's body
-        for prop in request.data:
-            setattr(request.user, prop, request.data[prop])
-        request.user.save()
-        
-        serializer = UserSerializer(request.user)
-        return JsonResponse(serializer.data)
-
     class ProfilePhotoView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
         permission_classes = [permissions.IsAuthenticated]
