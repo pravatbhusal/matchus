@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .models import media_dir, Chat, Photo, User
-from .serializers import UserSerializer, PhotoSerializer
+from .serializers import ChatSerializer, PhotoSerializer, UserSerializer
 from .forms import LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
 from notebook.matchus import similarity_matrix
 
@@ -94,8 +94,8 @@ class ProfileView(APIView):
         def delete(self, request, *args, **kwargs):
             # receive the photo of the photo name provided in the URL
             photo_name = str(kwargs.get('name', ''))
-            photo_name = media_dir + photo_name
-            photo = Photo.objects.filter(user=request.user).filter(photo=photo_name)
+            photo_url = media_dir + photo_name
+            photo = Photo.objects.filter(user=request.user).filter(photo=photo_url)
 
             if not photo:
                 return Response(status=status.HTTP_404_NOT_FOUND)
@@ -115,7 +115,7 @@ class ChatView(APIView):
         for chat in chats:
             # append the most recent message between the this user and the other user
             to_user = UserSerializer.ChatSerializer(chat.to_user)
-            message = { **to_user.data, "message": chat.message }
+            message = { **to_user.data, "anonymous": chat.anonymous, "message": chat.message }
             messages.append(message)
         
         return Response(messages)
@@ -128,9 +128,12 @@ class ChatView(APIView):
             user_id = int(kwargs.get('id', 0))
             user = User.objects.filter(id=user_id).first()
 
-            chats = Chat.objects.filter(from_user=request.user, to_user=user)
+            # receive all of the chats between the two users
+            chat_filter = (Q(from_user=user) & Q(to_user=request.user)) | (Q(from_user=request.user) & Q(to_user=user))
+            chats = Chat.objects.filter(chat_filter)
 
-            return Response()
+            serializer = ChatSerializer(chats, many=True)
+            return Response(serializer.data)
 
 class LogoutView(APIView):
     def post(self, request):
