@@ -31,6 +31,7 @@ class Photo(models.Model):
 
 class ChatRoom(models.Model):
     anonymous = models.BooleanField(default=True)
+    request_identity_from = models.ForeignKey(User, default=None, blank=True, null=True, related_name='request_identity_from', on_delete=models.CASCADE)
     user_A = models.ForeignKey(User, related_name='user_A', on_delete=models.CASCADE)
     user_B = models.ForeignKey(User, related_name='user_B', on_delete=models.CASCADE)
     chats = models.JSONField(default=list)

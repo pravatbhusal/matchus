@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .models import media_dir, ChatRoom, Photo, User
 from .serializers import PhotoSerializer, UserSerializer
-from .forms import LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
+from .forms import InterestForm, LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
 from notebook.matchus import similarity_matrix
 
 class VerifyCredentialsView(APIView):
@@ -72,7 +72,8 @@ class ProfileView(APIView):
                 return Response(photo_form.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
             # set this user's photo to the form's photo
-            request.user.profile_photo = photo_form.cleaned_data['photo']
+            photo = photo_form.cleaned_data['photo']
+            request.user.profile_photo = photo
             request.user.save()
 
             return Response(status=status.HTTP_201_CREATED)
@@ -88,7 +89,8 @@ class ProfileView(APIView):
                 return Response(photo_form.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
             # add this photo into the user's photos
-            photo = Photo.objects.create(photo=photo_form.cleaned_data['photo'], user=request.user)
+            photo = photo_form.cleaned_data['photo']
+            Photo.objects.create(photo=photo, user=request.user)
             return Response(status=status.HTTP_201_CREATED)
 
         def delete(self, request, *args, **kwargs):
@@ -102,6 +104,38 @@ class ProfileView(APIView):
 
             # delete the photo
             photo.delete()
+            return Response()
+
+    class InterestsView(APIView):
+        permission_classes = [permissions.IsAuthenticated]
+
+        def post(self, request):
+            interest_form = InterestForm(request.data)
+
+            if not interest_form.is_valid():
+                return Response(interest_form.errors, status=status.HTTP_412_PRECONDITION_FAILED)
+
+            # add this interest into the user's interests
+            interest = interest_form.cleaned_data['interest']
+            request.user.interests.append(interest)
+            request.user.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        def delete(self, request, *args, **kwargs):
+            # receive the interest index of the interest provided in the URL
+            interest = str(kwargs.get('interest', ''))
+            interest_index = -1
+            try:
+                interest_index = request.user.interests.index(interest)
+            except:
+                pass
+
+            if interest_index == -1:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+            # add this interest into the user's interests
+            del request.user.interests[interest_index]
+            request.user.save()
             return Response()
 
 class ChatView(APIView):
@@ -143,7 +177,7 @@ class ChatView(APIView):
             # make these users anonymous if the chat room is still anonymous
             my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": room.anonymous })
             other_user_serializer = UserSerializer.AnonymousSerializer(user, context={ "anonymous": room.anonymous })
-            
+
             return Response({ "me": my_user_serializer.data, "other": other_user_serializer.data, "chats": room.chats })
 
 class LogoutView(APIView):
