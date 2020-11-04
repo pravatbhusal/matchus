@@ -1,6 +1,11 @@
 from django import forms
 from django.contrib.auth import authenticate, login
-from .models import User
+from .models import User, Photo
+
+class RequestForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(RequestForm, self).__init__(*args, **kwargs)
 
 class VerifyCredentialsForm(forms.Form):
     email = forms.EmailField(required=True, min_length=4, max_length=128)
@@ -18,17 +23,13 @@ class VerifyCredentialsForm(forms.Form):
             
         return email
 
-class SignUpForm(VerifyCredentialsForm):
+class SignUpForm(RequestForm, VerifyCredentialsForm):
     location = forms.CharField(required=True, max_length=128, error_messages={
         "required": "Please input a location field."
     })
     interests = forms.JSONField(required=True, error_messages={
         "required": "Please input interests fields."
     })
-
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
-        super(LoginForm, self).__init__(*args, **kwargs)
 
     def save(self):
         """
@@ -42,15 +43,11 @@ class SignUpForm(VerifyCredentialsForm):
         login(self.request, user)
         return user
 
-class LoginForm(forms.Form):
+class LoginForm(RequestForm, forms.Form):
     email = forms.EmailField(required=True, min_length=4, max_length=128)
     password = forms.CharField(required=True, min_length=4, max_length=128, error_messages={
         "min_length": "The password is not strong enough."
     })
-
-    def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request', None)
-        super(LoginForm, self).__init__(*args, **kwargs)
 
     def clean(self):
         email = self.data['email'].lower()
@@ -72,4 +69,14 @@ class LoginForm(forms.Form):
         login(self.request, self.user)
         return self.user
 
-        
+class PhotoForm(forms.Form):
+    photo = forms.ImageField(required=True, error_messages={
+        "required": "Please upload a photo."
+    })
+
+class InterestForm(forms.Form):
+    interest = forms.CharField(required=True, max_length=256, error_messages={
+        "required": "Please enter an interest."
+    })
+
+
