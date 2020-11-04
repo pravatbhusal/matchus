@@ -31,7 +31,6 @@ class Photo(models.Model):
 
 class Chat(models.Model):
     message = models.TextField()
-    most_recent = models.BooleanField(default=True)
     date = models.DateTimeField(default=now)
     anonymous = models.BooleanField(default=True)
     from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)

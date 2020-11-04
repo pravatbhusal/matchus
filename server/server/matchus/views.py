@@ -108,14 +108,27 @@ class ChatView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        chat_filter = (Q(from_user=request.user) | Q(to_user=request.user)) & Q(most_recent=True)
-        chats = Chat.objects.filter(chat_filter)
+        chat_filter = Q(from_user=request.user) | Q(to_user=request.user)
+        chats = Chat.objects.filter(chat_filter).values('from_user', 'to_user').distinct()
 
         messages = []
         for chat in chats:
+            # determine the other user that's messaging this user
+            user = None
+            prefix = ""
+            if chat['to_user'] == request.user.id:
+                user = User.objects.filter(id=chat['from_user']).first()
+            else:
+                user = User.objects.filter(id=chat['to_user']).first()
+                prefix = "You: "
+
+            # receive the latest message between this user and the other user
+            chat_filter = (Q(from_user=user) & Q(to_user=request.user)) | (Q(from_user=request.user) & Q(to_user=user))
+            recent_chat = Chat.objects.filter(chat_filter).order_by('-id').first()
+
             # append the most recent message between the this user and the other user
-            to_user = UserSerializer.ChatSerializer(chat.to_user)
-            message = { **to_user.data, "anonymous": chat.anonymous, "message": chat.message }
+            serializer = UserSerializer.ChatSerializer(user)
+            message = { **serializer.data, "anonymous": recent_chat.anonymous, "message": prefix + recent_chat.message }
             messages.append(message)
         
         return Response(messages)
