@@ -20,6 +20,10 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
     
     @IBOutlet weak var locationText: UITextField!
     
+    var longitude: Double = 0
+    
+    var latitude: Double = 0
+    
     var manager: CLLocationManager?
     
     var placesClient: GMSPlacesClient?
@@ -62,8 +66,9 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
     }
     
     func setLocationText(place: GMSPlace) {
-        print(place)
         let placeComponents = place.addressComponents?.filter{$0.types.contains("locality") || $0.types.contains("administrative_area_level_1")}
+        self.longitude = place.coordinate.longitude
+        self.latitude = place.coordinate.latitude
         self.locationText.text = "\(placeComponents?[0].name ?? ""), \(placeComponents?[1].shortName ?? "")"
     }
     
@@ -106,6 +111,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
                 interestsVC.email = email
                 interestsVC.password = password
                 interestsVC.location = locationText.text!
+                interestsVC.longitude = longitude
+                interestsVC.latitude = latitude
             }
         }
     }
