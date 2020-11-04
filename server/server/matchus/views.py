@@ -41,7 +41,7 @@ class LoginView(APIView):
         user = login_form.save()
         token, _ = Token.objects.get_or_create(user=user)
         success_response = { "token": token.key }
-        return JsonResponse(success_response)
+        return JsonResponse({ "token": token.key })
 
 class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -50,6 +50,7 @@ class ProfileView(APIView):
         # receive the user of the profile id provided in the URL
         user_id = int(kwargs.get('id', 0))
         user = User.objects.filter(id=user_id).first()
+        photos = Photo.objects.filter(user=user)
 
         if not user:
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -58,8 +59,11 @@ class ProfileView(APIView):
         similarity = similarity_matrix(request.user.interests, user.interests)
         match = { "match": similarity[0]["similarity"] }
 
-        serializer = UserSerializer(user)
-        return JsonResponse(dict(serializer.data, **match))
+        # format the user and photos models
+        user_serializer = UserSerializer(user)
+        photos_serializer = PhotoSerializer(photos, many=True)
+
+        return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data, **match })
 
     class ProfilePhotoView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
