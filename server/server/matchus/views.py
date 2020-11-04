@@ -9,7 +9,7 @@ from rest_framework.authtoken.models import Token
 from .models import media_dir, ChatRoom, Photo, User
 from .serializers import PhotoSerializer, UserSerializer
 from .forms import InterestForm, LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
-from notebook.matchus import similarity_matrix
+from .queries import get_users_nearby
 
 class VerifyCredentialsView(APIView):
     def post(self, request):
@@ -43,6 +43,14 @@ class LoginView(APIView):
         success_response = { "token": token.key }
         return JsonResponse({ "token": token.key })
 
+class DashboardView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        users = get_users_nearby(0, 0).exclude(email=request.user.email)
+        serializer = UserSerializer.MatchSerializer(users, context={ "user": request.user }, many=True)
+        return Response(serializer.data)
+
 class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -55,15 +63,11 @@ class ProfileView(APIView):
         if not user:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        # receive the similarity between the logged-in user and the requested user
-        similarity = similarity_matrix(request.user.interests, user.interests)
-        match = { "match": similarity[0]["similarity"] }
-
-        # format the user and photos models
-        user_serializer = UserSerializer(user)
+        # serialize the user and similarity between the logged-in user and the requested user
+        user_serializer = UserSerializer.MatchSerializer(user, context={ "user": user })
         photos_serializer = PhotoSerializer(photos, many=True)
 
-        return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data, **match })
+        return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data })
 
     class ProfilePhotoView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
