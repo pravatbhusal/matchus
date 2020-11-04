@@ -58,7 +58,7 @@ class ProfileView(APIView):
         similarity = similarity_matrix(request.user.interests, user.interests)
         match = { "match": similarity[0]["similarity"] }
 
-        user_serializer = UserSerializer(user)
+        serializer = UserSerializer(user)
         return JsonResponse(dict(serializer.data, **match))
 
     class ProfilePhotoView(APIView):
