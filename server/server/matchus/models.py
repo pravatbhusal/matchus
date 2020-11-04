@@ -29,10 +29,9 @@ class Photo(models.Model):
     photo = models.ImageField(upload_to=media_dir)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-class Chat(models.Model):
-    message = models.TextField()
-    most_recent = models.BooleanField(default=True)
-    date = models.DateTimeField(default=now)
+class ChatRoom(models.Model):
     anonymous = models.BooleanField(default=True)
-    from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
-    to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
+    request_identity_from = models.ForeignKey(User, default=None, blank=True, null=True, related_name='request_identity_from', on_delete=models.CASCADE)
+    user_A = models.ForeignKey(User, related_name='user_A', on_delete=models.CASCADE)
+    user_B = models.ForeignKey(User, related_name='user_B', on_delete=models.CASCADE)
+    chats = models.JSONField(default=list)

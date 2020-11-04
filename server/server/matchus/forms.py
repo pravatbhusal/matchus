@@ -74,4 +74,9 @@ class PhotoForm(forms.Form):
         "required": "Please upload a photo."
     })
 
+class InterestForm(forms.Form):
+    interest = forms.CharField(required=True, max_length=256, error_messages={
+        "required": "Please enter an interest."
+    })
+
 

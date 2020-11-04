@@ -11,6 +11,8 @@ urlpatterns = [
     path('profile/profile-photo', views.ProfileView.ProfilePhotoView.as_view()),
     path('profile/photos', views.ProfileView.PhotosView.as_view()),
     path('profile/photos/<str:name>', views.ProfileView.PhotosView.as_view()),
+    path('profile/interests', views.ProfileView.InterestsView.as_view()),
+    path('profile/interests/<str:interest>', views.ProfileView.InterestsView.as_view()),
     path('chats', views.ChatView.as_view()),
     path('chats/<int:id>', views.ChatView.ChatProfileView.as_view()),
     path('logout', views.LogoutView.as_view()),

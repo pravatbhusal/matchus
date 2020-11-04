@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Chat, User, Photo
+from .models import ChatRoom, User, Photo
 
 admin.site.register(User)
 admin.site.register(Photo)
-admin.site.register(Chat)
+admin.site.register(ChatRoom)
