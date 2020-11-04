@@ -9,7 +9,7 @@ from rest_framework.authtoken.models import Token
 from .models import media_dir, ChatRoom, Photo, User
 from .serializers import PhotoSerializer, UserSerializer
 from .forms import InterestForm, LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
-from notebook.matchus import similarity_matrix
+from .queries import get_users_nearby
 
 class VerifyCredentialsView(APIView):
     def post(self, request):
@@ -43,6 +43,30 @@ class LoginView(APIView):
         success_response = { "token": token.key }
         return JsonResponse({ "token": token.key })
 
+class DashboardView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        # receive the page number provided in the URL
+        page = int(kwargs.get('page', 1))
+
+        # get the users nearby this user
+        latitude = float(request.user.latitude)
+        longitude = float(request.user.longitude)
+        max_distance_km = 10000
+        users = get_users_nearby(latitude, longitude, max_distance_km).exclude(email=request.user.email)
+
+        # receive the users of this page
+        users_per_page = 10
+        start_of_page = (page - 1) * users_per_page
+        end_of_page = page * users_per_page
+        users = list(users)[start_of_page : end_of_page]
+
+        # sort the users by best match to this user
+        serializer = UserSerializer.MatchSerializer(users, context={ "user": request.user }, many=True)
+        sorted_users = sorted(serializer.data, key=lambda user : user["match"], reverse=True)
+        return Response(sorted_users)
+
 class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
@@ -55,15 +79,11 @@ class ProfileView(APIView):
         if not user:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        # receive the similarity between the logged-in user and the requested user
-        similarity = similarity_matrix(request.user.interests, user.interests)
-        match = { "match": similarity[0]["similarity"] }
-
-        # format the user and photos models
-        user_serializer = UserSerializer(user)
+        # serialize the user and similarity between the logged-in user and the requested user
+        user_serializer = UserSerializer.MatchSerializer(user, context={ "user": user })
         photos_serializer = PhotoSerializer(photos, many=True)
 
-        return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data, **match })
+        return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data })
 
     class ProfilePhotoView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
