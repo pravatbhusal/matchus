@@ -1,26 +1,28 @@
 from rest_framework import serializers
-from .models import Chat, Photo, User
+from .models import Photo, User
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'name', 'interests', 'profile_photo']
 
-    class ChatSerializer(serializers.ModelSerializer):
+    class AnonymousSerializer(serializers.ModelSerializer):
+        anonymous = serializers.SerializerMethodField('get_anonymous')
+        name = serializers.SerializerMethodField('get_name')
+
         class Meta:
             model = User
-            fields = ['id', 'name', 'profile_photo']
+            fields = ['id', 'anonymous', 'name', 'profile_photo']
+
+        def get_anonymous(self, obj):
+            anonymous = self.context.get("anonymous")
+            return bool(anonymous)
+
+        def get_name(self, obj):
+            anonymous = bool(self.context.get("anonymous"))
+            return "Anonymous" if anonymous else obj.name
 
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
         fields = ['photo']
-
-class ChatSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(source='from_user.id')
-    name = serializers.CharField(source='from_user.name')
-    profile_photo = serializers.ImageField(source='from_user.profile_photo')
-
-    class Meta:
-        model = Chat
-        fields = ['message', 'date', 'anonymous', 'id', 'name', 'profile_photo']
