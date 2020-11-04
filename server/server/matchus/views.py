@@ -6,8 +6,8 @@ from rest_framework import authentication, parsers, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from .models import media_dir, Chat, Photo, User
-from .serializers import ChatSerializer, PhotoSerializer, UserSerializer
+from .models import media_dir, ChatRoom, Photo, User
+from .serializers import PhotoSerializer, UserSerializer
 from .forms import LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
 from notebook.matchus import similarity_matrix
 
@@ -108,28 +108,23 @@ class ChatView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        chat_filter = Q(from_user=request.user) | Q(to_user=request.user)
-        chats = Chat.objects.filter(chat_filter).values('from_user', 'to_user').distinct()
+        chat_filter = Q(user_A=request.user) | Q(user_B=request.user)
+        chat_rooms = ChatRoom.objects.filter(chat_filter)
 
         messages = []
-        for chat in chats:
-            # determine the other user that's messaging this user
-            user = None
-            prefix = ""
-            if chat['to_user'] == request.user.id:
-                user = User.objects.filter(id=chat['from_user']).first()
-            else:
-                user = User.objects.filter(id=chat['to_user']).first()
-                prefix = "You: "
-
+        for room in chat_rooms:
             # receive the latest message between this user and the other user
-            chat_filter = (Q(from_user=user) & Q(to_user=request.user)) | (Q(from_user=request.user) & Q(to_user=user))
-            recent_chat = Chat.objects.filter(chat_filter).order_by('-id').first()
+            recent_chat = room.chats[-1]
 
-            # append the most recent message between the this user and the other user
-            serializer = UserSerializer.ChatSerializer(user)
-            message = { **serializer.data, "anonymous": recent_chat.anonymous, "message": prefix + recent_chat.message }
-            messages.append(message)
+            # attributes to showcase for this recent message based on who the sender of the message was
+            other_user = room.user_B if request.user == room.user_A else room.user_A
+            message = recent_chat["message"]
+            recent_chat["message"] = "You: " + message if recent_chat["id"] == request.user.id else message
+            
+            # make this user anonymous if the chat room is anonymous
+            serializer = UserSerializer.AnonymousSerializer(other_user, context={ "anonymous": room.anonymous })
+
+            messages.append({ **serializer.data, "message": recent_chat["message"] })
         
         return Response(messages)
 
@@ -141,12 +136,15 @@ class ChatView(APIView):
             user_id = int(kwargs.get('id', 0))
             user = User.objects.filter(id=user_id).first()
 
-            # receive all of the chats between the two users
-            chat_filter = (Q(from_user=user) & Q(to_user=request.user)) | (Q(from_user=request.user) & Q(to_user=user))
-            chats = Chat.objects.filter(chat_filter)
+            # receive the chat room between the two users
+            chat_filter = (Q(user_A=user) & Q(user_B=request.user)) | (Q(user_A=request.user) & Q(user_B=user))
+            room = ChatRoom.objects.filter(chat_filter).first()
 
-            serializer = ChatSerializer(chats, many=True)
-            return Response(serializer.data)
+            # make these users anonymous if the chat room is still anonymous
+            my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": room.anonymous })
+            other_user_serializer = UserSerializer.AnonymousSerializer(user, context={ "anonymous": room.anonymous })
+            
+            return Response({ "me": my_user_serializer.data, "other": other_user_serializer.data, "chats": room.chats })
 
 class LogoutView(APIView):
     def post(self, request):
