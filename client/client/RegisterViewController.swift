@@ -23,6 +23,10 @@ class RegisterViewController: UIViewController {
     
     @IBOutlet weak var googleButton: UIButton!
     
+    
+    var email: String = ""
+    var password: String = ""
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -35,6 +39,9 @@ class RegisterViewController: UIViewController {
         emailText.layer.borderColor = UIColor.black.cgColor
         passwordText.layer.borderWidth = 2
         passwordText.layer.borderColor = UIColor.black.cgColor
+        
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
     }
     
     func verifyCredentials(email: String, password: String) {
@@ -69,10 +76,14 @@ class RegisterViewController: UIViewController {
     }
     
     @IBAction func googleButtonPressed(_ sender: Any) {
-        GIDSignIn.sharedInstance()?.signIn()
+        if (GIDSignIn.sharedInstance()?.currentUser == nil) {
+            GIDSignIn.sharedInstance()?.signIn()
+        }
         if let user = GIDSignIn.sharedInstance()?.currentUser {
             let email: String = user.profile.email
-            let password: String = user.authentication.idToken
+            let password: String = user.userID
+            self.email = email
+            self.password = password
 //            print("Email: ", email)
 //            print("Password: ", password)
             verifyCredentials(email: email, password: password)
@@ -83,8 +94,13 @@ class RegisterViewController: UIViewController {
         if segue.identifier == locationSegueIdentifier {
             if let locationVC = segue.destination as? LocationViewController {
                 // pass over the register view controller's variables
-                locationVC.email = emailText.text!
-                locationVC.password = passwordText.text!
+                if (self.email == "" || self.password == "") {
+                    locationVC.email = emailText.text!
+                    locationVC.password = passwordText.text!
+                } else {
+                    locationVC.email = self.email
+                    locationVC.password = self.password
+                }
             }
         }
     }
