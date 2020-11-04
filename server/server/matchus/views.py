@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
+from django.db.models import Q
 from rest_framework import authentication, parsers, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from .models import media_dir, Photo, User
+from .models import media_dir, Chat, Photo, User
 from .serializers import UserSerializer, PhotoSerializer
 from .forms import LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
 from notebook.matchus import similarity_matrix
@@ -101,6 +102,34 @@ class ProfileView(APIView):
 
             # delete the photo
             photo.delete()
+            return Response()
+
+class ChatView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        chat_filter = (Q(from_user=request.user) | Q(to_user=request.user)) & Q(most_recent=True)
+        chats = Chat.objects.filter(chat_filter)
+
+        messages = []
+        for chat in chats:
+            # append the most recent message between the this user and the other user
+            to_user = UserSerializer.ChatSerializer(chat.to_user)
+            message = { **to_user.data, "message": chat.message }
+            messages.append(message)
+        
+        return Response(messages)
+
+    class ChatProfileView(APIView):
+        permission_classes = [permissions.IsAuthenticated]
+
+        def get(self, request, *args, **kwargs):
+            # receive the user of the profile id provided in the URL
+            user_id = int(kwargs.get('id', 0))
+            user = User.objects.filter(id=user_id).first()
+
+            chats = Chat.objects.filter(from_user=request.user, to_user=user)
+
             return Response()
 
 class LogoutView(APIView):

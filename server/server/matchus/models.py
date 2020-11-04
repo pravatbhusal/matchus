@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
+from django.utils.timezone import now
 from django.db import models
 from .managers import UserManager
 
@@ -27,3 +28,11 @@ class User(AbstractUser):
 class Photo(models.Model):
     photo = models.ImageField(upload_to=media_dir)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Chat(models.Model):
+    message = models.TextField()
+    most_recent = models.BooleanField(default=True)
+    date = models.DateTimeField(default=now)
+    anonymous = models.BooleanField(default=True)
+    from_user = models.ForeignKey(User, related_name='from_user', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, related_name='to_user', on_delete=models.CASCADE)
