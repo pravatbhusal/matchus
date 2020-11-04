@@ -1,7 +1,13 @@
 # Django Server
-This is the server (API) for the app. You must have ```djangorestframework``` installed in your pip environment using Django version 3.x.x.
+This is the server (API) for the app. This app uses Django 3.1.2.
 
-To run the server, cd into the server folder and execute ```python3 manage.py runserver```.
+First, install the dependencies in the requirements.txt file.
+
+Second, run the migrations using ```python3 manage.py makemigrations```.
+
+Third, migrate the database using ```python3 manage.py migrate```.
+
+Lastly, to run the server, cd into the server folder and execute ```python3 manage.py runserver```.
 
 You can follow this tutorial https://www.youtube.com/watch?v=263xt_4mBNc to better understand how Django works.
 
