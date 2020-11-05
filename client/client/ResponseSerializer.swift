@@ -32,7 +32,7 @@ class ResponseSerializer {
     
     static func getProfilePicture(json: Any?) -> String? {
         let photo = json as! [String: AnyObject]
-        let profilePhotoURL: String? = photo["profilePhoto"] as? String
+        let profilePhotoURL: String? = "\(APIs.serverURI)\(photo["profilePhoto"] as? String ?? "")"
         
         return profilePhotoURL
     }
@@ -46,9 +46,10 @@ class ResponseSerializer {
     
     static func getMatchRate(json: Any?) -> String? {
         let match = json as! [String: AnyObject]
-        let matchRate: Int? = match["match"] as? Int
+        let matchRate: Float? = match["match"] as? Float
+        let percent: Int = Int(matchRate! * 100)
         
-        return String(matchRate!)
+        return String(percent)
     }
     
     static func getFeaturedPhotoURLs(json: Any?) -> [String]? {

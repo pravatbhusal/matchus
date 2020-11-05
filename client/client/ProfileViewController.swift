@@ -14,6 +14,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var profileName: UILabel!
+    @IBOutlet weak var loading: UIActivityIndicatorView!
     @IBOutlet weak var plusButton: UIButton!
     
     @IBOutlet weak var matchLabel: UILabel!
@@ -24,8 +25,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var interestsTableView: UITableView!
     
     var tag: String!
+    var id: Int!
     var delegate: UIViewController!
-    var interests: [String]!
+    var interests: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,14 +36,29 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         plusButton.layer.cornerRadius = 18
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
-        
+        toggleVisible(visible: false)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         getProfile()
     }
     
-    func getProfile() {
-        let url = URL.init(string: APIs.profile + tag)!
+    func toggleVisible(visible: Bool) {
+        loading.isHidden = visible
+        profilePhoto.isHidden = !visible
+        profileName.isHidden = !visible
+        interestsTableView.isHidden = !visible
+        matchLabel.isHidden = !visible
+        scrollView.isHidden = !visible
+        stackView.isHidden = !visible
+    }
     
-        AF.request(url, method: .get, parameters: nil).responseJSON { [self]
+    func getProfile() {
+        let headers: HTTPHeaders = ["Authorization": "Token \(UserDefaults.standard.string(forKey: User.token) ?? "")"]
+
+        let url = URL.init(string: "\(APIs.profile)/\(String(id))")!
+    
+        AF.request(url, method: .get, parameters: nil, headers: headers).responseJSON { [self]
             response in
                    switch response.result {
                        case .success:
@@ -65,7 +82,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             let interestsData: [String] = ResponseSerializer.getInterestsList(json: json)!
                             self.interests = interestsData
                             self.interestsTableView.reloadData()
-                            
+                            self.toggleVisible(visible: true)
                         }
 
                            
