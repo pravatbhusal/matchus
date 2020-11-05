@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Photo, User
+from .models import default_photo, Photo, User
 from notebook.matchus import similarity
 
 class UserSerializer(serializers.ModelSerializer):
@@ -46,7 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
             # serialize this photo
             photo_serializer = PhotoSerializer(photo)
 
-            return photo_serializer.data["photo"] if photo else ""
+            return photo_serializer.data["photo"] if photo else "/" + default_photo
 
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:

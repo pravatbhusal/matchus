@@ -5,6 +5,7 @@ from django.db import models
 from .managers import UserManager
 
 media_dir = 'media/'
+default_photo = "assets/default.png"
 default_profile_photo = "assets/profile-default.png"
 
 class User(AbstractUser):

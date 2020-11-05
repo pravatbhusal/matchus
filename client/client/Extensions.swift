@@ -32,3 +32,11 @@ extension UITextView {
         self.isScrollEnabled = false
     }
 }
+
+extension UITableView {
+    func scrollToBottom(animated: Bool) {
+        let y = contentSize.height - frame.size.height
+        if y < 0 { return }
+        setContentOffset(CGPoint(x: 0, y: y), animated: animated)
+    }
+}
