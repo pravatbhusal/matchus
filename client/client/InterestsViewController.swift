@@ -19,6 +19,10 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var password: String = ""
     
+    var name: String = ""
+    
+    var profilePhoto: UIImage!
+    
     var location: String = ""
     
     var longitude: Double = 0
@@ -118,9 +122,9 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func registerUser(email: String, password: String, location: String, interests: [String]) {
-        let parameters = ["email": email, "password": password, "location": location, "longitude": longitude, "latitude": latitude, "interests": interests] as [String : Any]
+        let parameters = ["email": email, "password": password, "name": name, "location": location, "longitude": longitude, "latitude": latitude, "interests": interests] as [String : Any]
         
-        AF.request(URL.init(string: APIs.signup)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        AF.request(URL.init(string: APIs.signup)!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 201?:
                         if let json = response.value {
@@ -128,7 +132,8 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
                             let token: String? = ResponseSerializer.getToken(json: json)
                             UserDefaults.standard.set(token, forKey: User.token)
                             
-                            self.performSegue(withIdentifier: self.dashboardSegueIdentifier, sender: nil)
+                            // call a separate request to store the profile image
+                            self.uploadProfilePhoto(photo: self.profilePhoto)
                         }
                         break
                     default:
@@ -147,6 +152,26 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
                         break
                 }
         }
+    }
+    
+    func uploadProfilePhoto(photo: UIImage) {
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
+        
+        // format the image into an acceptable form data for the server
+        let photoData = photo.jpegData(compressionQuality: 0.5)!
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(photoData, withName: "photo", fileName: "\(self.name).jpeg", mimeType: "image/jpeg")
+        }, to: APIs.profilePhoto, method: .post, headers: headers).response { response in
+            switch response.result {
+                case .success(_ ):
+                    self.performSegue(withIdentifier: self.dashboardSegueIdentifier, sender: nil)
+                    break
+                default:
+                    break
+            }
+        };
     }
     
     @IBAction func nextPressed(_ sender: Any) {

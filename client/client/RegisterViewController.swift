@@ -13,7 +13,7 @@ import GoogleSignIn
 
 class RegisterViewController: UIViewController {
     
-    let locationSegueIdentifier: String = "LocationSegue"
+    let identitySegueIdentifier: String = "IdentitySegue"
 
     @IBOutlet weak var emailText: UITextField!
     
@@ -47,11 +47,11 @@ class RegisterViewController: UIViewController {
     func verifyCredentials(email: String, password: String) {
         let parameters = ["email": email, "password": password]
         
-        AF.request(URL.init(string: APIs.verifyCredentials)!, method: .post, parameters: parameters as Parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        AF.request(URL.init(string: APIs.verifyCredentials)!, method: .post, parameters: parameters as Parameters, encoding: JSONEncoding.default).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
                         // the credentials were fine, so allow the user to begin the onboarding
-                        self.performSegue(withIdentifier: self.locationSegueIdentifier, sender: self)
+                        self.performSegue(withIdentifier: self.identitySegueIdentifier, sender: self)
                         break
                     default:
                         if let json = response.value {
@@ -91,15 +91,15 @@ class RegisterViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == locationSegueIdentifier {
-            if let locationVC = segue.destination as? LocationViewController {
+        if segue.identifier == identitySegueIdentifier {
+            if let identityVC = segue.destination as? IdentityViewController {
                 // pass over the register view controller's variables
                 if (self.email == "" || self.password == "") {
-                    locationVC.email = emailText.text!
-                    locationVC.password = passwordText.text!
+                    identityVC.email = emailText.text!
+                    identityVC.password = passwordText.text!
                 } else {
-                    locationVC.email = self.email
-                    locationVC.password = self.password
+                    identityVC.email = self.email
+                    identityVC.password = self.password
                 }
             }
         }

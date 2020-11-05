@@ -17,12 +17,12 @@ class Chat {
 
 class MeChatCell: UITableViewCell {
     @IBOutlet weak var profilePhoto: UIImageView!
-    @IBOutlet weak var message: UITextView!
+    @IBOutlet weak var message: UILabel!
 }
 
 class OtherChatCell: UITableViewCell {
     @IBOutlet weak var profilePhoto: UIImageView!
-    @IBOutlet weak var message: UITextView!
+    @IBOutlet weak var message: UILabel!
 }
 
 class ChatProfile {
@@ -31,11 +31,13 @@ class ChatProfile {
     var name: String = ""
 }
 
-class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WebSocketDelegate {
     
     var roomId: Int = 0
     
     var name: String = ""
+    
+    var loading: Bool = true
     
     var totalsChats: Int = 0
     
@@ -48,6 +50,10 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     var meProfile: ChatProfile = ChatProfile()
     
     var otherProfile: ChatProfile = ChatProfile()
+    
+    var socket: WebSocket!
+    
+    var isConnected: Bool = false
     
     @IBOutlet weak var profileButton: UIBarButtonItem!
     
@@ -65,18 +71,32 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         plusButton.layer.cornerRadius = 18
         
         // reset this view whenever loading it again
+        self.loading = true
         self.page = 1
         self.meProfile = ChatProfile()
         self.otherProfile = ChatProfile()
         self.chats = []
+        self.isConnected = false
+        
+        // initiate the web socket connection for this chat room
+        let url = URL(string: "\(APIs.chatRoom)/\(roomId)")!
+        let request = URLRequest(url: url)
+        self.socket = WebSocket(request: request)
+        self.socket.delegate = self
+        self.socket.connect()
 
         loadChatHistory(page: page)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.socket.disconnect()
     }
     
     func loadChatHistory(page: Int) {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
         let chatAPIURL = "\(APIs.chats)/\(roomId)/\(page)"
+        self.loading = true
         
         AF.request(URL.init(string: chatAPIURL)!, method: .get, headers: headers).responseJSON { (response) in
                 switch response.response?.statusCode {
@@ -108,13 +128,17 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                             
                             // store the chats between the users
                             let chats = ResponseSerializer.getChatHistory(json: json["chats"])!
-                            self.chats += chats
+                            self.chats = chats + self.chats
                             self.tableView.reloadData()
                             
-                            // scroll to the bottom of the table view on the initial load
+                            // scroll to the a view of the table before continuing to load any other pages
                             if initialLoad {
-                                self.tableView.scrollToBottom(animated: false)
+                                self.scrollToBottom(animated: false)
+                            } else {
+                                let indexPath = IndexPath(row: chats.count - 1, section: 0)
+                                self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
                             }
+                            self.loading = false
                         }
                         break
                     default:
@@ -126,9 +150,50 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                         
                         // present the alert
                         self.present(alert, animated: true, completion: nil)
+                        self.loading = false
                         break
                 }
         }
+    }
+    
+    func didReceive(event: WebSocketEvent, client: WebSocket) {
+        switch event {
+            case .connected(_ ):
+                self.isConnected = true
+            case .disconnected(_ ):
+                self.isConnected = false
+                break
+            case .text(let string):
+                let chat = string.toJSON() as? [String: AnyObject]
+                let id: Int = chat?["id"] as! Int
+                let message: String = chat?["message"] as! String
+                
+                // add this message into the list of chats
+                let newChat = Chat()
+                newChat.id = id
+                newChat.message = message
+                chats.append(newChat)
+                self.tableView.reloadData()
+                
+                // scroll to the bottom if this user sent the message
+                if id == meProfile.id {
+                    scrollToBottom(animated: true)
+                }
+                break
+            case .cancelled:
+                self.isConnected = false
+                break
+            case .error(_ ):
+                self.isConnected = false
+                break
+            default:
+                break
+        }
+    }
+    
+    func scrollToBottom(animated: Bool) {
+        let indexPath = IndexPath(row: self.chats.count - 1, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -151,7 +216,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
             
             cell.profilePhoto.image = meProfile.profilePhoto
             cell.message.text = chat.message
-            cell.message.adjustUITextViewHeight()
+            cell.message.adjustUILabelHeight()
             
             return cell
         }
@@ -161,29 +226,33 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.profilePhoto.image = otherProfile.profilePhoto
         cell.message.text = chat.message
-        cell.message.adjustUITextViewHeight()
+        cell.message.adjustUILabelHeight()
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let firstVisibleIndexPath = self.tableView.indexPathsForVisibleRows?[0]
         let lastPage: Float = Float(totalsChats) / Float(chatsPerPage)
         
-        if firstVisibleIndexPath!.row == 0 && Float(page) < lastPage {
+        if firstVisibleIndexPath!.row == 0 && Float(page) < lastPage && !self.loading {
             // reached the top of the table view and there exists more chat history, so load the next page
-            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
             page += 1
             loadChatHistory(page: page)
         }
     }
     
     @IBAction func sendPressed(_ sender: Any) {
-        if chattingText.text == nil || chattingText.text == "" {
+        if chattingText.text == nil || chattingText.text == "" || !self.isConnected {
             return
         }
         
+        // send a message to the socket connection
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let message = "{ \"token\": \"\(token)\", \"message\": \"\(chattingText.text!)\" }"
+        socket?.write(string: message)
         
+        chattingText.text = ""
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {

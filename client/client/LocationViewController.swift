@@ -16,6 +16,10 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
     
     var password: String = ""
     
+    var name: String = ""
+    
+    var profilePhoto: UIImage!
+    
     let interestsSegueIdentifier: String = "InterestsSegue"
     
     @IBOutlet weak var locationText: UITextField!
@@ -110,6 +114,8 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
                 // pass over the location view controller's variables
                 interestsVC.email = email
                 interestsVC.password = password
+                interestsVC.name = name
+                interestsVC.profilePhoto = profilePhoto
                 interestsVC.location = locationText.text!
                 interestsVC.longitude = longitude
                 interestsVC.latitude = latitude

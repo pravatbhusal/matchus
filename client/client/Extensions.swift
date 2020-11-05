@@ -25,18 +25,24 @@ extension UIImage {
     }
 }
 
-extension UITextView {
-    func adjustUITextViewHeight() {
-        self.translatesAutoresizingMaskIntoConstraints = true
-        self.sizeToFit()
-        self.isScrollEnabled = false
+extension UILabel {
+    func adjustUILabelHeight() {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
+        label.font = self.font
+        label.text = self.text
+        label.sizeToFit()
+        
+        // set this label's frame to its optimal height
+        let optimalHeight = label.frame.height + 20
+        self.frame = CGRect(x: self.frame.origin.x, y: self.frame.origin.y, width: self.frame.width, height: optimalHeight)
     }
 }
 
-extension UITableView {
-    func scrollToBottom(animated: Bool) {
-        let y = contentSize.height - frame.size.height
-        if y < 0 { return }
-        setContentOffset(CGPoint(x: 0, y: y), animated: animated)
+extension String {
+    func toJSON() -> Any? {
+        guard let data = self.data(using: .utf8, allowLossyConversion: false) else { return nil }
+        return try? JSONSerialization.jsonObject(with: data, options: .mutableContainers)
     }
 }
