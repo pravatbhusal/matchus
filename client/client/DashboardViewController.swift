@@ -14,13 +14,14 @@ class DashboardProfile {
     var name: String!
     var profilePhoto: String!
     var photo: String!
+    var profileTag: String!
 }
 
 class DashboardCell: UITableViewCell {
     @IBOutlet weak var photo: UIImageView!
+    @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileTag: UILabel!
-    @IBOutlet weak var profilePhoto: UIImageView!
 }
 
 class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -28,14 +29,13 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var plusButton: UIButton!
     
-    var profiles:[DashboardProfile] = []
-    var pageNum:Int = 1
+    var profiles:[DashboardProfile]!
+    var pageNum:Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
         plusButton.layer.cornerRadius = 18
+        pageNum = 1
         loadProfiles()
     }
     
@@ -49,6 +49,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             switch response.response?.statusCode {
                     case 200?:
                      if let json = response.value {
+                        // populate dashboard array here
                         let dashboardProfiles: [DashboardProfile] = ResponseSerializer.getDashboardList(json: json)!
                         self.profiles = dashboardProfiles
                         self.tableView.reloadData()
@@ -65,31 +66,13 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.profiles.count
+        return profiles.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "DashboardCell", for: indexPath as IndexPath) as! DashboardCell
         let row = indexPath.row
-        downloadImage(from: URL(string: self.profiles[row].profilePhoto)!, to: cell.profilePhoto)
-        downloadImage(from: URL(string: self.profiles[row].photo)!, to: cell.photo)
-        cell.profileName.text = profiles[row].name
-        cell.profileTag.text = "@\(profiles[row].name.lowercased())"
+        
         return cell
-    }
-    
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-    
-    func downloadImage(from url: URL, to imageView: UIImageView) {
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() {
-                imageView.image = UIImage(data: data)
-                imageView.image?.resizeImage(targetSize: CGSize(width: 75, height: 75))
-                self.tableView.reloadData()
-            }
-        }
     }
 }
