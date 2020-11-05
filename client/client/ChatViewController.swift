@@ -18,7 +18,7 @@ class RecentChat {
 
 class ChatCell: UITableViewCell {
     @IBOutlet weak var profilePhoto: UIImageView!
-    @IBOutlet weak var recentMessage: UITextView!
+    @IBOutlet weak var recentMessage: UILabel!
     @IBOutlet weak var name: UILabel!
 }
 

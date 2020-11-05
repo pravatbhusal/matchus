@@ -661,20 +661,19 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Recent Message" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="k0i-15-lK0">
-                                                    <rect key="frame" x="103" y="39" width="272" height="44"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Recent Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jiz-ip-6BL">
+                                                    <rect key="frame" x="107" y="44" width="268" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
+                                                    <fontDescription key="fontDescription" name="ArialMT" family="Arial" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="name" destination="mzj-bu-wNt" id="HMf-oH-mJu"/>
                                             <outlet property="profilePhoto" destination="MVy-1h-2m4" id="Dy5-I0-IiN"/>
-                                            <outlet property="recentMessage" destination="k0i-15-lK0" id="ZvZ-U5-adr"/>
+                                            <outlet property="recentMessage" destination="Jiz-ip-6BL" id="KX3-co-3GW"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
