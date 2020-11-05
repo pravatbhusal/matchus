@@ -86,7 +86,7 @@ class InterestForm(forms.Form):
         "required": "Please enter an interest."
     })
     
-class ChatForm(forms.Form):
+class ChatRoomForm(forms.Form):
     profile_id = forms.IntegerField(required=True, error_messages={
         "required": "Please enter a profile id."
     })

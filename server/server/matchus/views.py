@@ -6,8 +6,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .models import media_dir, ChatRoom, Photo, User
-from .serializers import PhotoSerializer, UserSerializer
-from .forms import ChatForm, InterestForm, LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
+from .serializers import ChatRoomSerializer, PhotoSerializer, UserSerializer
+from .forms import ChatRoomForm, InterestForm, LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
 from .queries import get_users_nearby
 
 class VerifyCredentialsView(APIView):
@@ -186,13 +186,13 @@ class ChatView(APIView):
         return Response(messages)
 
     def post(self, request):
-        chat_form = ChatForm(request.data)
+        chat_room_form = ChatRoomForm(request.data)
         
-        if not chat_form.is_valid():
+        if not chat_room_form.is_valid():
             return Response(status=HTTP_412_PRECONDITION_FAILED)
         
         # receive the user of the user that this user wants to chat with
-        user_id = chat_form.cleaned_data["profile_id"]
+        user_id = chat_room_form.cleaned_data["profile_id"]
         user = User.objects.filter(id=user_id).first()
 
         if not user:
@@ -204,9 +204,12 @@ class ChatView(APIView):
 
         if not room:
             # create a new chat room between the other user and this user
-            ChatRoom.objects.create(user_A=request.user, user_B=user)
+            room = ChatRoom.objects.create(user_A=request.user, user_B=user)
+            serializer = ChatRoomSerializer(room)
+            return JsonResponse(serializer.data, status=HTTP_201_CREATED)
 
-        return Response()
+        serializer = ChatRoomSerializer(room)
+        return JsonResponse(serializer.data)
 
     class ChatRoomView(APIView):
         permission_classes = [permissions.IsAuthenticated]

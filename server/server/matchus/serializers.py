@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import default_photo, Photo, User
+from .models import default_photo, ChatRoom, Photo, User
 from notebook.matchus import similarity
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,7 +35,6 @@ class UserSerializer(serializers.ModelSerializer):
             user = self.context.get("user")
 
             # receive the similarity between this user and the other user
-            print(obj.interests, user.interests)
             match = similarity(obj.interests, user.interests)
 
             return match
@@ -53,3 +52,8 @@ class PhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Photo
         fields = ['photo']
+
+class ChatRoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatRoom
+        fields = ['id']

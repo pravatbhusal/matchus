@@ -94,7 +94,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     func loadChatHistory(page: Int) {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
-        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
         let chatAPIURL = "\(APIs.chats)/\(roomId)/\(page)"
         self.loading = true
         
@@ -192,8 +192,11 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func scrollToBottom(animated: Bool) {
-        let indexPath = IndexPath(row: self.chats.count - 1, section: 0)
-        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+        let row = self.chats.count - 1
+        if row > 0 {
+            let indexPath = IndexPath(row: row, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
