@@ -10,7 +10,7 @@ import UIKit
 
 class ChatRoomViewController: UIViewController {
     
-    var id: Int = 0
+    var roomId: Int = 0
     
     var page: Int = 1
 

@@ -91,8 +91,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == chatRoomSegueIdentifier {
             if let chatRoomVC = segue.destination as? ChatRoomViewController {
-                // pass over the profile id of user that this user chatted with
-                chatRoomVC.id = (sender as! ChatProfile).id
+                // pass over the room id of this chat room
+                chatRoomVC.roomId = (sender as! ChatProfile).id
             }
         }
     }
