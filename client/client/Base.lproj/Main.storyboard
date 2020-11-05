@@ -603,15 +603,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="383" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Recent Message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kfK-gt-TMG">
-                                                    <rect key="frame" x="103" y="35" width="272" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzj-bu-wNt">
-                                                    <rect key="frame" x="103" y="10" width="272" height="21"/>
+                                                    <rect key="frame" x="107" y="10" width="268" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -622,13 +615,20 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                                 </imageView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Recent Message" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0i-15-lK0">
+                                                    <rect key="frame" x="103" y="39" width="272" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="name" destination="mzj-bu-wNt" id="HMf-oH-mJu"/>
                                             <outlet property="profilePhoto" destination="MVy-1h-2m4" id="Dy5-I0-IiN"/>
-                                            <outlet property="recentMessage" destination="kfK-gt-TMG" id="Ys6-9k-GEH"/>
-                                            <segue destination="F0c-Vi-3r4" kind="push" id="5ED-fg-atE"/>
+                                            <outlet property="recentMessage" destination="k0i-15-lK0" id="ZvZ-U5-adr"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -641,6 +641,7 @@
                     <connections>
                         <outlet property="plusButton" destination="fVA-n7-sKK" id="kGu-wF-F1S"/>
                         <outlet property="tableView" destination="BQb-PH-zpM" id="e8W-yg-9aj"/>
+                        <segue destination="F0c-Vi-3r4" kind="show" identifier="ChatRoomSegueIdentifier" id="BuF-bP-5U4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Eq-50-WSY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -650,7 +651,7 @@
         <!--Name-->
         <scene sceneID="edz-uf-1rU">
             <objects>
-                <viewController id="F0c-Vi-3r4" customClass="IndividualChatViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="F0c-Vi-3r4" customClass="ChatRoomViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="k8f-gQ-bJ0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

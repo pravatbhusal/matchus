@@ -9,38 +9,6 @@
 import UIKit
 import Alamofire
 
-//class Chat {
-//
-//    var id: Int!
-//    var imageURL: String!
-//    var messages: [Message]
-//    var name: String!
-//
-//    init(id: Int, imageURL: String, name: String) {
-//        self.id = id
-//        self.imageURL = imageURL
-//        self.messages = []
-//        self.name = name
-//    }
-//
-//    func addMessage(msg: Message) {
-//        self.messages.append(msg)
-//    }
-//
-//}
-//
-//class Message {
-//
-//    var id: Int
-//    var message: String
-//
-//    init(id: Int, msg: String) {
-//        self.id = id
-//        self.message = msg
-//    }
-//
-//}
-
 class ChatProfile {
     var id: Int = 0
     var name: String = ""
@@ -50,17 +18,19 @@ class ChatProfile {
 
 class ChatCell: UITableViewCell {
     @IBOutlet weak var profilePhoto: UIImageView!
-    @IBOutlet weak var recentMessage: UILabel!
+    @IBOutlet weak var recentMessage: UITextView!
     @IBOutlet weak var name: UILabel!
 }
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    let chatRoomSegueIdentifier: String = "ChatRoomSegueIdentifier"
 
     @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var plusButton: UIButton!
     
     var chats: [ChatProfile] = []
-    var tag: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,6 +82,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chat: ChatProfile = chats[indexPath.row]
+        
+        performSegue(withIdentifier: chatRoomSegueIdentifier, sender: chat)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == chatRoomSegueIdentifier {
+            if let chatRoomVC = segue.destination as? ChatRoomViewController {
+                // pass over the room id of this chat room
+                chatRoomVC.roomId = (sender as! ChatProfile).id
+            }
+        }
+    }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
@@ -121,8 +105,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                imageView.image = UIImage(data: data)
-                imageView.image?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                imageView.image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
                 self.tableView.reloadData()
             }
         }
