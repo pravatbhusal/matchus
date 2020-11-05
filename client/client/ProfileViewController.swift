@@ -104,6 +104,66 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
+    // right swipe
+    func tableView(_ tableView: UITableView,
+                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let like = UIContextualAction(style: .normal, title:  "👍🏼", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
+            print("Liked interest")
+            self.likeInterest(interest: self.interests[indexPath.row])
+            success(true)
+        })
+//        like.image = #imageLiteral(resourceName: "like")
+//        like.image?.withTintColor(.white)
+        
+        like.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+     
+        return UISwipeActionsConfiguration(actions: [like])
+     
+     }
+     
+    // left swipe
+     func tableView(_ tableView: UITableView,
+                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+     {
+         let dislike = UIContextualAction(style: .destructive, title:  "👎🏼", handler: { (ac:UIContextualAction, view:UIView, nil) in
+             print("Disliked interest")
+            self.interests.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.reloadData()
+         })
+//         dislike.image = #imageLiteral(resourceName: "dislike")
+//         dislike.backgroundColor = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)
+     
+         return UISwipeActionsConfiguration(actions: [dislike])
+     }
+    
+    func likeInterest(interest: String) {
+        print(interest)
+        let parameters: [String: Any] = ["interest" : interest]
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
+        
+        AF.request(URL.init(string: APIs.interests)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+            print(response.response?.statusCode)
+                switch response.response?.statusCode {
+                    case 200?:
+                        if let json = response.value {
+                            print(json)
+
+                        }
+                        break
+                    default:
+                        if let json = response.value {
+                            print(json)
+
+                        }
+                        break
+                }
+        }
+        
+    }
+    
+    
     // logic taken from below
     // https://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
     // always download images asynchronously...?

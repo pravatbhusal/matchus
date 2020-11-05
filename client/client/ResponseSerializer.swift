@@ -32,7 +32,7 @@ class ResponseSerializer {
     
     static func getProfilePicture(json: Any?) -> String? {
         let photo = json as! [String: AnyObject]
-        let profilePhotoURL: String? = "\(APIs.serverURI)\(photo["profilePhoto"] as? String ?? "")"
+        let profilePhotoURL: String? = "\(APIs.serverURI)\(photo["profile_photo"] as? String ?? "")"
         
         return profilePhotoURL
     }
