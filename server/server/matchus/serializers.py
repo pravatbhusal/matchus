@@ -35,6 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
             user = self.context.get("user")
 
             # receive the similarity between this user and the other user
+            print(obj.interests, user.interests)
             match = similarity(obj.interests, user.interests)
 
             return match

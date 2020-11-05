@@ -70,6 +70,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             let profileName: String = ResponseSerializer.getProfileName(json: json)!
                             self.profileName.text = profileName
                             
+                            print(json)
                             let matchRate: String = ResponseSerializer.getMatchRate(json: json)!
                             self.matchLabel.text = "Match Rate: \(matchRate)%"
                             // get all photo urls, then download them and add to the scrollview
