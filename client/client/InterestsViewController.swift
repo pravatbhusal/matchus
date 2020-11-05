@@ -13,6 +13,8 @@ public var interests: [String] = []
 
 class InterestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    let dashboardSegueIdentifier: String = "DashboardSegueIdentifier"
+    
     var email: String = ""
     
     var password: String = ""
@@ -122,8 +124,11 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
                 switch response.response?.statusCode {
                     case 201?:
                         if let json = response.value {
+                            // store the user's token in the device's memory
                             let token: String? = ResponseSerializer.getToken(json: json)
                             UserDefaults.standard.set(token, forKey: User.token)
+                            
+                            self.performSegue(withIdentifier: self.dashboardSegueIdentifier, sender: nil)
                         }
                         break
                     default:

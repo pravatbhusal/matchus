@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.db.models import Q
@@ -73,7 +72,7 @@ class ProfileView(APIView):
     def get(self, request, *args, **kwargs):
         # receive the user of the profile id provided in the URL
         user_id = int(kwargs.get('id', 0))
-        user = User.objects.filter(id=user_id).first()
+        user = User.objects.get(id=user_id)
         photos = Photo.objects.filter(user=user)
 
         if not user:
@@ -186,17 +185,17 @@ class ChatView(APIView):
         
         return Response(messages)
 
-    class ChatProfileView(APIView):
+    class ChatRoomView(APIView):
         permission_classes = [permissions.IsAuthenticated]
 
         def get(self, request, *args, **kwargs):
             # receive the user of the profile id provided in the URL
             user_id = int(kwargs.get('id', 0))
-            user = User.objects.filter(id=user_id).first()
+            user = User.objects.get(id=user_id)
 
             # receive the chat room between the two users
             chat_filter = (Q(user_A=user) & Q(user_B=request.user)) | (Q(user_A=request.user) & Q(user_B=user))
-            room = ChatRoom.objects.filter(chat_filter).first()
+            room = ChatRoom.objects.get(chat_filter)
 
             # make these users anonymous if the chat room is still anonymous
             my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": room.anonymous })
