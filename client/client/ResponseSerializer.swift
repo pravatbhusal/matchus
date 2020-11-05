@@ -67,7 +67,16 @@ class ResponseSerializer {
     
     static func getChatsList(json: Any?) -> [ChatProfile]? {
         let chats = json as! [NSDictionary]
-        let chatsArray: [ChatProfile] = []
+        var chatsArray: [ChatProfile] = []
+        
+        for chat in chats {
+            let chatProfile: ChatProfile = ChatProfile()
+            chatProfile.id = chat["id"] as! Int
+            chatProfile.name = chat["name"] as! String
+            chatProfile.message = chat["message"] as! String
+            chatProfile.profilePhoto = "\(APIs.serverURI)\(chat["profile_photo"] as! String)"
+            chatsArray.append(chatProfile)
+        }
 
         return chatsArray
     }

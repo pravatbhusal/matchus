@@ -16,6 +16,7 @@
 		913FC53C254E2AF2008881C6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC53B254E2AF2008881C6 /* ChatViewController.swift */; };
 		913FC540254E2C87008881C6 /* IndividualChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC53F254E2C87008881C6 /* IndividualChatViewController.swift */; };
 		DA16E23A2542712900F179F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16E2392542712900F179F0 /* Constants.swift */; };
+		DA3C88972553A20A003A3714 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3C88962553A20A003A3714 /* Extensions.swift */; };
 		DA6537DA254F628C0085ED03 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */; };
 		DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1595252BAB9D00083305 /* AppDelegate.swift */; };
 		DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA1597252BAB9D00083305 /* SceneDelegate.swift */; };
@@ -40,6 +41,7 @@
 		913FC53B254E2AF2008881C6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		913FC53F254E2C87008881C6 /* IndividualChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndividualChatViewController.swift; sourceTree = "<group>"; };
 		DA16E2392542712900F179F0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA3C88962553A20A003A3714 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializer.swift; sourceTree = "<group>"; };
 		DABA1592252BAB9D00083305 /* Matchus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Matchus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DABA1595252BAB9D00083305 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				DA16E2392542712900F179F0 /* Constants.swift */,
 				DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */,
 				DABA1595252BAB9D00083305 /* AppDelegate.swift */,
+				DA3C88962553A20A003A3714 /* Extensions.swift */,
 				DABA1597252BAB9D00083305 /* SceneDelegate.swift */,
 				DABA1599252BAB9D00083305 /* ViewController.swift */,
 				03FE665F2536C38700A4C1C2 /* LoginViewController.swift */,
@@ -251,6 +254,7 @@
 				DABA1598252BAB9D00083305 /* SceneDelegate.swift in Sources */,
 				913FC53C254E2AF2008881C6 /* ChatViewController.swift in Sources */,
 				DA16E23A2542712900F179F0 /* Constants.swift in Sources */,
+				DA3C88972553A20A003A3714 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
