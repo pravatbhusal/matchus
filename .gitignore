@@ -94,3 +94,6 @@ media/
 
 # OS
 .DS_Store
+
+# Django
+db.sqlite3
