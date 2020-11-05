@@ -84,8 +84,6 @@ class RegisterViewController: UIViewController {
             let password: String = user.userID
             self.email = email
             self.password = password
-//            print("Email: ", email)
-//            print("Password: ", password)
             verifyCredentials(email: email, password: password)
         }
     }

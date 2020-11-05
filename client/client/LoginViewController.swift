@@ -51,7 +51,6 @@ class LoginViewController: UIViewController {
                             // store the user's token in the device's memory
                             let token: String? = ResponseSerializer.getToken(json: json)
                             UserDefaults.standard.set(token, forKey: User.token)
-                            print(token)
                             self.performSegue(withIdentifier: self.dashboardSegueIdentifier, sender: nil)
                         }
                         break
@@ -77,8 +76,6 @@ class LoginViewController: UIViewController {
         loginUser(email: emailText.text ?? "", password: passwordText.text ?? "")
     }
     
-    // https://developers.google.com/identity/sign-in/ios/start-integrating
-    
     @IBAction func googleSignIn(_ sender: Any) {
         if (GIDSignIn.sharedInstance()?.currentUser == nil) {
             GIDSignIn.sharedInstance()?.signIn()
@@ -86,8 +83,6 @@ class LoginViewController: UIViewController {
         if let user = GIDSignIn.sharedInstance()?.currentUser {
             let email: String = user.profile.email
             let password: String = user.userID
-//            print("Email: ", email)
-//            print("Password: ", password)
             loginUser(email: email, password: password)
         }
     }

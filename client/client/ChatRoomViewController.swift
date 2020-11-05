@@ -29,6 +29,7 @@ class ChatProfile {
     var id: Int = 0
     var profilePhoto: UIImage!
     var name: String = ""
+    var anonymous: Bool = false
 }
 
 class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WebSocketDelegate {
@@ -109,6 +110,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                                 let me = json["me"] as! NSDictionary
                                 self.meProfile.id = me["id"] as! Int
                                 self.meProfile.name = me["name"] as! String
+                                self.meProfile.anonymous = me["anonymous"] as! Bool
                                 let mePhotoURL: String = "\(APIs.serverURI)\(me["profile_photo"] as! String)"
                                 self.downloadImage(from: URL(string: mePhotoURL)!, to: self.meProfile)
                             }
@@ -118,6 +120,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                                 let other = json["other"] as! NSDictionary
                                 self.otherProfile.id = other["id"] as! Int
                                 self.otherProfile.name = other["name"] as! String
+                                self.otherProfile.anonymous = other["anonymous"] as! Bool
                                 let otherPhotoURL = "\(APIs.serverURI)\(other["profile_photo"] as! String)"
                                 self.downloadImage(from: URL(string: otherPhotoURL)!, to: self.otherProfile)
                             }

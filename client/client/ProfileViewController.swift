@@ -14,17 +14,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     let chatRoomSegueIdentifier: String = "ChatRoomSegueIdentifier"
     
     @IBOutlet weak var profilePhoto: UIImageView!
+    
     @IBOutlet weak var profileName: UILabel!
+    
     @IBOutlet weak var loading: UIActivityIndicatorView!
+    
     @IBOutlet weak var plusButton: UIButton!
+    
     @IBOutlet weak var messageButton: UIBarButtonItem!
     
     @IBOutlet weak var matchLabel: UILabel!
     
     @IBOutlet weak var interestsTableView: UITableView!
-    @IBOutlet weak var pageControl: UIPageControl!
     
-    var tag: String = ""
+    @IBOutlet weak var pageControl: UIPageControl!
     
     var id: Int = 0
     
@@ -33,28 +36,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var interests: [String] = []
     
     @IBOutlet weak var imageView1: UIImageView!
-    @IBOutlet weak var imageView2: UIImageView!
-    @IBOutlet weak var imageView3: UIImageView!
     
+    @IBOutlet weak var imageView2: UIImageView!
+    
+    @IBOutlet weak var imageView3: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         plusButton.layer.cornerRadius = 18
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
         
+        loadProfile()
         toggleVisible(visible: false)
     
-        
         // add a click event to the message bar button item
         messageButton.target = self
         messageButton.action = #selector(createChat(sender:))
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        getProfile()
     }
     
     func toggleVisible(visible: Bool) {
@@ -65,7 +63,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         matchLabel.isHidden = !visible
     }
     
-    func getProfile() {
+    func loadProfile() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
         let url = URL.init(string: "\(APIs.profile)/\(String(id))")!
@@ -88,8 +86,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             
                             // get all photo urls, then download them and add to the scrollview
                             let featuredPhotoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
-                            
-                            let imageViewsToLoad : [UIImageView] = [imageView1, imageView2, imageView3]
+                            let imageViewsToLoad : [UIImageView] = [self.imageView1, self.imageView2, self.imageView3]
                             
                             var index = 0
                             var total = 3
@@ -97,12 +94,14 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                                 total = featuredPhotoURLs.count
                             }
                             
+                            // download each image that this user owns
                             while index < total{
                                 if imageViewsToLoad[index].image == nil {
                                     self.downloadImage(from: URL(string: featuredPhotoURLs[index])!, to: imageViewsToLoad[index])
                                 }
                                 index += 1
                             }
+                            
                             // add interests to the array (data source for the table) then reload to reflect changes
                             let interestsData: [String] = ResponseSerializer.getInterestsList(json: json)!
                             self.interests = interestsData
@@ -162,7 +161,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         return cell
     }
     
-    // right swipe
+    // called whenever the user swipes right
     func tableView(_ tableView: UITableView,
                     leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let like = UIContextualAction(style: .normal, title:  "👍🏼", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
@@ -170,8 +169,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.likeInterest(interest: self.interests[indexPath.row])
             success(true)
         })
-//        like.image = #imageLiteral(resourceName: "like")
-//        like.image?.withTintColor(.white)
         
         like.backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
      
@@ -179,7 +176,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
      
      }
      
-    // left swipe
+    // called whenever the user swipes left
      func tableView(_ tableView: UITableView,
                     trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
      {
@@ -189,9 +186,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
          })
-//         dislike.image = #imageLiteral(resourceName: "dislike")
-//         dislike.backgroundColor = #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1)
-     
+        
          return UISwipeActionsConfiguration(actions: [dislike])
      }
     
@@ -202,15 +197,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
         
         AF.request(URL.init(string: APIs.interests)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
-            print(response.response?.statusCode)
         }
-        
     }
-    
-    
-    // logic taken from below
-    // https://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
-    // always download images asynchronously...?
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
@@ -219,10 +207,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func downloadImage(from url: URL, to imageView: UIImageView) {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
-            print("downloaded", url)
-            DispatchQueue.main.async() { [weak self] in
+            DispatchQueue.main.async() {
                 imageView.image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
-                print(imageView.image)
             }
         }
     }
