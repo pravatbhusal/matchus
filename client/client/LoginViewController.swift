@@ -44,7 +44,7 @@ class LoginViewController: UIViewController {
     func loginUser(email: String, password: String) {
         let parameters = ["email": email, "password": password]
         
-        AF.request(URL.init(string: APIs.login)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        AF.request(URL.init(string: APIs.login)!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
                         if let json = response.value {

@@ -47,7 +47,7 @@ class RegisterViewController: UIViewController {
     func verifyCredentials(email: String, password: String) {
         let parameters = ["email": email, "password": password]
         
-        AF.request(URL.init(string: APIs.verifyCredentials)!, method: .post, parameters: parameters as Parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
+        AF.request(URL.init(string: APIs.verifyCredentials)!, method: .post, parameters: parameters as Parameters, encoding: JSONEncoding.default).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
                         // the credentials were fine, so allow the user to begin the onboarding

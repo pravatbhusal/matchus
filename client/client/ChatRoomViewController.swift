@@ -158,9 +158,9 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     func didReceive(event: WebSocketEvent, client: WebSocket) {
         switch event {
-            case .connected( _):
+            case .connected(_ ):
                 self.isConnected = true
-            case .disconnected( _):
+            case .disconnected(_ ):
                 self.isConnected = false
                 break
             case .text(let string):
@@ -183,7 +183,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
             case .cancelled:
                 self.isConnected = false
                 break
-            case .error( _):
+            case .error(_ ):
                 self.isConnected = false
                 break
             default:

@@ -27,6 +27,8 @@ struct APIs {
     
     static let profile: String = "\(serverURI)/profile"
     
+    static let profilePhoto: String = "\(serverURI)/profile/profile-photo"
+    
     static let chats: String = "\(serverURI)/chats"
     
     static let chatRoom: String = "\(socketURI)/ws/chat-room"

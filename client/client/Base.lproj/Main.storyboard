@@ -243,13 +243,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LCd-Hp-nmv">
-                                <rect key="frame" x="14.444064535431608" y="258" width="381.99999999999977" height="53.999999999999886"/>
+                                <rect key="frame" x="20" y="554" width="381.99999999999977" height="53.999999999999886"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="First Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ptO-4X-Vxj">
-                                <rect key="frame" x="14.444064535431608" y="229" width="378" height="21"/>
+                                <rect key="frame" x="20" y="525" width="378" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -267,6 +267,23 @@
                                     <action selector="nextPressed:" destination="F8d-rm-6as" eventType="touchDown" id="3X6-eM-rJa"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Profile Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cNc-Yo-Ncn">
+                                <rect key="frame" x="15.955973903606719" y="241.00000000000023" width="378" height="20.999999999999773"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZKt-tN-wmb">
+                                <rect key="frame" x="100.95597390360626" y="302.00000000000023" width="209.00000000000023" height="188.99999999999972"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" backgroundImage="person.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="profilePhotoPressed:" destination="F8d-rm-6as" eventType="touchDown" id="v7L-w0-Bzh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="zvx-bJ-v0Z"/>
@@ -274,12 +291,13 @@
                     <navigationItem key="navigationItem" id="aYo-BC-kmg"/>
                     <connections>
                         <outlet property="firstNameText" destination="LCd-Hp-nmv" id="ZMY-iq-H2W"/>
+                        <outlet property="profilePhoto" destination="ZKt-tN-wmb" id="8kE-6c-tWJ"/>
                         <segue destination="95q-9c-MaG" kind="show" identifier="LocationSegue" id="e8b-Fc-Vnr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hO2-QU-q7V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2586" y="-757"/>
+            <point key="canvasLocation" x="2585.507246376812" y="-757.36607142857144"/>
         </scene>
         <!--Location View Controller-->
         <scene sceneID="2RV-S2-1Vv">
@@ -909,6 +927,7 @@
         <image name="homeButton" width="512" height="512"/>
         <image name="logo" width="365.33334350585938" height="318"/>
         <image name="person" catalog="system" width="64" height="58"/>
+        <image name="person.fill" catalog="system" width="64" height="60"/>
         <image name="profileButton" width="225" height="225"/>
         <image name="sentButton" width="225" height="225"/>
         <image name="settingButton" width="800" height="800"/>
