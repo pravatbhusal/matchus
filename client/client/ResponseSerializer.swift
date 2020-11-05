@@ -65,17 +65,31 @@ class ResponseSerializer {
         return interestsArray
     }
     
-    static func getChatsList(json: Any?) -> [ChatProfile]? {
+    static func getChatsList(json: Any?) -> [RecentChat]? {
         let chats = json as! [NSDictionary]
-        var chatsArray: [ChatProfile] = []
+        var chatsArray: [RecentChat] = []
         
         for chat in chats {
-            let chatProfile: ChatProfile = ChatProfile()
-            chatProfile.id = chat["id"] as! Int
-            chatProfile.name = chat["name"] as! String
-            chatProfile.message = chat["message"] as! String
-            chatProfile.profilePhoto = "\(APIs.serverURI)\(chat["profile_photo"] as! String)"
-            chatsArray.append(chatProfile)
+            let recentChat: RecentChat = RecentChat()
+            recentChat.id = chat["id"] as! Int
+            recentChat.name = chat["name"] as! String
+            recentChat.message = chat["message"] as! String
+            recentChat.profilePhoto = "\(APIs.serverURI)\(chat["profile_photo"] as! String)"
+            chatsArray.append(recentChat)
+        }
+
+        return chatsArray
+    }
+    
+    static func getChatHistory(json: Any?) -> [Chat]? {
+        let chats = json as! [NSDictionary]
+        var chatsArray: [Chat] = []
+        
+        for chat in chats {
+            let chatHistory: Chat = Chat()
+            chatHistory.id = chat["id"] as! Int
+            chatHistory.message = chat["message"] as! String
+            chatsArray.append(chatHistory)
         }
 
         return chatsArray

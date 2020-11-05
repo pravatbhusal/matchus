@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ChatProfile {
+class RecentChat {
     var id: Int = 0
     var name: String = ""
     var message: String = ""
@@ -30,7 +30,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var plusButton: UIButton!
     
-    var chats: [ChatProfile] = []
+    var chats: [RecentChat] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +53,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                         }
                         break
                     default:
-                        // create a failure to load alert
+                        // create a failure to load chats alert
                         let alert = UIAlertController(title: "Failed to Load Chats", message: "Could not load the chats, is your internet down?", preferredStyle: UIAlertController.Style.alert)
                         
                         // add an OK button to cancel the alert
@@ -83,7 +83,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chat: ChatProfile = chats[indexPath.row]
+        let chat: RecentChat = chats[indexPath.row]
         
         performSegue(withIdentifier: chatRoomSegueIdentifier, sender: chat)
     }
@@ -92,7 +92,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == chatRoomSegueIdentifier {
             if let chatRoomVC = segue.destination as? ChatRoomViewController {
                 // pass over the room id of this chat room
-                let chat: ChatProfile = (sender as! ChatProfile)
+                let chat: RecentChat = (sender as! RecentChat)
                 chatRoomVC.roomId = chat.id
                 chatRoomVC.name = chat.name
             }
