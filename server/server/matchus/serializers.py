@@ -26,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         def get_profile_photo(self, obj):
             anonymous = bool(self.context.get("anonymous"))
-            return "/" + default_profile_photo if anonymous else obj.profile_photo
+            return "/" + default_profile_photo if anonymous else obj.profile_photo.name
 
     class MatchSerializer(serializers.ModelSerializer):
         match = serializers.SerializerMethodField('get_match')
