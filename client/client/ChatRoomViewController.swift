@@ -37,6 +37,8 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     var name: String = ""
     
+    var loading: Bool = true
+    
     var totalsChats: Int = 0
     
     var chatsPerPage: Int = 0
@@ -69,6 +71,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         plusButton.layer.cornerRadius = 18
         
         // reset this view whenever loading it again
+        self.loading = true
         self.page = 1
         self.meProfile = ChatProfile()
         self.otherProfile = ChatProfile()
@@ -93,6 +96,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
         let chatAPIURL = "\(APIs.chats)/\(roomId)/\(page)"
+        self.loading = true
         
         AF.request(URL.init(string: chatAPIURL)!, method: .get, headers: headers).responseJSON { (response) in
                 switch response.response?.statusCode {
@@ -124,13 +128,17 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                             
                             // store the chats between the users
                             let chats = ResponseSerializer.getChatHistory(json: json["chats"])!
-                            self.chats += chats
+                            self.chats = chats + self.chats
                             self.tableView.reloadData()
                             
-                            // scroll to the bottom of the table view on the initial load
+                            // scroll to the a view of the table before continuing to load any other pages
                             if initialLoad {
-                                self.scrollToBottom()
+                                self.scrollToBottom(animated: false)
+                            } else {
+                                let indexPath = IndexPath(row: chats.count - 1, section: 0)
+                                self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
                             }
+                            self.loading = false
                         }
                         break
                     default:
@@ -142,6 +150,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                         
                         // present the alert
                         self.present(alert, animated: true, completion: nil)
+                        self.loading = false
                         break
                 }
         }
@@ -168,7 +177,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 // scroll to the bottom if this user sent the message
                 if id == meProfile.id {
-                    scrollToBottom()
+                    scrollToBottom(animated: true)
                 }
                 break
             case .cancelled:
@@ -182,11 +191,9 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    func scrollToBottom() {
-        DispatchQueue.main.async {
-            let indexPath = IndexPath(row: self.chats.count - 1, section: 0)
-            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-        }
+    func scrollToBottom(animated: Bool) {
+        let indexPath = IndexPath(row: self.chats.count - 1, section: 0)
+        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -224,13 +231,12 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         return cell
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let firstVisibleIndexPath = self.tableView.indexPathsForVisibleRows?[0]
         let lastPage: Float = Float(totalsChats) / Float(chatsPerPage)
         
-        if firstVisibleIndexPath!.row == 0 && Float(page) < lastPage && chats.count != 0 {
+        if firstVisibleIndexPath!.row == 0 && Float(page) < lastPage && !self.loading {
             // reached the top of the table view and there exists more chat history, so load the next page
-            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
             page += 1
             loadChatHistory(page: page)
         }
