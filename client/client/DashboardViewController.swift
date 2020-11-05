@@ -31,8 +31,10 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     let profileSegueIdentifier = "ProfileSegue"
 
-    var profiles:[DashboardProfile] = []
-    var pageNum:Int = 1
+    var profiles: [DashboardProfile] = []
+    var totalProfiles: Int = 0
+    var profilesPerPage: Int = 0
+    var page: Int = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,30 +42,37 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.dataSource = self
         navigationItem.hidesBackButton = true
         plusButton.layer.cornerRadius = 18
-        loadProfiles()
+        loadProfiles(page: page)
     }
     
-    func loadProfiles() {
-        let headers: HTTPHeaders = ["Authorization": "Token \(UserDefaults.standard.string(forKey: User.token) ?? "")"]
-        
-        let url = APIs.serverURI + "/dashboard/" + String(pageNum)
+    func loadProfiles(page: Int) {
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
+        let url = "\(APIs.serverURI)/dashboard/\(String(page))"
         
         AF.request(url, method: .get, parameters: nil, headers: headers).responseJSON { [self]
          response in
             switch response.response?.statusCode {
                     case 200?:
                      if let json = response.value as! NSDictionary? {
+                        self.totalProfiles = json["total_profiles"] as! Int
+                        self.profilesPerPage = json["profiles_per_page"] as! Int
+                        
                         let profiles: [DashboardProfile] = ResponseSerializer.getDashboardList(json: json["profiles"])!
-                        self.profiles = profiles
+                        self.profiles = self.profiles + profiles
                         self.tableView.reloadData()
                      }
-                     break;
+                     break
             default:
-                if let json = response.value {
-                    let errorMessage: String? = ResponseSerializer.getErrorMessage(json: json)
-                    print(errorMessage ?? "")
-                }
-                break;
+                // create a failure to load chat history alert
+                let alert = UIAlertController(title: "Failed to Load Dashboard", message: "Could not load the dashboard, is your internet down?", preferredStyle: UIAlertController.Style.alert)
+                
+                // add an OK button to cancel the alert
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                
+                // present the alert
+                self.present(alert, animated: true, completion: nil)
+                break
             }
         }
     }
@@ -88,6 +97,18 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.profileName.text = profiles[row].name
         cell.profileTag.text = "@\(profiles[row].name.lowercased())"
         return cell
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let lastPage: Float = Float(totalProfiles) / Float(profilesPerPage)
+        
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+        if distanceFromBottom < height && Float(page) < lastPage {
+            page += 1
+            loadProfiles(page: page)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

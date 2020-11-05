@@ -46,7 +46,7 @@ class ResponseSerializer {
     
     static func getMatchRate(json: Any?) -> String? {
         let match = json as! [String: AnyObject]
-        let matchRate: Float? = match["match"] as? Float
+        let matchRate: Double? = match["match"] as? Double
         let percent: Int = Int(matchRate! * 100)
         
         return String(percent)

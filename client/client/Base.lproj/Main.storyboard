@@ -592,6 +592,9 @@
                                 <rect key="frame" x="267" y="817" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="chat" image="chatButton"/>
+                                <connections>
+                                    <segue destination="C6n-X2-eiH" kind="show" id="srM-fE-Wfc"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xKc-Yp-EHZ">
                                 <rect key="frame" x="350" y="817" width="40" height="40"/>
@@ -678,7 +681,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S35-is-BwA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5173.913043478261" y="634.82142857142856"/>
+            <point key="canvasLocation" x="5232" y="723"/>
         </scene>
         <!--Chats-->
         <scene sceneID="LHM-Dw-OUs">
@@ -771,7 +774,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Eq-50-WSY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5947.826086956522" y="198.88392857142856"/>
+            <point key="canvasLocation" x="6014" y="167"/>
         </scene>
         <!--Name-->
         <scene sceneID="edz-uf-1rU">
@@ -933,6 +936,7 @@
         <image name="settingButton" width="800" height="800"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="srM-fE-Wfc"/>
         <segue reference="sI3-nR-DUJ"/>
     </inferredMetricsTieBreakers>
 </document>

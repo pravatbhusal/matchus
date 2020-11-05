@@ -79,7 +79,7 @@ class ProfileView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         # serialize the user and similarity between the logged-in user and the requested user
-        user_serializer = UserSerializer.MatchSerializer(user, context={ "user": user })
+        user_serializer = UserSerializer.MatchSerializer(user, context={ "user": request.user })
         photos_serializer = PhotoSerializer(photos, many=True)
 
         return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data })
