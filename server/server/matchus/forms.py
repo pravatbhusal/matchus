@@ -30,6 +30,8 @@ class SignUpForm(RequestForm, VerifyCredentialsForm):
     interests = forms.JSONField(required=True, error_messages={
         "required": "Please input interests fields."
     })
+    latitude = forms.DecimalField(required=True, max_digits=16, decimal_places=12)
+    longitude = forms.DecimalField(required=True, max_digits=16, decimal_places=12)
 
     def save(self):
         """
@@ -38,6 +40,8 @@ class SignUpForm(RequestForm, VerifyCredentialsForm):
 
         user = User.objects.create_user(email=self.cleaned_data['email'], password=self.cleaned_data['password'])
         user.location = self.cleaned_data['location']
+        user.latitude = self.cleaned_data['latitude']
+        user.longitude = self.cleaned_data['longitude']
         user.interests = self.cleaned_data['interests']
         user.profile_photo = default_profile_photo
         user.save()

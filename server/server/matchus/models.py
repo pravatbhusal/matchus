@@ -22,8 +22,8 @@ class User(AbstractUser):
     name = models.CharField(default="No Name", max_length=128)
     location = models.CharField(default="", max_length=128)
     interests = models.JSONField(default=list)
-    latitude = models.DecimalField(default=0, max_digits=8, decimal_places=4)
-    longitude = models.DecimalField(default=0, max_digits=8, decimal_places=4)
+    latitude = models.DecimalField(default=0, max_digits=16, decimal_places=12)
+    longitude = models.DecimalField(default=0, max_digits=16, decimal_places=12)
     profile_photo = models.ImageField(upload_to=media_dir)
 
     # helper methods for the User class
