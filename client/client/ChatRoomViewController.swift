@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import Starscream
 
 class Chat {
     var id: Int = 0
@@ -175,6 +176,14 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
             page += 1
             loadChatHistory(page: page)
         }
+    }
+    
+    @IBAction func sendPressed(_ sender: Any) {
+        if chattingText.text == nil || chattingText.text == "" {
+            return
+        }
+        
+        
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
