@@ -171,14 +171,18 @@ class ChatView(APIView):
         messages = []
         for room in chat_rooms:
             # receive the latest message between this user and the other user
-            recent_chat = room.chats[-1]
-
-            # attributes to showcase for this recent message based on who the sender of the message was
-            other_user = room.user_B if request.user == room.user_A else room.user_A
-            message = recent_chat["message"]
-            recent_chat["message"] = "You: " + message if recent_chat["id"] == request.user.id else message
+            recent_chat = room.chats[-1] if len(room.chats) > 0 else None
+            
+            if recent_chat:
+                # attributes to showcase for this recent message based on who the sender of the message was
+                message = recent_chat["message"]
+                recent_chat["message"] = "You: " + message if recent_chat["id"] == request.user.id else message
+            else:
+                recent_chat = dict()
+                recent_chat["message"] = ""
             
             # make this user anonymous if the chat room is anonymous
+            other_user = room.user_B if request.user == room.user_A else room.user_A
             serializer = UserSerializer.AnonymousSerializer(other_user, context={ "anonymous": room.anonymous })
 
             messages.append({ **serializer.data, "id": room.id, "message": recent_chat["message"] })
