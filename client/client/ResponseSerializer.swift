@@ -91,7 +91,6 @@ class ResponseSerializer {
             dashboardProfile.name = profile["name"] as? String
             dashboardProfile.profilePhoto = profile["profile_photo"] as? String
             dashboardProfile.photo = profile["photo"] as? String
-            dashboardProfile.profileTag = profile["tag"] as? String
             dashboardArray.append(dashboardProfile)
         }
         
