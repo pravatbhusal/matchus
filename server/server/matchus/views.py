@@ -235,7 +235,7 @@ class ChatView(APIView):
             user = room.user_B if request.user == room.user_A else room.user_A
 
             # make these users anonymous if the chat room is still anonymous
-            my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": room.anonymous })
+            my_user_serializer = UserSerializer(request.user)
             other_user_serializer = UserSerializer.AnonymousSerializer(user, context={ "anonymous": room.anonymous })
 
             return JsonResponse({ "total_chats": total_chats, "chats_per_page": chats_per_page, "me": my_user_serializer.data, "other": other_user_serializer.data, "chats": chats })
