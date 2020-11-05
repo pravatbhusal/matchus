@@ -473,7 +473,6 @@
                                             <outlet property="profileName" destination="gD8-NI-W3B" id="nam-oh-nQY"/>
                                             <outlet property="profilePhoto" destination="TgI-uk-uMs" id="NnY-ZR-tVc"/>
                                             <outlet property="profileTag" destination="86s-Go-3ZV" id="2Em-zK-nzH"/>
-                                            <segue destination="XaQ-lE-asI" kind="show" identifier="ProfileSegue" id="qdm-M9-4mp"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -488,6 +487,7 @@
                         <outlet property="navigationItem" destination="in3-R7-H9d" id="bkz-WO-yPK"/>
                         <outlet property="plusButton" destination="7Qr-G1-XiZ" id="FAA-1A-UnS"/>
                         <outlet property="tableView" destination="NTt-Av-1kA" id="sN8-Ey-aR3"/>
+                        <segue destination="XaQ-lE-asI" kind="show" identifier="ProfileSegue" id="oHc-qd-Fbx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="asa-HH-Rw7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

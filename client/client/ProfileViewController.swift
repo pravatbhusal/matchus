@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var tag: String!
     var id: Int!
     var delegate: UIViewController!
-    var interests: [String]!
+    var interests: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,18 +35,23 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         plusButton.layer.cornerRadius = 18
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         getProfile()
     }
     
     func getProfile() {
-        let url = URL.init(string: APIs.profile + tag)!
+        let headers: HTTPHeaders = ["Authorization": "Token \(UserDefaults.standard.string(forKey: User.token) ?? "")"]
+
+        let url = URL.init(string: "\(APIs.profile)/\(String(id))")!
     
-        AF.request(url, method: .get, parameters: nil).responseJSON { [self]
+        AF.request(url, method: .get, parameters: nil, headers: headers).responseJSON { [self]
             response in
                    switch response.result {
                        case .success:
                         if let json = response.value {
+                            print(json)
                             // add download profilephoto from url and set the imageview image
                             let profilePhotoURL: String = ResponseSerializer.getProfilePicture(json: json)!
                             self.downloadImage(from: URL(string: profilePhotoURL)!, to: self.profilePhoto)

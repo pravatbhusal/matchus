@@ -91,7 +91,20 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        <#code#>
+        if segue.identifier == profileSegueIdentifier {
+            if let profileVC = segue.destination as? ProfileViewController {
+                profileVC.id = sender as? Int
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let row = indexPath.row
+        let selectedProfile: DashboardProfile = profiles[row]
+        
+        performSegue(withIdentifier: profileSegueIdentifier, sender: selectedProfile.id)
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
