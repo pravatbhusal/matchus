@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     let chatRoomSegueIdentifier: String = "ChatRoomSegueIdentifier"
     
@@ -22,9 +22,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var matchLabel: UILabel!
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var stackView: UIStackView!
     
     @IBOutlet weak var interestsTableView: UITableView!
+    @IBOutlet weak var pageControl: UIPageControl!
     
     var tag: String = ""
     
@@ -41,6 +41,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         plusButton.layer.cornerRadius = 18
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
+        
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.isPagingEnabled = true
+
+        scrollView.delegate = self
         toggleVisible(visible: false)
         
         // add a click event to the message bar button item
@@ -59,7 +64,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         interestsTableView.isHidden = !visible
         matchLabel.isHidden = !visible
         scrollView.isHidden = !visible
-        stackView.isHidden = !visible
     }
     
     func getProfile() {
@@ -85,11 +89,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             
                             // get all photo urls, then download them and add to the scrollview
                             let featuredPhotoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
-//                            print(json)
-                            print(featuredPhotoURLs)
+                            
                             for photoUrl in featuredPhotoURLs {
-                                self.stackView.addArrangedSubview(self.image(filename: photoUrl))
+                                let imageView = UIImageView()
+                                if imageView.image == nil {
+                                    self.downloadImage(from: URL(string: photoUrl)!, to: imageView)
+                                }
+                                self.scrollView.addSubview(imageView)
+                                print("added imageView to scrollView")
+                                imageView.frame = CGRect(x: scrollView.frame.midX, y: scrollView.frame.height/2, width: 75, height: 75)
+                                
                             }
+                            scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(featuredPhotoURLs.count), height: scrollView.frame.size.height)
                             
                             // add interests to the array (data source for the table) then reload to reflect changes
                             let interestsData: [String] = ResponseSerializer.getInterestsList(json: json)!
@@ -106,6 +117,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
            
     }
     
+
     @objc func createChat(sender : UIBarButtonItem) {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
@@ -131,6 +143,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                         break
                 }
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let page = scrollView.contentOffset.x/scrollView.frame.size.width
+        pageControl.currentPage = Int(page)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -185,20 +202,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         AF.request(URL.init(string: APIs.interests)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
             print(response.response?.statusCode)
-                switch response.response?.statusCode {
-                    case 200?:
-                        if let json = response.value {
-                            print(json)
-
-                        }
-                        break
-                    default:
-                        if let json = response.value {
-                            print(json)
-
-                        }
-                        break
-                }
         }
         
     }
@@ -208,23 +211,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // https://stackoverflow.com/questions/24231680/loading-downloading-image-from-url-on-swift
     // always download images asynchronously...?
     
-    func image(filename: String) -> UIImageView {
-        let imgView = UIImageView()
-        downloadImage(from: URL(string: filename)!, to: imgView)
-        
-        let width = view.frame.width
-        var height = view.frame.width
-            
-        let imgWidth = imgView.image!.size.width
-        let imgHeight = imgView.image!.size.height
-        height = height * (imgHeight / imgWidth)
-            
-        imgView.widthAnchor.constraint(equalToConstant: width).isActive = true
-        imgView.heightAnchor.constraint(equalToConstant: height).isActive = true
-        
-        return imgView
-    }
-    
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
@@ -232,8 +218,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func downloadImage(from url: URL, to imageView: UIImageView) {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() {
-                imageView.image = UIImage(data: data)
+            print("downloaded", url)
+            DispatchQueue.main.async() { [weak self] in
+                imageView.image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
             }
         }
     }
