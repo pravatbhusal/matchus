@@ -15,6 +15,7 @@
 		913FC538254E29CF008881C6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC537254E29CF008881C6 /* ProfileViewController.swift */; };
 		913FC53C254E2AF2008881C6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC53B254E2AF2008881C6 /* ChatViewController.swift */; };
 		DA16E23A2542712900F179F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16E2392542712900F179F0 /* Constants.swift */; };
+		DA3A630C25548EAF0066DB48 /* IdentityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */; };
 		DA3C88972553A20A003A3714 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3C88962553A20A003A3714 /* Extensions.swift */; };
 		DA3C88992553AAAB003A3714 /* ChatRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3C88982553AAAB003A3714 /* ChatRoomViewController.swift */; };
 		DA6537DA254F628C0085ED03 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */; };
@@ -40,6 +41,7 @@
 		913FC537254E29CF008881C6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		913FC53B254E2AF2008881C6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		DA16E2392542712900F179F0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityViewController.swift; sourceTree = "<group>"; };
 		DA3C88962553A20A003A3714 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DA3C88982553AAAB003A3714 /* ChatRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewController.swift; sourceTree = "<group>"; };
 		DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSerializer.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				DABA1599252BAB9D00083305 /* ViewController.swift */,
 				03FE665F2536C38700A4C1C2 /* LoginViewController.swift */,
 				910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */,
+				DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */,
 				910C0F492533A55800DCDBE7 /* LocationViewController.swift */,
 				910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */,
 				913FC532254E1E3C008881C6 /* DashboardViewController.swift */,
@@ -243,6 +246,7 @@
 			files = (
 				03FE66602536C38700A4C1C2 /* LoginViewController.swift in Sources */,
 				910C0F4C2533A57E00DCDBE7 /* InterestsViewController.swift in Sources */,
+				DA3A630C25548EAF0066DB48 /* IdentityViewController.swift in Sources */,
 				DA3C88992553AAAB003A3714 /* ChatRoomViewController.swift in Sources */,
 				DABA159A252BAB9D00083305 /* ViewController.swift in Sources */,
 				DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */,
