@@ -59,7 +59,7 @@ class DashboardView(APIView):
         users_per_page = 10
         start_of_page = (page - 1) * users_per_page
         end_of_page = page * users_per_page
-        users = list(users)[start_of_page : end_of_page]
+        users = users[start_of_page : end_of_page]
 
         # sort the users by best match to this user
         serializer = UserSerializer.MatchSerializer(users, context={ "user": request.user }, many=True)
