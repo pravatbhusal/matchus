@@ -19,6 +19,8 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var password: String = ""
     
+    var name: String = ""
+    
     var location: String = ""
     
     var longitude: Double = 0
@@ -118,7 +120,7 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func registerUser(email: String, password: String, location: String, interests: [String]) {
-        let parameters = ["email": email, "password": password, "location": location, "longitude": longitude, "latitude": latitude, "interests": interests] as [String : Any]
+        let parameters = ["email": email, "password": password, "name": name, "location": location, "longitude": longitude, "latitude": latitude, "interests": interests] as [String : Any]
         
         AF.request(URL.init(string: APIs.signup)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: nil).responseJSON { (response) in
                 switch response.response?.statusCode {

@@ -24,6 +24,7 @@ class VerifyCredentialsForm(forms.Form):
         return email
 
 class SignUpForm(RequestForm, VerifyCredentialsForm):
+    name = forms.CharField(max_length=128)
     location = forms.CharField(required=True, max_length=128, error_messages={
         "required": "Please input a location field."
     })
@@ -39,6 +40,7 @@ class SignUpForm(RequestForm, VerifyCredentialsForm):
         """
 
         user = User.objects.create_user(email=self.cleaned_data['email'], password=self.cleaned_data['password'])
+        user.name = self.cleaned_data['name']
         user.location = self.cleaned_data['location']
         user.latitude = self.cleaned_data['latitude']
         user.longitude = self.cleaned_data['longitude']
