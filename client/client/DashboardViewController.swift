@@ -114,7 +114,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == profileSegueIdentifier {
             if let profileVC = segue.destination as? ProfileViewController {
-                profileVC.id = sender as? Int
+                profileVC.id = sender as! Int
             }
         }
     }

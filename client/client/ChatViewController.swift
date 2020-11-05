@@ -42,7 +42,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func loadChats() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
-        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
         
         AF.request(URL.init(string: APIs.chats)!, method: .get, headers: headers).responseJSON { (response) in
                 switch response.response?.statusCode {
@@ -97,7 +97,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == chatRoomSegueIdentifier {
             if let chatRoomVC = segue.destination as? ChatRoomViewController {
                 // pass over the room id of this chat room
-                let chat: RecentChat = (sender as! RecentChat)
+                let chat: RecentChat = sender as! RecentChat
                 chatRoomVC.roomId = chat.id
                 chatRoomVC.name = chat.name
             }
