@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .models import media_dir, ChatRoom, Photo, User
 from .serializers import PhotoSerializer, UserSerializer
-from .forms import InterestForm, LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
+from .forms import ChatForm, InterestForm, LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
 from .queries import get_users_nearby
 
 class VerifyCredentialsView(APIView):
@@ -185,6 +185,29 @@ class ChatView(APIView):
         
         return Response(messages)
 
+    def post(self, request):
+        chat_form = ChatForm(request.data)
+        
+        if not chat_form.is_valid():
+            return Response(status=HTTP_412_PRECONDITION_FAILED)
+        
+        # receive the user of the user that this user wants to chat with
+        user_id = chat_form.cleaned_data["profile_id"]
+        user = User.objects.filter(id=user_id).first()
+
+        if not user:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        # check if a chat room already exists between the users
+        chat_filter = (Q(user_A=request.user) & Q(user_B=user)) | (Q(user_A=user) & Q(user_B=request.user))
+        room = ChatRoom.objects.filter(chat_filter).first()
+
+        if not room:
+            # create a new chat room between the other user and this user
+            ChatRoom.objects.create(user_A=request.user, user_B=user)
+
+        return Response()
+
     class ChatRoomView(APIView):
         permission_classes = [permissions.IsAuthenticated]
 
@@ -209,6 +232,7 @@ class ChatView(APIView):
             other_user_serializer = UserSerializer.AnonymousSerializer(user, context={ "anonymous": room.anonymous })
 
             return JsonResponse({ "total_chats": total_chats, "chats_per_page": chats_per_page, "me": my_user_serializer.data, "other": other_user_serializer.data, "chats": chats })
+
 
 class LogoutView(APIView):
     def post(self, request):
