@@ -36,15 +36,17 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     var name: String = ""
     
-    var page: Int = 1
+    var totalsChats: Int = 0
     
-    var atLastPage: Bool = false
+    var chatsPerPage: Int = 0
+    
+    var page: Int = 1
     
     var chats: [Chat] = []
     
-    var meProfile: ChatProfile!
+    var meProfile: ChatProfile = ChatProfile()
     
-    var otherProfile: ChatProfile!
+    var otherProfile: ChatProfile = ChatProfile()
     
     @IBOutlet weak var profileButton: UIBarButtonItem!
     
@@ -63,8 +65,8 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         
         // reset this view whenever loading it again
         self.page = 1
-        self.meProfile = nil
-        self.otherProfile = nil
+        self.meProfile = ChatProfile()
+        self.otherProfile = ChatProfile()
         self.chats = []
 
         loadChatHistory(page: page)
@@ -79,10 +81,11 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                 switch response.response?.statusCode {
                     case 200?:
                         if let json = response.value as! NSDictionary? {
+                            let initialLoad: Bool = page == 1
+                            
                             // store this user's chat profile
-                            if self.meProfile == nil {
+                            if initialLoad {
                                 let me = json["me"] as! NSDictionary
-                                self.meProfile = ChatProfile()
                                 self.meProfile.id = me["id"] as! Int
                                 self.meProfile.name = me["name"] as! String
                                 let mePhotoURL: String = "\(APIs.serverURI)\(me["profile_photo"] as! String)"
@@ -90,20 +93,27 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                             }
                             
                             // store the other user's chat profile
-                            if self.otherProfile == nil {
+                            if initialLoad {
                                 let other = json["other"] as! NSDictionary
-                                self.otherProfile = ChatProfile()
                                 self.otherProfile.id = other["id"] as! Int
                                 self.otherProfile.name = other["name"] as! String
                                 let otherPhotoURL = "\(APIs.serverURI)\(other["profile_photo"] as! String)"
                                 self.downloadImage(from: URL(string: otherPhotoURL)!, to: self.otherProfile)
                             }
                             
+                            // store the number of pages and chats
+                            self.totalsChats = json["total_chats"] as! Int
+                            self.chatsPerPage = json["chats_per_page"] as! Int
+                            
                             // store the chats between the users
                             let chats = ResponseSerializer.getChatHistory(json: json["chats"])!
                             self.chats += chats
-                            self.atLastPage = chats.count == 0
                             self.tableView.reloadData()
+                            
+                            // scroll to the bottom of the table view on the initial load
+                            if initialLoad {
+                                self.tableView.scrollToBottom(animated: false)
+                            }
                         }
                         break
                     default:
@@ -157,9 +167,10 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let firstVisibleIndexPath = self.tableView.indexPathsForVisibleRows?[0]
+        let lastPage: Float = Float(totalsChats) / Float(chatsPerPage)
         
-        if firstVisibleIndexPath!.row == 0 && !self.atLastPage {
-            // reached the top of the table view and there may exist more chat history, so load the next page
+        if firstVisibleIndexPath!.row == 0 && Float(page) < lastPage {
+            // reached the top of the table view and there exists more chat history, so load the next page
             self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
             page += 1
             loadChatHistory(page: page)

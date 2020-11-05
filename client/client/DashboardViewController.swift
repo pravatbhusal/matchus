@@ -48,10 +48,9 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
          response in
             switch response.response?.statusCode {
                     case 200?:
-                     if let json = response.value {
-                        print(json)
-                        let dashboardProfiles: [DashboardProfile] = ResponseSerializer.getDashboardList(json: json)!
-                        self.profiles = dashboardProfiles
+                     if let json = response.value as! NSDictionary? {
+                        let profiles: [DashboardProfile] = ResponseSerializer.getDashboardList(json: json["profiles"])!
+                        self.profiles = profiles
                         self.tableView.reloadData()
                      }
                      break;
@@ -72,11 +71,19 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "DashboardCell", for: indexPath as IndexPath) as! DashboardCell
         let row = indexPath.row
-        downloadImage(from: URL(string: self.profiles[row].profilePhoto)!, to: cell.profilePhoto)
-        downloadImage(from: URL(string: self.profiles[row].photo)!, to: cell.photo)
+        
+        // download the profile photo image if it's already not downloaded
+        if cell.profilePhoto.image == nil {
+            downloadImage(from: URL(string: self.profiles[row].profilePhoto)!, to: cell.profilePhoto)
+        }
+        
+        // download the photo if it's already not downloaded
+        if cell.photo.image == nil {
+            downloadImage(from: URL(string: self.profiles[row].photo)!, to: cell.photo)
+        }
+        
         cell.profileName.text = profiles[row].name
         cell.profileTag.text = "@\(profiles[row].name.lowercased())"
-        print(self.profiles[row].photo)
         return cell
     }
     

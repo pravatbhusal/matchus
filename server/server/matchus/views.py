@@ -59,12 +59,12 @@ class DashboardView(APIView):
         users_per_page = 10
         start_of_page = (page - 1) * users_per_page
         end_of_page = page * users_per_page
-        users = list(users)[start_of_page : end_of_page]
+        users_page = users[start_of_page : end_of_page]
 
         # sort the users by best match to this user
-        serializer = UserSerializer.MatchSerializer(users, context={ "user": request.user }, many=True)
+        serializer = UserSerializer.MatchSerializer(users_page, context={ "user": request.user }, many=True)
         sorted_users = sorted(serializer.data, key=lambda user : user["match"], reverse=True)
-        return Response(sorted_users)
+        return JsonResponse({ "total_profiles": users.count(), "profiles_per_page": users_per_page, "profiles": sorted_users })
 
 class ProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -207,7 +207,7 @@ class ChatView(APIView):
             my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": room.anonymous })
             other_user_serializer = UserSerializer.AnonymousSerializer(user, context={ "anonymous": room.anonymous })
 
-            return Response({ "me": my_user_serializer.data, "other": other_user_serializer.data, "chats": chats })
+            return JsonResponse({ "total_chats": len(room.chats), "chats_per_page": chats_per_page, "me": my_user_serializer.data, "other": other_user_serializer.data, "chats": chats })
 
 class LogoutView(APIView):
     def post(self, request):
