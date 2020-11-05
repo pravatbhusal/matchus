@@ -65,30 +65,11 @@ class ResponseSerializer {
         return interestsArray
     }
     
-    static func getChatProfiles(json: Any?) -> [ChatProfile]? {
-        // we're getting an array of JSON objects
-        let profiles = json as! [NSDictionary]
-        var profileArray: [ChatProfile] = []
-        
-        for p in profiles {
-            var chatProfile = ChatProfile()
-            for (k, v) in p {
-                let key = k as! String
-                if key == "profileId"  {
-                    chatProfile.profileId = v as? Int
-                } else if key == "name" {
-                    chatProfile.name = v as? String
-                } else if key == "recentMessage" {
-                    chatProfile.recentMessage = v as? String
-                } else if key == "profilePhoto" {
-                    chatProfile.profileImageURL = v as? String
-                }
-            }
-            profileArray.append(chatProfile)
-            
-        }
-        
-        return profileArray
+    static func getChatsList(json: Any?) -> [ChatProfile]? {
+        let chats = json as! [NSDictionary]
+        let chatsArray: [ChatProfile] = []
+
+        return chatsArray
     }
     
 //    static func getChatMessages(json: Any?) -> [Chat]? {

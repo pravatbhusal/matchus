@@ -185,7 +185,7 @@ class ChatView(APIView):
         
         return Response(messages)
 
-    class ChatProfileView(APIView):
+    class ChatRoomView(APIView):
         permission_classes = [permissions.IsAuthenticated]
 
         def get(self, request, *args, **kwargs):

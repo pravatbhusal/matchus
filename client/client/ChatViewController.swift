@@ -42,17 +42,15 @@ import Alamofire
 //}
 
 class ChatProfile {
-    var profileId: Int!
-    var name: String!
-    var recentMessage: String!
-    var profileImageURL: String!
+    var profileId: Int = 0
+    var name: String = ""
+    var message: String = ""
+    var profilePhoto: String = ""
 }
 
 class ChatCell: UITableViewCell {
-    
     @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var recentMessage: UILabel!
-    
 }
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
@@ -60,13 +58,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var plusButton: UIButton!
     
-    var chats: [ChatProfile]!
-    var tag:String!
+    var chats: [ChatProfile] = []
+    var tag: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         plusButton.layer.cornerRadius = 18
         tableView.delegate = self
         tableView.dataSource = self
@@ -74,25 +70,29 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func loadChats() {
-        let url = URL.init(string: APIs.chats + tag)!
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
         
-        AF.request(url, method: .get, parameters: nil).responseJSON { [self]
-            response in
-                   switch response.result {
-                       case .success:
+        AF.request(URL.init(string: APIs.chats)!, method: .get, headers: headers).responseJSON { (response) in
+                switch response.response?.statusCode {
+                    case 200?:
                         if let json = response.value {
-                            // populate chats array here
-                            
-                            let chatProfiles: [ChatProfile] = ResponseSerializer.getChatProfiles(json: json)!
-                            self.chats = chatProfiles
+                            self.chats = ResponseSerializer.getChatsList(json: json)!
                             self.tableView.reloadData()
-                            
                         }
-                           
-                       case .failure(let error):
-                           print(error)
-                       }
-           }
+                        break
+                    default:
+                        // create a failure to load alert
+                        let alert = UIAlertController(title: "Failed to Load Chats", message: "Could not load the chats, is your internet down?", preferredStyle: UIAlertController.Style.alert)
+                        
+                        // add an OK button to cancel the alert
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        
+                        // present the alert
+                        self.present(alert, animated: true, completion: nil)
+                        break
+                }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -103,8 +103,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "ChatCell", for: indexPath as IndexPath) as! ChatCell
         let row = indexPath.row
         
-        downloadImage(from: URL(string: self.chats[row].profileImageURL)!, to: cell.imageView!)
-        cell.recentMessage.text = chats[row].recentMessage
+        downloadImage(from: URL(string: self.chats[row].profilePhoto)!, to: cell.imageView!)
+        cell.recentMessage.text = chats[row].message
         
         return cell
         
@@ -119,22 +119,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             print(response?.suggestedFilename ?? url.lastPathComponent)
-            DispatchQueue.main.async() { [weak self] in
+            DispatchQueue.main.async() {
                 imageView.image = UIImage(data: data)
             }
         }
     }
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
