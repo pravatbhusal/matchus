@@ -171,14 +171,18 @@ class ChatView(APIView):
         messages = []
         for room in chat_rooms:
             # receive the latest message between this user and the other user
-            recent_chat = room.chats[-1]
-
-            # attributes to showcase for this recent message based on who the sender of the message was
-            other_user = room.user_B if request.user == room.user_A else room.user_A
-            message = recent_chat["message"]
-            recent_chat["message"] = "You: " + message if recent_chat["id"] == request.user.id else message
+            recent_chat = room.chats[-1] if len(room.chats) > 0 else None
+            
+            if recent_chat:
+                # attributes to showcase for this recent message based on who the sender of the message was
+                message = recent_chat["message"]
+                recent_chat["message"] = "You: " + message if recent_chat["id"] == request.user.id else message
+            else:
+                recent_chat = dict()
+                recent_chat["message"] = ""
             
             # make this user anonymous if the chat room is anonymous
+            other_user = room.user_B if request.user == room.user_A else room.user_A
             serializer = UserSerializer.AnonymousSerializer(other_user, context={ "anonymous": room.anonymous })
 
             messages.append({ **serializer.data, "id": room.id, "message": recent_chat["message"] })
@@ -206,7 +210,7 @@ class ChatView(APIView):
             # create a new chat room between the other user and this user
             room = ChatRoom.objects.create(user_A=request.user, user_B=user)
             serializer = ChatRoomSerializer(room)
-            return JsonResponse(serializer.data, status=HTTP_201_CREATED)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
 
         serializer = ChatRoomSerializer(room)
         return JsonResponse(serializer.data)
@@ -231,7 +235,7 @@ class ChatView(APIView):
             user = room.user_B if request.user == room.user_A else room.user_A
 
             # make these users anonymous if the chat room is still anonymous
-            my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": room.anonymous })
+            my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": False })
             other_user_serializer = UserSerializer.AnonymousSerializer(user, context={ "anonymous": room.anonymous })
 
             return JsonResponse({ "total_chats": total_chats, "chats_per_page": chats_per_page, "me": my_user_serializer.data, "other": other_user_serializer.data, "chats": chats })

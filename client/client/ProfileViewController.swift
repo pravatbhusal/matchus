@@ -68,13 +68,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func getProfile() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
-        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
         let url = URL.init(string: "\(APIs.profile)/\(String(id))")!
     
         AF.request(url, method: .get, parameters: nil, headers: headers).responseJSON { [self]
             response in
-                   switch response.result {
-                       case .success:
+                switch response.response?.statusCode {
+                    case 200?:
                         if let json = response.value {
                             // add download profilephoto from url and set the imageview image
                             let profilePhotoURL: String = ResponseSerializer.getProfilePicture(json: json)!
@@ -108,13 +108,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             self.interestsTableView.reloadData()
                             self.toggleVisible(visible: true)
                         }
-
-                           
-                       case .failure(let error):
-                           print(error)
-                       }
-           }
-           
+                    default:
+                        // create a failure to load profile alert
+                        let alert = UIAlertController(title: "Failed to Load Profile", message: "Could not load this profile, is your internet down?", preferredStyle: UIAlertController.Style.alert)
+                        
+                        // add an OK button to cancel the alert
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        
+                        // present the alert
+                        self.present(alert, animated: true, completion: nil)
+                        break
+            }
+        }
     }
     
 

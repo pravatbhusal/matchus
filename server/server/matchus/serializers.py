@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import default_photo, ChatRoom, Photo, User
+from .models import default_photo, default_profile_photo, ChatRoom, Photo, User
 from notebook.matchus import similarity
 
 class UserSerializer(serializers.ModelSerializer):
@@ -10,6 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
     class AnonymousSerializer(serializers.ModelSerializer):
         anonymous = serializers.SerializerMethodField('get_anonymous')
         name = serializers.SerializerMethodField('get_name')
+        profile_photo = serializers.SerializerMethodField('get_profile_photo')
 
         class Meta:
             model = User
@@ -22,6 +23,10 @@ class UserSerializer(serializers.ModelSerializer):
         def get_name(self, obj):
             anonymous = bool(self.context.get("anonymous"))
             return "Anonymous" if anonymous else obj.name
+
+        def get_profile_photo(self, obj):
+            anonymous = bool(self.context.get("anonymous"))
+            return "/" + default_profile_photo if anonymous else "/" + obj.profile_photo.name
 
     class MatchSerializer(serializers.ModelSerializer):
         match = serializers.SerializerMethodField('get_match')
