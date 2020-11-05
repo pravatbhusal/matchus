@@ -27,7 +27,10 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var plusButton: UIButton!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
+    let profileSegueIdentifier = "ProfileSegue"
+
     var profiles:[DashboardProfile] = []
     var pageNum:Int = 1
 
@@ -35,6 +38,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        navigationItem.hidesBackButton = true
         plusButton.layer.cornerRadius = 18
         loadProfiles()
     }
@@ -76,7 +80,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         if cell.profilePhoto.image == nil {
             downloadImage(from: URL(string: self.profiles[row].profilePhoto)!, to: cell.profilePhoto)
         }
-        
         // download the photo if it's already not downloaded
         if cell.photo.image == nil {
             downloadImage(from: URL(string: self.profiles[row].photo)!, to: cell.photo)
@@ -85,6 +88,10 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         cell.profileName.text = profiles[row].name
         cell.profileTag.text = "@\(profiles[row].name.lowercased())"
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        <#code#>
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {

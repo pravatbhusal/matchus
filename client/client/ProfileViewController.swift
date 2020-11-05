@@ -24,6 +24,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var interestsTableView: UITableView!
     
     var tag: String!
+    var id: Int!
     var delegate: UIViewController!
     var interests: [String]!
     
