@@ -20,11 +20,13 @@ PODS:
   - GTMSessionFetcher/Core (1.4.0)
   - GTMSessionFetcher/Full (1.4.0):
     - GTMSessionFetcher/Core (= 1.4.0)
+  - Starscream (4.0.4)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
   - GooglePlaces (= 4.0.0)
   - GoogleSignIn
+  - Starscream (~> 4.0.0)
 
 SPEC REPOS:
   trunk:
@@ -35,6 +37,7 @@ SPEC REPOS:
     - GoogleSignIn
     - GTMAppAuth
     - GTMSessionFetcher
+    - Starscream
 
 SPEC CHECKSUMS:
   Alamofire: c1ca147559e730bfb2182c8c7aafbdd90a867987
@@ -44,7 +47,8 @@ SPEC CHECKSUMS:
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
 
-PODFILE CHECKSUM: 7b021959a01e9de3978072f7a6c6b195de7fe714
+PODFILE CHECKSUM: 8f44562b88312e9b6bf7c788e577640db36c453c
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.9.3
