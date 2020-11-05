@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
                             // store the user's token in the device's memory
                             let token: String? = ResponseSerializer.getToken(json: json)
                             UserDefaults.standard.set(token, forKey: User.token)
-                            
+                            print(token)
                             self.performSegue(withIdentifier: self.dashboardSegueIdentifier, sender: nil)
                         }
                         break

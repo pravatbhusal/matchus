@@ -32,7 +32,7 @@ class ResponseSerializer {
     
     static func getProfilePicture(json: Any?) -> String? {
         let photo = json as! [String: AnyObject]
-        let profilePhotoURL: String? = "\(APIs.serverURI)\(photo["profilePhoto"] as? String ?? "")"
+        let profilePhotoURL: String? = "\(APIs.serverURI)\(photo["profile_photo"] as? String ?? "")"
         
         return profilePhotoURL
     }
@@ -54,9 +54,14 @@ class ResponseSerializer {
     
     static func getFeaturedPhotoURLs(json: Any?) -> [String]? {
         let urls = json as! [String: AnyObject]
-        let photoArray: [String]? = urls["photos"] as? [String]
+        let photoArray = urls["photos"] as! [NSDictionary]
         
-        return photoArray
+        var photoUrls: [String] = []
+        
+        for photo in photoArray {
+            photoUrls.append("\(APIs.serverURI)\(photo["photo"] as! String)")
+        }
+        return photoUrls
     }
     
     static func getInterestsList(json: Any?) -> [String]? {
