@@ -50,17 +50,17 @@ class ChatProfile {
 
 class ChatCell: UITableViewCell {
     @IBOutlet weak var profilePhoto: UIImageView!
-    @IBOutlet weak var recentMessage: UILabel!
+    @IBOutlet weak var recentMessage: UITextView!
     @IBOutlet weak var name: UILabel!
 }
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var plusButton: UIButton!
     
     var chats: [ChatProfile] = []
-    var tag: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -112,7 +112,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
@@ -121,8 +120,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                imageView.image = UIImage(data: data)
-                imageView.image?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                imageView.image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
                 self.tableView.reloadData()
             }
         }

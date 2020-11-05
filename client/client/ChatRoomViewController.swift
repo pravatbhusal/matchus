@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IndividualChatViewController: UIViewController {
+class ChatRoomViewController: UIViewController {
 
     @IBOutlet weak var chattingText: UITextField!
     @IBOutlet weak var plusButton: UIButton!
