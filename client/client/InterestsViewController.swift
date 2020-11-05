@@ -156,7 +156,7 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func uploadProfilePhoto(photo: UIImage) {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
-        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
         
         // format the image into an acceptable form data for the server
         let photoData = photo.jpegData(compressionQuality: 0.5)!

@@ -667,16 +667,20 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="60x-J5-Q9u"/>
                     </view>
-                    <navigationItem key="navigationItem" id="zyJ-z8-x1n"/>
+                    <navigationItem key="navigationItem" id="zyJ-z8-x1n">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="message" catalog="system" id="dEC-Yw-1xb"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="interestsTableView" destination="YXl-6B-cFR" id="nnj-lu-Pxj"/>
                         <outlet property="loading" destination="OsP-vu-fN7" id="LCL-o2-5GC"/>
                         <outlet property="matchLabel" destination="maU-JO-dm7" id="XKt-kj-GVv"/>
+                        <outlet property="messageButton" destination="dEC-Yw-1xb" id="s6K-35-PUO"/>
                         <outlet property="plusButton" destination="nVm-Ey-LEi" id="ZUz-Av-7XY"/>
                         <outlet property="profileName" destination="ztj-e9-GJf" id="3cD-ce-bNP"/>
                         <outlet property="profilePhoto" destination="3Sg-wH-tFs" id="vfX-fz-IoR"/>
                         <outlet property="scrollView" destination="QgN-md-Tv5" id="8j5-5N-dNo"/>
                         <outlet property="stackView" destination="gAF-Ct-VRR" id="nAt-sx-fC0"/>
+                        <segue destination="F0c-Vi-3r4" kind="show" identifier="ChatRoomSegueIdentifier" id="ms9-eX-H2J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S35-is-BwA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -929,6 +933,7 @@
         <image name="chatButton" width="235" height="214"/>
         <image name="homeButton" width="512" height="512"/>
         <image name="logo" width="365.33334350585938" height="318"/>
+        <image name="message" catalog="system" width="64" height="56"/>
         <image name="person" catalog="system" width="64" height="58"/>
         <image name="person.fill" catalog="system" width="64" height="60"/>
         <image name="profileButton" width="225" height="225"/>
@@ -936,6 +941,7 @@
         <image name="settingButton" width="800" height="800"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ms9-eX-H2J"/>
         <segue reference="srM-fE-Wfc"/>
         <segue reference="sI3-nR-DUJ"/>
     </inferredMetricsTieBreakers>
