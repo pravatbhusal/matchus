@@ -649,18 +649,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QgN-md-Tv5">
-                                <rect key="frame" x="0.0" y="472" width="414" height="332"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <viewLayoutGuide key="contentLayoutGuide" id="fOc-ph-d2n"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="aKY-1W-wQw"/>
-                            </scrollView>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="OsP-vu-fN7">
                                 <rect key="frame" x="197" y="454" width="20" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Sg-wH-tFs">
                                 <rect key="frame" x="163" y="95" width="88" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wyi-rw-WO0">
+                                <rect key="frame" x="3" y="482" width="206" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yVh-MS-Qp6">
+                                <rect key="frame" x="3" y="625" width="206" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="46m-0D-E6P">
+                                <rect key="frame" x="226" y="482" width="180" height="271"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -671,6 +677,9 @@
                         <barButtonItem key="rightBarButtonItem" title="Item" image="message" catalog="system" id="dEC-Yw-1xb"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="imageView1" destination="Wyi-rw-WO0" id="bv1-nm-YAB"/>
+                        <outlet property="imageView2" destination="yVh-MS-Qp6" id="0it-l2-akz"/>
+                        <outlet property="imageView3" destination="46m-0D-E6P" id="OYl-g0-1uR"/>
                         <outlet property="interestsTableView" destination="YXl-6B-cFR" id="nnj-lu-Pxj"/>
                         <outlet property="loading" destination="OsP-vu-fN7" id="LCL-o2-5GC"/>
                         <outlet property="matchLabel" destination="maU-JO-dm7" id="XKt-kj-GVv"/>
@@ -679,7 +688,6 @@
                         <outlet property="plusButton" destination="nVm-Ey-LEi" id="ZUz-Av-7XY"/>
                         <outlet property="profileName" destination="ztj-e9-GJf" id="3cD-ce-bNP"/>
                         <outlet property="profilePhoto" destination="3Sg-wH-tFs" id="vfX-fz-IoR"/>
-                        <outlet property="scrollView" destination="QgN-md-Tv5" id="8j5-5N-dNo"/>
                         <segue destination="F0c-Vi-3r4" kind="show" identifier="ChatRoomSegueIdentifier" id="ms9-eX-H2J"/>
                     </connections>
                 </viewController>

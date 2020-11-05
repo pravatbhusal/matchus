@@ -21,8 +21,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var matchLabel: UILabel!
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var interestsTableView: UITableView!
     @IBOutlet weak var pageControl: UIPageControl!
     
@@ -34,6 +32,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     var interests: [String] = []
     
+    @IBOutlet weak var imageView1: UIImageView!
+    @IBOutlet weak var imageView2: UIImageView!
+    @IBOutlet weak var imageView3: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -42,11 +45,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
         
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.isPagingEnabled = true
-
-        scrollView.delegate = self
         toggleVisible(visible: false)
+    
         
         // add a click event to the message bar button item
         messageButton.target = self
@@ -63,7 +63,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         profileName.isHidden = !visible
         interestsTableView.isHidden = !visible
         matchLabel.isHidden = !visible
-        scrollView.isHidden = !visible
     }
     
     func getProfile() {
@@ -90,18 +89,20 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             // get all photo urls, then download them and add to the scrollview
                             let featuredPhotoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
                             
-                            for photoUrl in featuredPhotoURLs {
-                                let imageView = UIImageView()
-                                if imageView.image == nil {
-                                    self.downloadImage(from: URL(string: photoUrl)!, to: imageView)
-                                }
-                                self.scrollView.addSubview(imageView)
-                                print("added imageView to scrollView")
-                                imageView.frame = CGRect(x: scrollView.frame.midX, y: scrollView.frame.height/2, width: 75, height: 75)
-                                
-                            }
-                            scrollView.contentSize = CGSize(width: scrollView.frame.size.width * CGFloat(featuredPhotoURLs.count), height: scrollView.frame.size.height)
+                            let imageViewsToLoad : [UIImageView] = [imageView1, imageView2, imageView3]
                             
+                            var index = 0
+                            var total = 3
+                            if featuredPhotoURLs.count < 3 {
+                                total = featuredPhotoURLs.count
+                            }
+                            
+                            while index < total{
+                                if imageViewsToLoad[index].image == nil {
+                                    self.downloadImage(from: URL(string: featuredPhotoURLs[index])!, to: imageViewsToLoad[index])
+                                }
+                                index += 1
+                            }
                             // add interests to the array (data source for the table) then reload to reflect changes
                             let interestsData: [String] = ResponseSerializer.getInterestsList(json: json)!
                             self.interests = interestsData
@@ -148,11 +149,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                         break
                 }
         }
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let page = scrollView.contentOffset.x/scrollView.frame.size.width
-        pageControl.currentPage = Int(page)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -226,6 +222,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             print("downloaded", url)
             DispatchQueue.main.async() { [weak self] in
                 imageView.image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                print(imageView.image)
             }
         }
     }
