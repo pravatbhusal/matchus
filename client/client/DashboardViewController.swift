@@ -29,22 +29,22 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var plusButton: UIButton!
     
-    var token: String!
     var profiles:[DashboardProfile]!
     var pageNum:Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         plusButton.layer.cornerRadius = 18
-        token = UserDefaults.standard.string(forKey: User.token)
         pageNum = 1
         loadProfiles()
     }
     
     func loadProfiles() {
+        let headers: HTTPHeaders = ["Authorization": "Token \(UserDefaults.standard.string(forKey: User.token) ?? "")"]
+        
         let url = APIs.serverURI + "/dashboard/" + String(pageNum)
         
-        AF.request(url, method: .get, parameters: nil, headers: ["Authorization": token]).responseJSON { [self]
+        AF.request(url, method: .get, parameters: nil, headers: headers).responseJSON { [self]
          response in
             switch response.response?.statusCode {
                     case 200?:
