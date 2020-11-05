@@ -72,7 +72,7 @@ class ProfileView(APIView):
     def get(self, request, *args, **kwargs):
         # receive the user of the profile id provided in the URL
         user_id = int(kwargs.get('id', 0))
-        user = User.objects.get(id=user_id)
+        user = User.objects.filter(id=user_id).first()
         photos = Photo.objects.filter(user=user)
 
         if not user:
@@ -191,11 +191,11 @@ class ChatView(APIView):
         def get(self, request, *args, **kwargs):
             # receive the user of the profile id provided in the URL
             user_id = int(kwargs.get('id', 0))
-            user = User.objects.get(id=user_id)
+            user = User.objects.filter(id=user_id).first()
 
             # receive the chat room between the two users
             chat_filter = (Q(user_A=user) & Q(user_B=request.user)) | (Q(user_A=request.user) & Q(user_B=user))
-            room = ChatRoom.objects.get(chat_filter)
+            room = ChatRoom.objects.filter(chat_filter).first()
 
             # make these users anonymous if the chat room is still anonymous
             my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": room.anonymous })

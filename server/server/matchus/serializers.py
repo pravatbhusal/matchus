@@ -25,10 +25,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     class MatchSerializer(serializers.ModelSerializer):
         match = serializers.SerializerMethodField('get_match')
+        photo = serializers.SerializerMethodField('get_photo')
 
         class Meta:
             model = User
-            fields = ['id', 'match', 'name', 'interests', 'profile_photo']
+            fields = ['id', 'match', 'name', 'interests', 'profile_photo', 'photo']
 
         def get_match(self, obj):
             user = self.context.get("user")
@@ -37,6 +38,15 @@ class UserSerializer(serializers.ModelSerializer):
             match = similarity(obj.interests, user.interests)
 
             return match
+
+        def get_photo(self, obj):
+            user = User.objects.get(id=obj.id)
+            photo = Photo.objects.filter(user=user).first()
+            
+            # serialize this photo
+            photo_serializer = PhotoSerializer(photo)
+
+            return photo_serializer.data["photo"] if photo else ""
 
 class PhotoSerializer(serializers.ModelSerializer):
     class Meta:

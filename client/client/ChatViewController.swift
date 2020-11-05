@@ -42,7 +42,7 @@ import Alamofire
 //}
 
 class ChatProfile {
-    var profileId: Int = 0
+    var id: Int = 0
     var name: String = ""
     var message: String = ""
     var profilePhoto: String = ""
@@ -51,6 +51,7 @@ class ChatProfile {
 class ChatCell: UITableViewCell {
     @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var recentMessage: UILabel!
+    @IBOutlet weak var name: UILabel!
 }
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
@@ -105,6 +106,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         downloadImage(from: URL(string: self.chats[row].profilePhoto)!, to: cell.imageView!)
         cell.recentMessage.text = chats[row].message
+        cell.name.text = chats[row].name
         
         return cell
         
@@ -118,9 +120,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func downloadImage(from url: URL, to imageView: UIImageView) {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
-            print(response?.suggestedFilename ?? url.lastPathComponent)
             DispatchQueue.main.async() {
                 imageView.image = UIImage(data: data)
+                imageView.image?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                self.tableView.reloadData()
             }
         }
     }
