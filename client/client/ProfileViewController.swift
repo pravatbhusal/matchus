@@ -74,7 +74,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             self.matchLabel.text = "Match Rate: \(matchRate)%"
                             // get all photo urls, then download them and add to the scrollview
                             let featuredPhotoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
-                            
+//                            print(json)
+                            print(featuredPhotoURLs)
                             for photoUrl in featuredPhotoURLs {
                                 self.stackView.addArrangedSubview(self.image(filename: photoUrl))
                             }
