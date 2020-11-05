@@ -206,7 +206,7 @@ class ChatView(APIView):
             # create a new chat room between the other user and this user
             room = ChatRoom.objects.create(user_A=request.user, user_B=user)
             serializer = ChatRoomSerializer(room)
-            return JsonResponse(serializer.data, status=HTTP_201_CREATED)
+            return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
 
         serializer = ChatRoomSerializer(room)
         return JsonResponse(serializer.data)
