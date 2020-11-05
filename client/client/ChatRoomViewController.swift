@@ -38,6 +38,8 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     var page: Int = 1
     
+    var atLastPage: Bool = false
+    
     var chats: [Chat] = []
     
     var meProfile: ChatProfile!
@@ -98,7 +100,9 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                             }
                             
                             // store the chats between the users
-                            self.chats += ResponseSerializer.getChatHistory(json: json["chats"])!
+                            let chats = ResponseSerializer.getChatHistory(json: json["chats"])!
+                            self.chats += chats
+                            self.atLastPage = chats.count == 0
                             self.tableView.reloadData()
                         }
                         break
@@ -154,8 +158,8 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let firstVisibleIndexPath = self.tableView.indexPathsForVisibleRows?[0]
         
-        if firstVisibleIndexPath!.row == 0 {
-            // reached the top of the table view, so load the next page
+        if firstVisibleIndexPath!.row == 0 && !self.atLastPage {
+            // reached the top of the table view and there may exist more chat history, so load the next page
             self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
             page += 1
             loadChatHistory(page: page)

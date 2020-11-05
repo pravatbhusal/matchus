@@ -74,7 +74,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "ChatCell", for: indexPath as IndexPath) as! ChatCell
         let row = indexPath.row
         
-        downloadImage(from: URL(string: self.chats[row].profilePhoto)!, to: cell.imageView!)
+        // to prevent continously downloading the image, only set the image if it hasn't been yet set
+        if cell.imageView?.image == nil {
+            downloadImage(from: URL(string: self.chats[row].profilePhoto)!, to: cell.imageView!)
+        }
+        
         cell.recentMessage.text = chats[row].message
         cell.name.text = chats[row].name
         
@@ -84,6 +88,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let chat: RecentChat = chats[indexPath.row]
+        self.tableView.deselectRow(at: indexPath, animated: false)
         
         performSegue(withIdentifier: chatRoomSegueIdentifier, sender: chat)
     }
