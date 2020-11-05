@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 
 class DashboardProfile {
-    var profileId: Int!
+    var id: Int!
     var name: String!
     var profilePhoto: String!
     var photo: String!
@@ -49,14 +49,10 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
             switch response.response?.statusCode {
                     case 200?:
                      if let json = response.value {
-                        let profilePhotoURL: String = ResponseSerializer.getProfilePicture(json: json)!
-                        let profileName: String = ResponseSerializer.getProfileName(json: json)!
-                        let photoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
-                         // populate dashboard array here
-                         
-                         //let dashboardProfiles: [DashboardProfile] = ResponseSerializer.get(json: json)!
-                         //self.chats = chatProfiles
-                         self.tableView.reloadData()
+                        // populate dashboard array here
+                        let dashboardProfiles: [DashboardProfile] = ResponseSerializer.getDashboardList(json: json)!
+                        self.profiles = dashboardProfiles
+                        self.tableView.reloadData()
                      }
                      break;
             default:

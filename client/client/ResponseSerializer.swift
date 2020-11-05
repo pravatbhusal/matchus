@@ -72,6 +72,23 @@ class ResponseSerializer {
         return chatsArray
     }
     
+    static func getDashboardList(json: Any?) -> [DashboardProfile]? {
+        let dashboard = json as! [NSDictionary]
+        var dashboardArray: [DashboardProfile] = []
+        
+        for profile in dashboard {
+            let dashboardProfile: DashboardProfile = DashboardProfile()
+            dashboardProfile.id = profile["id"] as? Int
+            dashboardProfile.name = profile["name"] as? String
+            dashboardProfile.profilePhoto = profile["profile_photo"] as? String
+            dashboardProfile.photo = profile["photo"] as? String
+            dashboardProfile.profileTag = profile["tag"] as? String
+            dashboardArray.append(dashboardProfile)
+        }
+        
+        return dashboardArray
+    }
+    
 //    static func getChatMessages(json: Any?) -> [Chat]? {
 //        let chats = json as! [String: AnyObject]
 //        let profiles = chats["profiles"] as! [String: AnyObject]
