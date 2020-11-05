@@ -14,6 +14,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var profileName: UILabel!
+    @IBOutlet weak var loading: UIActivityIndicatorView!
     @IBOutlet weak var plusButton: UIButton!
     
     @IBOutlet weak var matchLabel: UILabel!
@@ -35,10 +36,21 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         plusButton.layer.cornerRadius = 18
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
+        toggleVisible(visible: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         getProfile()
+    }
+    
+    func toggleVisible(visible: Bool) {
+        loading.isHidden = visible
+        profilePhoto.isHidden = !visible
+        profileName.isHidden = !visible
+        interestsTableView.isHidden = !visible
+        matchLabel.isHidden = !visible
+        scrollView.isHidden = !visible
+        stackView.isHidden = !visible
     }
     
     func getProfile() {
@@ -51,7 +63,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                    switch response.result {
                        case .success:
                         if let json = response.value {
-                            print(json)
                             // add download profilephoto from url and set the imageview image
                             let profilePhotoURL: String = ResponseSerializer.getProfilePicture(json: json)!
                             self.downloadImage(from: URL(string: profilePhotoURL)!, to: self.profilePhoto)
@@ -71,7 +82,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             let interestsData: [String] = ResponseSerializer.getInterestsList(json: json)!
                             self.interests = interestsData
                             self.interestsTableView.reloadData()
-                            
+                            self.toggleVisible(visible: true)
                         }
 
                            
