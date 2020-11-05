@@ -92,7 +92,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         if segue.identifier == chatRoomSegueIdentifier {
             if let chatRoomVC = segue.destination as? ChatRoomViewController {
                 // pass over the room id of this chat room
-                chatRoomVC.roomId = (sender as! ChatProfile).id
+                let chat: ChatProfile = (sender as! ChatProfile)
+                chatRoomVC.roomId = chat.id
+                chatRoomVC.name = chat.name
             }
         }
     }

@@ -12,6 +12,8 @@ class ChatRoomViewController: UIViewController {
     
     var roomId: Int = 0
     
+    var name: String = ""
+    
     var page: Int = 1
 
     @IBOutlet weak var chattingText: UITextField!
@@ -20,6 +22,7 @@ class ChatRoomViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = name
         plusButton.layer.cornerRadius = 18
         plusButton.layer.borderWidth = 1.5
         plusButton.layer.borderColor = UIColor.black.cgColor
