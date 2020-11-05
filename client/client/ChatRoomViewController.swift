@@ -1,5 +1,5 @@
 //
-//  IndividualChatViewController.swift
+//  ChatRoomViewController.swift
 //  Matchus
 //
 //  Created by Jinho Yoon on 11/1/20.
@@ -9,30 +9,24 @@
 import UIKit
 
 class ChatRoomViewController: UIViewController {
+    
+    var id: Int = 0
+    
+    var page: Int = 1
 
     @IBOutlet weak var chattingText: UITextField!
-    @IBOutlet weak var plusButton: UIButton!
     
+    @IBOutlet weak var plusButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         plusButton.layer.cornerRadius = 18
         plusButton.layer.borderWidth = 1.5
         plusButton.layer.borderColor = UIColor.black.cgColor
-        
+        loadChatRoomPage(page: page)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func loadChatRoomPage(page: Int) {
+        
     }
-    */
-
 }

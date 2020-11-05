@@ -629,7 +629,6 @@
                                             <outlet property="name" destination="mzj-bu-wNt" id="HMf-oH-mJu"/>
                                             <outlet property="profilePhoto" destination="MVy-1h-2m4" id="Dy5-I0-IiN"/>
                                             <outlet property="recentMessage" destination="k0i-15-lK0" id="ZvZ-U5-adr"/>
-                                            <segue destination="F0c-Vi-3r4" kind="push" id="5ED-fg-atE"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -642,6 +641,7 @@
                     <connections>
                         <outlet property="plusButton" destination="fVA-n7-sKK" id="kGu-wF-F1S"/>
                         <outlet property="tableView" destination="BQb-PH-zpM" id="e8W-yg-9aj"/>
+                        <segue destination="F0c-Vi-3r4" kind="show" identifier="ChatRoomSegueIdentifier" id="BuF-bP-5U4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Eq-50-WSY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

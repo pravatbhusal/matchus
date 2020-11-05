@@ -181,7 +181,7 @@ class ChatView(APIView):
             # make this user anonymous if the chat room is anonymous
             serializer = UserSerializer.AnonymousSerializer(other_user, context={ "anonymous": room.anonymous })
 
-            messages.append({ **serializer.data, "message": recent_chat["message"] })
+            messages.append({ **serializer.data, "id": room.id, "message": recent_chat["message"] })
         
         return Response(messages)
 
@@ -189,13 +189,12 @@ class ChatView(APIView):
         permission_classes = [permissions.IsAuthenticated]
 
         def get(self, request, *args, **kwargs):
-            # receive the user of the profile id provided in the URL
-            user_id = int(kwargs.get('id', 0))
-            user = User.objects.filter(id=user_id).first()
+            # receive the chat room of the chat room id provided in the URL
+            room_id = int(kwargs.get('id', 0))
+            room = ChatRoom.objects.filter(id=room_id).first()
 
-            # receive the chat room between the two users
-            chat_filter = (Q(user_A=user) & Q(user_B=request.user)) | (Q(user_A=request.user) & Q(user_B=user))
-            room = ChatRoom.objects.filter(chat_filter).first()
+            # receive the other user
+            user = room.user_B if request.user == room.user_A else room.user_A
 
             # make these users anonymous if the chat room is still anonymous
             my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": room.anonymous })

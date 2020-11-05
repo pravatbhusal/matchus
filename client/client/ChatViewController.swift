@@ -9,38 +9,6 @@
 import UIKit
 import Alamofire
 
-//class Chat {
-//
-//    var id: Int!
-//    var imageURL: String!
-//    var messages: [Message]
-//    var name: String!
-//
-//    init(id: Int, imageURL: String, name: String) {
-//        self.id = id
-//        self.imageURL = imageURL
-//        self.messages = []
-//        self.name = name
-//    }
-//
-//    func addMessage(msg: Message) {
-//        self.messages.append(msg)
-//    }
-//
-//}
-//
-//class Message {
-//
-//    var id: Int
-//    var message: String
-//
-//    init(id: Int, msg: String) {
-//        self.id = id
-//        self.message = msg
-//    }
-//
-//}
-
 class ChatProfile {
     var id: Int = 0
     var name: String = ""
@@ -54,7 +22,9 @@ class ChatCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
 }
 
-class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    let chatRoomSegueIdentifier: String = "ChatRoomSegueIdentifier"
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -110,6 +80,21 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell
         
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let chat: ChatProfile = chats[indexPath.row]
+        
+        performSegue(withIdentifier: chatRoomSegueIdentifier, sender: chat)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == chatRoomSegueIdentifier {
+            if let chatRoomVC = segue.destination as? ChatRoomViewController {
+                // pass over the profile id of user that this user chatted with
+                chatRoomVC.id = (sender as! ChatProfile).id
+            }
+        }
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
