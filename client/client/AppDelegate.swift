@@ -14,11 +14,10 @@ import GoogleSignIn
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
-              withError error: Error!) {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
       if let error = error {
         if (error as NSError).code == GIDSignInErrorCode.hasNoAuthInKeychain.rawValue {
-          print("The user has not signed in before or they have since signed out.")
+          print("The Google user has not signed in before or they have since signed out.")
         } else {
           print("\(error.localizedDescription)")
         }
@@ -44,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         GMSPlacesClient.provideAPIKey(APIKeys.gmsPlacesAPIKey)
-        GIDSignIn.sharedInstance().clientID = "593493559154-4564ahmp4fl20r8lrju29nk1ng5d5hkt.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().clientID = APIKeys.googleSignAPIKey
         GIDSignIn.sharedInstance().delegate = self
         return true
     }

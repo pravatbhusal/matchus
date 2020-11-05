@@ -10,6 +10,7 @@ struct APIKeys {
     
     static let gmsPlacesAPIKey: String = "AIzaSyDp2K1mkC9_73l2kAq3okvRIc_WKxIMLtk"
     
+    static let googleSignAPIKey: String = "593493559154-4564ahmp4fl20r8lrju29nk1ng5d5hkt.apps.googleusercontent.com"
 }
 
 struct APIs {
@@ -22,9 +23,9 @@ struct APIs {
     
     static let verifyCredentials: String = "\(serverURI)/verify-credentials"
     
-    static let profile: String = "\(serverURI)/profile/"
+    static let profile: String = "\(serverURI)/profile"
     
-    static let chats: String = "\(serverURI)/chats/"
+    static let chats: String = "\(serverURI)/chats"
     
 }
 

@@ -12,6 +12,8 @@ import Alamofire
 import GoogleSignIn
 
 class LoginViewController: UIViewController {
+    
+    let dashboardSegueIdentifier: String = "DashboardSegueIdentifier"
 
     @IBOutlet weak var emailText: UITextField!
     
@@ -50,14 +52,7 @@ class LoginViewController: UIViewController {
                             let token: String? = ResponseSerializer.getToken(json: json)
                             UserDefaults.standard.set(token, forKey: User.token)
                             
-                            // create a successfully logged-in alert
-                            let alert = UIAlertController(title: "Logged-in!", message: token, preferredStyle: UIAlertController.Style.alert)
-                            
-                            // add an OK button to cancel the alert
-                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                            
-                            // present the alert
-                            self.present(alert, animated: true, completion: nil)
+                            self.performSegue(withIdentifier: self.dashboardSegueIdentifier, sender: nil)
                         }
                         break
                     default:
