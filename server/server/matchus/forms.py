@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate, login
-from .models import User, Photo
+from .models import default_profile_photo, User, Photo
 
 class RequestForm(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -39,6 +39,7 @@ class SignUpForm(RequestForm, VerifyCredentialsForm):
         user = User.objects.create_user(email=self.cleaned_data['email'], password=self.cleaned_data['password'])
         user.location = self.cleaned_data['location']
         user.interests = self.cleaned_data['interests']
+        user.profile_photo = default_profile_photo
         user.save()
         login(self.request, user)
         return user

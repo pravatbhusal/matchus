@@ -15,6 +15,6 @@ urlpatterns = [
     path('profile/interests', views.ProfileView.InterestsView.as_view()),
     path('profile/interests/<str:interest>', views.ProfileView.InterestsView.as_view()),
     path('chats', views.ChatView.as_view()),
-    path('chats/<int:id>', views.ChatView.ChatRoomView.as_view()),
+    path('chats/<int:id>/<int:page>', views.ChatView.ChatRoomView.as_view()),
     path('logout', views.LogoutView.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

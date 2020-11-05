@@ -193,6 +193,13 @@ class ChatView(APIView):
             room_id = int(kwargs.get('id', 0))
             room = ChatRoom.objects.filter(id=room_id).first()
 
+            # receive the chats for the chat room page provided in the URL
+            page = int(kwargs.get('page', 1))
+            chats_per_page = 20
+            start_of_page = (page - 1) * chats_per_page
+            end_of_page = page * chats_per_page
+            chats = room.chats[start_of_page : end_of_page]
+
             # receive the other user
             user = room.user_B if request.user == room.user_A else room.user_A
 
@@ -200,7 +207,7 @@ class ChatView(APIView):
             my_user_serializer = UserSerializer.AnonymousSerializer(request.user, context={ "anonymous": room.anonymous })
             other_user_serializer = UserSerializer.AnonymousSerializer(user, context={ "anonymous": room.anonymous })
 
-            return Response({ "me": my_user_serializer.data, "other": other_user_serializer.data, "chats": room.chats })
+            return Response({ "me": my_user_serializer.data, "other": other_user_serializer.data, "chats": chats })
 
 class LogoutView(APIView):
     def post(self, request):
