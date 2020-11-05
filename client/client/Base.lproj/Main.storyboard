@@ -696,19 +696,52 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="sentButton"/>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dtc-06-r81">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dtc-06-r81">
                                 <rect key="frame" x="20" y="88" width="374" height="651"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="KpW-Ha-BkM" customClass="OtherChatCell" customModule="Matchus" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="374" height="90"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KpW-Ha-BkM" id="63t-7i-WRL">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="90"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmy-f4-zuS">
+                                                    <rect key="frame" x="20" y="8" width="75" height="75"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
+                                                </imageView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Text goes here" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9vu-x9-8C2">
+                                                    <rect key="frame" x="103" y="8" width="263" height="75"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.92143100499999997" green="0.92145264149999995" blue="0.92144101860000005" alpha="0.40520654965753422" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="message" destination="9vu-x9-8C2" id="asb-r4-mjF"/>
+                                            <outlet property="profilePhoto" destination="fmy-f4-zuS" id="hCT-hp-e3c"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="8m6-QA-Srh"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Name" id="oqV-Nx-2tN"/>
+                    <navigationItem key="navigationItem" title="Name" id="IZV-eS-Qik">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="person" catalog="system" id="JEr-ne-SvN"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="chattingText" destination="VQC-A3-kR8" id="iHG-h4-rp2"/>
-                        <outlet property="plusButton" destination="33v-mx-w9c" id="dkf-jU-bs5"/>
+                        <outlet property="plusButton" destination="33v-mx-w9c" id="Jvn-JG-aUY"/>
+                        <outlet property="profileButton" destination="JEr-ne-SvN" id="h1o-SQ-Svi"/>
+                        <outlet property="tableView" destination="dtc-06-r81" id="GhZ-Fa-LVj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZR-xe-oBz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -738,6 +771,7 @@
         <image name="chatButton" width="235" height="214"/>
         <image name="homeButton" width="512" height="512"/>
         <image name="logo" width="365.33334350585938" height="318"/>
+        <image name="person" catalog="system" width="64" height="58"/>
         <image name="profileButton" width="225" height="225"/>
         <image name="sentButton" width="225" height="225"/>
         <image name="settingButton" width="800" height="800"/>

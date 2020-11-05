@@ -24,3 +24,11 @@ extension UIImage {
         return newImage!
     }
 }
+
+extension UITextView {
+    func adjustUITextViewHeight() {
+        self.translatesAutoresizingMaskIntoConstraints = true
+        self.sizeToFit()
+        self.isScrollEnabled = false
+    }
+}
