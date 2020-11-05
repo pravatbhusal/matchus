@@ -17,12 +17,12 @@ class Chat {
 
 class MeChatCell: UITableViewCell {
     @IBOutlet weak var profilePhoto: UIImageView!
-    @IBOutlet weak var message: UITextView!
+    @IBOutlet weak var message: UILabel!
 }
 
 class OtherChatCell: UITableViewCell {
     @IBOutlet weak var profilePhoto: UIImageView!
-    @IBOutlet weak var message: UITextView!
+    @IBOutlet weak var message: UILabel!
 }
 
 class ChatProfile {
@@ -31,7 +31,7 @@ class ChatProfile {
     var name: String = ""
 }
 
-class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WebSocketDelegate {
     
     var roomId: Int = 0
     
@@ -48,6 +48,10 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     var meProfile: ChatProfile = ChatProfile()
     
     var otherProfile: ChatProfile = ChatProfile()
+    
+    var socket: WebSocket!
+    
+    var isConnected: Bool = false
     
     @IBOutlet weak var profileButton: UIBarButtonItem!
     
@@ -69,8 +73,20 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         self.meProfile = ChatProfile()
         self.otherProfile = ChatProfile()
         self.chats = []
+        self.isConnected = false
+        
+        // initiate the web socket connection for this chat room
+        let url = URL(string: "\(APIs.chatRoom)/\(roomId)")!
+        let request = URLRequest(url: url)
+        self.socket = WebSocket(request: request)
+        self.socket.delegate = self
+        self.socket.connect()
 
         loadChatHistory(page: page)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.socket.disconnect()
     }
     
     func loadChatHistory(page: Int) {
@@ -113,7 +129,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                             
                             // scroll to the bottom of the table view on the initial load
                             if initialLoad {
-                                self.tableView.scrollToBottom(animated: false)
+                                self.scrollToBottom()
                             }
                         }
                         break
@@ -128,6 +144,48 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                         self.present(alert, animated: true, completion: nil)
                         break
                 }
+        }
+    }
+    
+    func didReceive(event: WebSocketEvent, client: WebSocket) {
+        switch event {
+            case .connected( _):
+                self.isConnected = true
+            case .disconnected( _):
+                self.isConnected = false
+                break
+            case .text(let string):
+                let chat = string.toJSON() as? [String: AnyObject]
+                let id: Int = chat?["id"] as! Int
+                let message: String = chat?["message"] as! String
+                
+                // add this message into the list of chats
+                let newChat = Chat()
+                newChat.id = id
+                newChat.message = message
+                chats.append(newChat)
+                self.tableView.reloadData()
+                
+                // scroll to the bottom if this user sent the message
+                if id == meProfile.id {
+                    scrollToBottom()
+                }
+                break
+            case .cancelled:
+                self.isConnected = false
+                break
+            case .error( _):
+                self.isConnected = false
+                break
+            default:
+                break
+        }
+    }
+    
+    func scrollToBottom() {
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.chats.count - 1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
     
@@ -151,7 +209,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
             
             cell.profilePhoto.image = meProfile.profilePhoto
             cell.message.text = chat.message
-            cell.message.adjustUITextViewHeight()
+            cell.message.adjustUILabelHeight()
             
             return cell
         }
@@ -161,7 +219,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         
         cell.profilePhoto.image = otherProfile.profilePhoto
         cell.message.text = chat.message
-        cell.message.adjustUITextViewHeight()
+        cell.message.adjustUILabelHeight()
         
         return cell
     }
@@ -170,7 +228,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         let firstVisibleIndexPath = self.tableView.indexPathsForVisibleRows?[0]
         let lastPage: Float = Float(totalsChats) / Float(chatsPerPage)
         
-        if firstVisibleIndexPath!.row == 0 && Float(page) < lastPage {
+        if firstVisibleIndexPath!.row == 0 && Float(page) < lastPage && chats.count != 0 {
             // reached the top of the table view and there exists more chat history, so load the next page
             self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
             page += 1
@@ -179,11 +237,16 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     @IBAction func sendPressed(_ sender: Any) {
-        if chattingText.text == nil || chattingText.text == "" {
+        if chattingText.text == nil || chattingText.text == "" || !self.isConnected {
             return
         }
         
+        // send a message to the socket connection
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let message = "{ \"token\": \"\(token)\", \"message\": \"\(chattingText.text!)\" }"
+        socket?.write(string: message)
         
+        chattingText.text = ""
     }
     
     func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {

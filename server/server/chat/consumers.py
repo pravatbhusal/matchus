@@ -26,6 +26,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         )
 
     async def receive(self, text_data):
+        print(text_data)
         json_data = json.loads(text_data)
         message = json_data['message']
         token = json_data['token']

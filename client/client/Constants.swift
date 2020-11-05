@@ -17,6 +17,8 @@ struct APIs {
     
     static let serverURI: String = "http://127.0.0.1:8000"
     
+    static let socketURI: String = "ws://127.0.0.1:8000"
+    
     static let login: String = "\(serverURI)/login"
     
     static let signup: String = "\(serverURI)/signup"
@@ -26,6 +28,8 @@ struct APIs {
     static let profile: String = "\(serverURI)/profile"
     
     static let chats: String = "\(serverURI)/chats"
+    
+    static let chatRoom: String = "\(socketURI)/ws/chat-room"
     
 }
 
