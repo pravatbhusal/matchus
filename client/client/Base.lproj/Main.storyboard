@@ -556,7 +556,7 @@
                     <navigationItem key="navigationItem" id="in3-R7-H9d"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="navigationItem" destination="in3-R7-H9d" id="bkz-WO-yPK"/>
+                        <outlet property="navigationBar" destination="in3-R7-H9d" id="JfD-L9-Dh2"/>
                         <outlet property="plusButton" destination="7Qr-G1-XiZ" id="FAA-1A-UnS"/>
                         <outlet property="tableView" destination="NTt-Av-1kA" id="sN8-Ey-aR3"/>
                         <segue destination="XaQ-lE-asI" kind="show" identifier="ProfileSegue" id="oHc-qd-Fbx"/>
