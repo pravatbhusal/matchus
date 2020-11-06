@@ -51,7 +51,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
             # if an identity request exists, then check if the user accepted the identity request
             def check_identity_request():
-                if self.chat_room.request_identity_from and token.user != self.chat_room.request_identity_from:
+                if self.chat_room.request_identity_from and token.user == self.chat_room.request_identity_from:
                     self.chat_room.request_identity_from = None
 
                     # the chat room is no longer anonymous if the requested user accepted the request

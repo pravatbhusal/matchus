@@ -209,7 +209,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 if anonymous != otherProfile.anonymous {
                     // the chat is no longer anonymous
-                    
+                    nonAnonymousComplete()
                 }
                 break
             case .cancelled:
@@ -238,6 +238,20 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
             let indexPath = IndexPath(row: row, section: 0)
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
         }
+    }
+    
+    /* Called whenever the chat room is no longer anonymous */
+    func nonAnonymousComplete() {
+        // create an alert to let the user know this chat room is no longer anonymous
+        let alert = UIAlertController(title: "Chat Room is No Longer Anonymous", message: "This room is no longer anonymous, please reload the chat screen.", preferredStyle: UIAlertController.Style.alert)
+        
+        // add an OK button to cancel the alert and go back to the screen that segue'd into this chat room
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
+            self.navigationController?.popViewController(animated: true)
+        }))
+        
+        // present the alert
+        self.present(alert, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
