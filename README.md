@@ -1,4 +1,4 @@
-# MatchUS (Alpha)
+# MatchUS
 An IOS app that matches people based on preferences and interests.
 
 DISCLAIMER: The app only supports the viewports of the IPhone 11 Pro Max.
