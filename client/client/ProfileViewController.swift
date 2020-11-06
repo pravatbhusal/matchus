@@ -127,7 +127,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-
     @objc func createChat(sender : UIBarButtonItem) {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
@@ -155,7 +154,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
@@ -174,8 +172,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         headerView.backgroundColor = UIColor.clear
         return headerView
     }
-    
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InterestCell", for: indexPath as IndexPath)
