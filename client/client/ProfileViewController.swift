@@ -162,10 +162,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     // called whenever the user swipes right
-    func tableView(_ tableView: UITableView,
-                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let like = UIContextualAction(style: .normal, title:  "👍🏼", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            print("Liked interest")
+            self.interests.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
             self.likeInterest(interest: self.interests[indexPath.row])
             success(true)
         })
@@ -177,11 +177,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
      }
      
     // called whenever the user swipes left
-     func tableView(_ tableView: UITableView,
-                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
-     {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
          let dislike = UIContextualAction(style: .destructive, title:  "👎🏼", handler: { (ac:UIContextualAction, view:UIView, nil) in
-             print("Disliked interest")
             self.interests.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.reloadData()
@@ -191,7 +188,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
      }
     
     func likeInterest(interest: String) {
-        print(interest)
         let parameters: [String: Any] = ["interest" : interest]
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
