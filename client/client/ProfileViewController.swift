@@ -258,7 +258,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                 // pass over the room id of this chat room
                 let roomId: Int = sender as! Int
                 chatRoomVC.roomId = roomId
-                chatRoomVC.name = profileName.text!
             }
         }
     }

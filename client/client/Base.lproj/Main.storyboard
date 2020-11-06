@@ -788,7 +788,7 @@
             </objects>
             <point key="canvasLocation" x="6014" y="167"/>
         </scene>
-        <!--Name-->
+        <!--Chat Room View Controller-->
         <scene sceneID="edz-uf-1rU">
             <objects>
                 <viewController id="F0c-Vi-3r4" customClass="ChatRoomViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
@@ -904,7 +904,7 @@
                         <viewLayoutGuide key="safeArea" id="8m6-QA-Srh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Name" id="IZV-eS-Qik">
+                    <navigationItem key="navigationItem" id="IZV-eS-Qik">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="person" catalog="system" id="JEr-ne-SvN"/>
                     </navigationItem>
                     <connections>

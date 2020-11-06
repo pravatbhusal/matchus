@@ -99,7 +99,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 // pass over the room id of this chat room
                 let chat: RecentChat = sender as! RecentChat
                 chatRoomVC.roomId = chat.id
-                chatRoomVC.name = chat.name
             }
         }
     }
