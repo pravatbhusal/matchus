@@ -171,31 +171,24 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
             case .text(let string):
                 let chat = string.toJSON() as? [String: AnyObject]
                 let id: Int = chat?["id"] as! Int
+                let message: String = chat?["message"] as! String
+                let anonymous: Bool = chat?["anonymous"] as! Bool
                 
-                if chat?["message"] != nil {
-                    let message: String = chat?["message"] as! String
-                    
-                    // add this message into the list of chats
-                    let newChat = Chat()
-                    newChat.id = id
-                    newChat.message = message
-                    chats.append(newChat)
-                } else if chat?["request"] != nil {
-                    // add a message to this user that the other user wishes to not be anonymous
-                    let message: String = "Anonymous would like to reveal both of your profiles. Type ACCEPT or something else to deny."
-                    
-                    // add this message into the list of chats
-                    let newChat = Chat()
-                    newChat.id = id
-                    newChat.message = message
-                    chats.append(newChat)
-                }
-                
+                // add this message into the list of chats
+                let newChat = Chat()
+                newChat.id = id
+                newChat.message = message
+                chats.append(newChat)
                 self.tableView.reloadData()
                 
                 // scroll to the bottom if this user sent the message
                 if id == meProfile.id {
                     scrollToBottom(animated: true)
+                }
+                
+                if anonymous != otherProfile.anonymous {
+                    // the chat is no longer anonymous
+                    
                 }
                 break
             case .cancelled:
@@ -213,7 +206,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         if otherProfile.anonymous {
             // send a message to the socket that the user wishes to no longer be anonymous
             let token: String = UserDefaults.standard.string(forKey: User.token)!
-            let message = "{ \"token\": \"\(token)\", \"request\": \"\(true)\" }"
+            let message = "{ \"token\": \"\(token)\", \"request\": \(true) }"
             socket?.write(string: message)
         }
     }
@@ -232,8 +225,9 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let message: String = chats[indexPath.row].message
-        let minCellHeight = 90
-        return message.count < minCellHeight ? CGFloat(minCellHeight) : CGFloat(message.count)
+        let minCellHeight = CGFloat(105)
+        let messageLength = CGFloat(message.count)
+        return messageLength < minCellHeight ? minCellHeight : messageLength
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

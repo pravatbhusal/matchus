@@ -27,7 +27,6 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         json_data = json.loads(text_data)
-        message = json_data['message']
         token = json_data['token']
         token = await sync_to_async(Token.objects.get)(key=token)
 
@@ -36,8 +35,37 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
             return token.user.id
         user_id = await sync_to_async(get_user_id)()
 
+        is_identity_request = bool("request" in json_data and json_data["request"])
+        message = ""
+        if is_identity_request:
+            message = "Anonymous would like to reveal both of your profiles. Type ACCEPT or something else to deny."
+
+            # set the user to request the identity from
+            def set_identity_request():
+                user_identity_from = self.chat_room.user_A if token.user != self.chat_room.user_A else self.chat_room.user_B
+                self.chat_room.request_identity_from = user_identity_from
+                self.chat_room.save()
+            await sync_to_async(set_identity_request)()
+        else:
+            message = json_data['message']
+
+            # if an identity request exists, then check if the user accepted the identity request
+            def check_identity_request():
+                if self.chat_room.request_identity_from and token.user != self.chat_room.request_identity_from:
+                    self.chat_room.request_identity_from = None
+
+                    # the chat room is no longer anonymous if the requested user accepted the request
+                    self.chat_room.anonymous = not (message == "ACCEPT")
+                    self.chat_room.save()
+            await sync_to_async(check_identity_request)()
+
+        # check if the chat room is still anonymous
+        def get_anonymous():
+            return bool(self.chat_room.anonymous)
+        anonymous = await sync_to_async(get_anonymous)()
+
         # add this message into the chat room's model
-        chat = { "id": user_id, "message": message }
+        chat = { "id": user_id, "message": message, "anonymous": anonymous, "request": is_identity_request }
         def add_chat():
             self.chat_room.chats.append(chat)
             self.chat_room.save()
