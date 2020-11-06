@@ -172,14 +172,14 @@ class ChatView(APIView):
         for room in chat_rooms:
             # receive the latest message between this user and the other user
             recent_chat = room.chats[-1] if len(room.chats) > 0 else None
+
+            if not recent_chat:
+                # there exists no chats between the users, so don't append this message
+                continue
             
-            if recent_chat:
-                # attributes to showcase for this recent message based on who the sender of the message was
-                message = recent_chat["message"]
-                recent_chat["message"] = "You: " + message if recent_chat["id"] == request.user.id else message
-            else:
-                recent_chat = dict()
-                recent_chat["message"] = ""
+            # attributes to showcase for this recent message based on who the sender of the message was
+            message = recent_chat["message"]
+            recent_chat["message"] = "You: " + message if recent_chat["id"] == request.user.id else message
             
             # make this user anonymous if the chat room is anonymous
             other_user = room.user_B if request.user == room.user_A else room.user_A

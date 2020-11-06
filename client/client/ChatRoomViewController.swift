@@ -36,8 +36,6 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     var roomId: Int = 0
     
-    var name: String = ""
-    
     var loading: Bool = true
     
     var totalsChats: Int = 0
@@ -66,7 +64,6 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = name
         tableView.delegate = self
         tableView.dataSource = self
         plusButton.layer.cornerRadius = 18
@@ -120,6 +117,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                                 let other = json["other"] as! NSDictionary
                                 self.otherProfile.id = other["id"] as! Int
                                 self.otherProfile.name = other["name"] as! String
+                                self.title = self.otherProfile.name
                                 self.otherProfile.anonymous = other["anonymous"] as! Bool
                                 let otherPhotoURL = "\(APIs.serverURI)\(other["profile_photo"] as! String)"
                                 self.downloadImage(from: URL(string: otherPhotoURL)!, to: self.otherProfile)
@@ -163,19 +161,36 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         switch event {
             case .connected(_ ):
                 self.isConnected = true
+            
+                // add a click event to the message bar button item
+                self.profileButton.target = self
+                self.profileButton.action = #selector(viewProfile(sender:))
             case .disconnected(_ ):
                 self.isConnected = false
                 break
             case .text(let string):
                 let chat = string.toJSON() as? [String: AnyObject]
                 let id: Int = chat?["id"] as! Int
-                let message: String = chat?["message"] as! String
                 
-                // add this message into the list of chats
-                let newChat = Chat()
-                newChat.id = id
-                newChat.message = message
-                chats.append(newChat)
+                if chat?["message"] != nil {
+                    let message: String = chat?["message"] as! String
+                    
+                    // add this message into the list of chats
+                    let newChat = Chat()
+                    newChat.id = id
+                    newChat.message = message
+                    chats.append(newChat)
+                } else if chat?["request"] != nil {
+                    // add a message to this user that the other user wishes to not be anonymous
+                    let message: String = "Anonymous would like to reveal both of your profiles. Type ACCEPT or something else to deny."
+                    
+                    // add this message into the list of chats
+                    let newChat = Chat()
+                    newChat.id = id
+                    newChat.message = message
+                    chats.append(newChat)
+                }
+                
                 self.tableView.reloadData()
                 
                 // scroll to the bottom if this user sent the message
@@ -191,6 +206,15 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                 break
             default:
                 break
+        }
+    }
+    
+    @objc func viewProfile(sender : UIBarButtonItem) {
+        if otherProfile.anonymous {
+            // send a message to the socket that the user wishes to no longer be anonymous
+            let token: String = UserDefaults.standard.string(forKey: User.token)!
+            let message = "{ \"token\": \"\(token)\", \"request\": \"\(true)\" }"
+            socket?.write(string: message)
         }
     }
     
