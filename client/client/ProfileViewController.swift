@@ -9,7 +9,8 @@
 import UIKit
 import Alamofire
 
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let chatRoomSegueIdentifier: String = "ChatRoomSegueIdentifier"
     
@@ -41,6 +42,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var imageView3: UIImageView!
     
+    let tableRowSpacing: CGFloat = 20
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         plusButton.layer.cornerRadius = 18
@@ -53,6 +56,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // add a click event to the message bar button item
         messageButton.target = self
         messageButton.action = #selector(createChat(sender:))
+        
+        interestsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0);
     }
     
     func toggleVisible(visible: Bool) {
@@ -150,23 +155,53 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
     }
     
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return interests.count
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return tableRowSpacing
+    }
+    
+    // clears out the section background color
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
+    }
+    
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InterestCell", for: indexPath as IndexPath)
-        let row = indexPath.row
+        let row = indexPath.section
         cell.textLabel?.text = interests[row]
+        cell.contentView.layer.borderWidth = 2.5
+        cell.contentView.layer.cornerRadius = 4.0
         return cell
     }
     
     // called whenever the user swipes right
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let like = UIContextualAction(style: .normal, title:  "👍🏼", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
-            self.interests.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            self.likeInterest(interest: self.interests[indexPath.row])
+            
+            self.likeInterest(interest: self.interests[indexPath.section])
+            self.interests.remove(at: indexPath.section)
+            tableView.beginUpdates()
+            UIView.animate(withDuration: 3.0, delay: 0.0, options: .curveEaseOut, animations: {tableView.cellForRow(at: indexPath)?.contentView.layer.borderColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)}, completion: {finished in
+                let indexSet = NSMutableIndexSet()
+                indexSet.add(indexPath.section)
+                tableView.deleteSections(indexSet as IndexSet, with: .right)
+                tableView.endUpdates()
+                tableView.reloadData()
+            })
+            
+            
             success(true)
         })
         
@@ -179,9 +214,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     // called whenever the user swipes left
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
          let dislike = UIContextualAction(style: .destructive, title:  "👎🏼", handler: { (ac:UIContextualAction, view:UIView, nil) in
-            self.interests.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            tableView.reloadData()
+            
+            self.interests.remove(at: indexPath.section)
+            tableView.beginUpdates()
+            
+            UIView.animate(withDuration: 3.0, delay: 0.0, options: .curveEaseOut, animations: {tableView.cellForRow(at: indexPath)?.contentView.layer.borderColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)}, completion: {finished in
+                let indexSet = NSMutableIndexSet()
+                indexSet.add(indexPath.section)
+                tableView.deleteSections(indexSet as IndexSet, with: .left)
+                tableView.endUpdates()
+                tableView.reloadData()
+            })
          })
         
          return UISwipeActionsConfiguration(actions: [dislike])
