@@ -36,8 +36,6 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     var roomId: Int = 0
     
-    var name: String = ""
-    
     var loading: Bool = true
     
     var totalsChats: Int = 0
@@ -66,7 +64,6 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = name
         tableView.delegate = self
         tableView.dataSource = self
         plusButton.layer.cornerRadius = 18
@@ -141,6 +138,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                                 let other = json["other"] as! NSDictionary
                                 self.otherProfile.id = other["id"] as! Int
                                 self.otherProfile.name = other["name"] as! String
+                                self.title = self.otherProfile.name
                                 self.otherProfile.anonymous = other["anonymous"] as! Bool
                                 let otherPhotoURL = "\(APIs.serverURI)\(other["profile_photo"] as! String)"
                                 self.downloadImage(from: URL(string: otherPhotoURL)!, to: self.otherProfile)
@@ -184,6 +182,10 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         switch event {
             case .connected(_ ):
                 self.isConnected = true
+            
+                // add a click event to the message bar button item
+                self.profileButton.target = self
+                self.profileButton.action = #selector(viewProfile(sender:))
             case .disconnected(_ ):
                 self.isConnected = false
                 break
@@ -191,6 +193,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                 let chat = string.toJSON() as? [String: AnyObject]
                 let id: Int = chat?["id"] as! Int
                 let message: String = chat?["message"] as! String
+                let anonymous: Bool = chat?["anonymous"] as! Bool
                 
                 // add this message into the list of chats
                 let newChat = Chat()
@@ -202,6 +205,11 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                 // scroll to the bottom if this user sent the message
                 if id == meProfile.id {
                     scrollToBottom(animated: true)
+                }
+                
+                if anonymous != otherProfile.anonymous {
+                    // the chat is no longer anonymous
+                    nonAnonymousComplete()
                 }
                 break
             case .cancelled:
@@ -215,6 +223,15 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    @objc func viewProfile(sender : UIBarButtonItem) {
+        if otherProfile.anonymous {
+            // send a message to the socket that the user wishes to no longer be anonymous
+            let token: String = UserDefaults.standard.string(forKey: User.token)!
+            let message = "{ \"token\": \"\(token)\", \"request\": \(true) }"
+            socket?.write(string: message)
+        }
+    }
+    
     func scrollToBottom(animated: Bool) {
         let row = self.chats.count - 1
         if row > 0 {
@@ -223,14 +240,29 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    /* Called whenever the chat room is no longer anonymous */
+    func nonAnonymousComplete() {
+        // create an alert to let the user know this chat room is no longer anonymous
+        let alert = UIAlertController(title: "Chat Room is No Longer Anonymous", message: "This room is no longer anonymous, please reload the chat screen.", preferredStyle: UIAlertController.Style.alert)
+        
+        // add an OK button to cancel the alert and go back to the screen that segue'd into this chat room
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (action: UIAlertAction!) in
+            self.navigationController?.popViewController(animated: true)
+        }))
+        
+        // present the alert
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.chats.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let message: String = chats[indexPath.row].message
-        let minCellHeight = 90
-        return message.count < minCellHeight ? CGFloat(minCellHeight) : CGFloat(message.count)
+        let minCellHeight = CGFloat(105)
+        let messageLength = CGFloat(message.count)
+        return messageLength < minCellHeight ? minCellHeight : messageLength
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
