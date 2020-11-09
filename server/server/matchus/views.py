@@ -84,6 +84,18 @@ class ProfileView(APIView):
 
         return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data })
 
+    class SettingsView(APIView):
+        permission_classes = [permissions.IsAuthenticated]
+        
+        def get(self, request, *args, **kwargs):
+            photos = Photo.objects.filter(user=request.user)
+
+            # serialize this user and its photos
+            user_serializer = UserSerializer(request.user)
+            photos_serializer = PhotoSerializer(photos, many=True)
+
+            return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data })
+
     class ProfilePhotoView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
         permission_classes = [permissions.IsAuthenticated]

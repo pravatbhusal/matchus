@@ -5,7 +5,7 @@ from notebook.matchus import similarity
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'name', 'interests', 'profile_photo']
+        fields = ['id', 'name', 'location', 'biography', 'interests', 'profile_photo']
 
     class AnonymousSerializer(serializers.ModelSerializer):
         anonymous = serializers.SerializerMethodField('get_anonymous')
