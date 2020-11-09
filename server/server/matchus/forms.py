@@ -24,7 +24,7 @@ class VerifyCredentialsForm(forms.Form):
         return email
 
 class SignUpForm(RequestForm, VerifyCredentialsForm):
-    name = forms.CharField(max_length=128)
+    name = forms.CharField(required=True, max_length=128)
     location = forms.CharField(required=True, max_length=128, error_messages={
         "required": "Please input a location."
     })
@@ -79,6 +79,38 @@ class LoginForm(RequestForm, forms.Form):
 
         login(self.request, self.user)
         return self.user
+
+class SettingsForm(RequestForm):
+    email = forms.EmailField(required=False, min_length=4, max_length=128)
+    old_password = forms.CharField(required=False, min_length=4, max_length=128)
+    password = forms.CharField(required=False, min_length=4, max_length=128)
+    confirm_password = forms.CharField(required=False, min_length=4, max_length=128)
+    name = forms.CharField(required=False, max_length=128)
+    location = forms.CharField(required=False, max_length=128)
+    interests = forms.JSONField(required=False)
+    biography = forms.CharField(required=False, max_length=512)
+    latitude = forms.DecimalField(required=False, max_digits=16, decimal_places=12)
+    longitude = forms.DecimalField(required=False, max_digits=16, decimal_places=12)
+
+    def clean_email(self):
+        if 'email' not in self.data:
+            return None
+
+        email = self.data['email'].lower()
+
+        account_exists = User.objects.filter(email=email).exists()
+        if account_exists:
+            # account already exists for this email, so return a conflicted response
+            raise forms.ValidationError(f"User already exists with the email {email}.")
+            
+        return email
+
+    def save(self):
+        """
+        Updates a user with the provided form information.
+        """
+
+        return user
 
 class PhotoForm(forms.Form):
     photo = forms.ImageField(required=True, error_messages={
