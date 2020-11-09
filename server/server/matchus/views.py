@@ -102,7 +102,9 @@ class ProfileView(APIView):
             if not settings_form.is_valid():
                 return Response(settings_form.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
 
-            return Response()
+            user = settings_form.save()
+            user_serializer = UserSerializer(user)
+            return JsonResponse(user_serializer.data)
 
         def delete(self, request):
             request.user.delete()
