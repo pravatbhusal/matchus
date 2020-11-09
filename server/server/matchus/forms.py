@@ -26,10 +26,13 @@ class VerifyCredentialsForm(forms.Form):
 class SignUpForm(RequestForm, VerifyCredentialsForm):
     name = forms.CharField(max_length=128)
     location = forms.CharField(required=True, max_length=128, error_messages={
-        "required": "Please input a location field."
+        "required": "Please input a location."
     })
     interests = forms.JSONField(required=True, error_messages={
-        "required": "Please input interests fields."
+        "required": "Please input enough interests."
+    })
+    biography = forms.CharField(required=True, max_length=512, error_messages={
+        "required": "Please input a biography."
     })
     latitude = forms.DecimalField(required=True, max_digits=16, decimal_places=12)
     longitude = forms.DecimalField(required=True, max_digits=16, decimal_places=12)
@@ -45,6 +48,7 @@ class SignUpForm(RequestForm, VerifyCredentialsForm):
         user.latitude = self.cleaned_data['latitude']
         user.longitude = self.cleaned_data['longitude']
         user.interests = self.cleaned_data['interests']
+        user.biography = self.cleaned_data["biography"]
         user.profile_photo = default_profile_photo
         user.save()
         login(self.request, user)
