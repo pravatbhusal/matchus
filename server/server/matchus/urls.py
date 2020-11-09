@@ -9,6 +9,7 @@ urlpatterns = [
     path('login', views.LoginView.as_view()),
     path('dashboard/<int:page>', views.DashboardView.as_view()),
     path('profile/<int:id>', views.ProfileView.as_view()),
+    path('profile/settings', views.ProfileView.SettingsView.as_view()),
     path('profile/profile-photo', views.ProfileView.ProfilePhotoView.as_view()),
     path('profile/photos', views.ProfileView.PhotosView.as_view()),
     path('profile/photos/<str:name>', views.ProfileView.PhotosView.as_view()),

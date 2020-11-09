@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from .models import media_dir, ChatRoom, Photo, User
 from .serializers import ChatRoomSerializer, PhotoSerializer, UserSerializer
-from .forms import ChatRoomForm, InterestForm, LoginForm, PhotoForm, SignUpForm, VerifyCredentialsForm
+from .forms import ChatRoomForm, InterestForm, LoginForm, PhotoForm, SettingsForm, SignUpForm, VerifyCredentialsForm
 from .queries import get_users_nearby
 
 class VerifyCredentialsView(APIView):
@@ -83,6 +83,32 @@ class ProfileView(APIView):
         photos_serializer = PhotoSerializer(photos, many=True)
 
         return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data })
+
+    class SettingsView(APIView):
+        permission_classes = [permissions.IsAuthenticated]
+        
+        def get(self, request):
+            photos = Photo.objects.filter(user=request.user)
+
+            # serialize this user and its photos
+            user_serializer = UserSerializer(request.user)
+            photos_serializer = PhotoSerializer(photos, many=True)
+
+            return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data })
+
+        def put(self, request):
+            settings_form = SettingsForm(request.data, request=request)
+
+            if not settings_form.is_valid():
+                return Response(settings_form.errors, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+            user = settings_form.save()
+            user_serializer = UserSerializer(user)
+            return JsonResponse(user_serializer.data)
+
+        def delete(self, request):
+            request.user.delete()
+            return Response()
 
     class ProfilePhotoView(APIView):
         parser_classes = [parsers.FormParser, parsers.MultiPartParser]
