@@ -75,6 +75,51 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		A2069390255B165300A9D1B6 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				03FE665F2536C38700A4C1C2 /* LoginViewController.swift */,
+				910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		A2069391255B16E200A9D1B6 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */,
+				910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */,
+				910C0F492533A55800DCDBE7 /* LocationViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		A2069392255B16FB00A9D1B6 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				A2069394255B175100A9D1B6 /* Chat */,
+				913FC532254E1E3C008881C6 /* DashboardViewController.swift */,
+				913FC537254E29CF008881C6 /* ProfileViewController.swift */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		A2069393255B171200A9D1B6 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A2069394255B175100A9D1B6 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				913FC53B254E2AF2008881C6 /* ChatViewController.swift */,
+				DA3C88982553AAAB003A3714 /* ChatRoomViewController.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
 		B58098E18A3EA6FFE20B3CF0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -105,6 +150,10 @@
 		DABA1594252BAB9D00083305 /* client */ = {
 			isa = PBXGroup;
 			children = (
+				A2069391255B16E200A9D1B6 /* Onboarding */,
+				A2069390255B165300A9D1B6 /* Auth */,
+				A2069392255B16FB00A9D1B6 /* Account */,
+				A2069393255B171200A9D1B6 /* Settings */,
 				DABA159E252BAB9E00083305 /* Assets.xcassets */,
 				DA16E2392542712900F179F0 /* Constants.swift */,
 				DA6537D9254F628C0085ED03 /* ResponseSerializer.swift */,
@@ -112,15 +161,6 @@
 				DA3C88962553A20A003A3714 /* Extensions.swift */,
 				DABA1597252BAB9D00083305 /* SceneDelegate.swift */,
 				DABA1599252BAB9D00083305 /* ViewController.swift */,
-				03FE665F2536C38700A4C1C2 /* LoginViewController.swift */,
-				910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */,
-				DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */,
-				910C0F492533A55800DCDBE7 /* LocationViewController.swift */,
-				910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */,
-				913FC532254E1E3C008881C6 /* DashboardViewController.swift */,
-				913FC537254E29CF008881C6 /* ProfileViewController.swift */,
-				913FC53B254E2AF2008881C6 /* ChatViewController.swift */,
-				DA3C88982553AAAB003A3714 /* ChatRoomViewController.swift */,
 				DABA159B252BAB9D00083305 /* Main.storyboard */,
 				DABA15A0252BAB9E00083305 /* LaunchScreen.storyboard */,
 				03FE66672536D22100A4C1C2 /* client.entitlements */,
