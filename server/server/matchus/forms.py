@@ -8,6 +8,7 @@ class RequestForm(forms.Form):
         super(RequestForm, self).__init__(*args, **kwargs)
 
 class VerifyCredentialsForm(forms.Form):
+    google_user_id = forms.CharField(required=False, max_length=128)
     email = forms.EmailField(required=True, min_length=4, max_length=128)
     password = forms.CharField(required=True, min_length=4, max_length=128, error_messages={
         "min_length": "The password is not strong enough."
@@ -43,6 +44,7 @@ class SignUpForm(RequestForm, VerifyCredentialsForm):
         """
 
         user = User.objects.create_user(email=self.cleaned_data['email'], password=self.cleaned_data['password'])
+        user.google_user_id = self.cleaned_data['google_user_id']
         user.name = self.cleaned_data['name']
         user.interests = self.cleaned_data['interests']
         user.biography = self.cleaned_data["biography"]
@@ -55,16 +57,25 @@ class SignUpForm(RequestForm, VerifyCredentialsForm):
         return user
 
 class LoginForm(RequestForm, forms.Form):
+    google_user_id = forms.CharField(required=False, max_length=128)
     email = forms.EmailField(required=True, min_length=4, max_length=128)
     password = forms.CharField(required=True, min_length=4, max_length=128, error_messages={
         "min_length": "The password is not strong enough."
     })
 
     def clean(self):
+        google_user_id = self.data['google_user_id']
         email = self.data['email'].lower()
-        password = self.data['password']
 
-        user = authenticate(self.request, email=email, password=password)
+        user = None
+        if bool(google_user_id):
+            # login using Google OAuth
+            user = User.objects.filter(email=email, google_user_id=google_user_id).first()
+        else:
+            # login using the provided password
+            password = self.data['password']
+            user = authenticate(self.request, email=email, password=password)
+
         if user is None:
             # the authentication failed because the email and password combination was not found
             raise forms.ValidationError(f"The email and password credentials were not found.")

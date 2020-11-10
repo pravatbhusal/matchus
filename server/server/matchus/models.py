@@ -17,6 +17,7 @@ class User(AbstractUser):
     username = None
     first_name = None
     last_name = None
+    google_user_id = models.CharField(default="", max_length=128)
     email = models.EmailField(_('email address'), unique=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

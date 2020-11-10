@@ -15,6 +15,8 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     let dashboardSegueIdentifier: String = "DashboardSegueIdentifier"
     
+    var googleUserId: String = ""
+    
     var email: String = ""
     
     var password: String = ""
@@ -124,9 +126,9 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func registerUser(email: String, password: String, location: String, interests: [String]) {
-        let parameters = ["email": email, "password": password, "name": name, "biography": biography, "location": location, "longitude": longitude, "latitude": latitude, "interests": interests] as [String : Any]
+        let parameters = ["google_user_id": googleUserId, "email": email, "password": password, "name": name, "biography": biography, "location": location, "longitude": longitude, "latitude": latitude, "interests": interests] as [String : Any]
         
-        AF.request(URL.init(string: APIs.signup)!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
+        AF.request(URL.init(string: APIs.signup)!, method: .post, parameters: parameters as Parameters, encoding: JSONEncoding.default).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 201?:
                         if let json = response.value {

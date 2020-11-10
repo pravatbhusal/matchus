@@ -41,10 +41,10 @@ class LoginViewController: UIViewController {
     }
     
     
-    func loginUser(email: String, password: String) {
-        let parameters = ["email": email, "password": password]
+    func loginUser(googleUserId: String, email: String, password: String) {
+        let parameters = ["google_user_id": googleUserId, "email": email, "password": password]
         
-        AF.request(URL.init(string: APIs.login)!, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { (response) in
+        AF.request(URL.init(string: APIs.login)!, method: .post, parameters: parameters as Parameters, encoding: JSONEncoding.default).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
                         if let json = response.value {
@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginPressed(_ sender: Any) {
-        loginUser(email: emailText.text ?? "", password: passwordText.text ?? "")
+        loginUser(googleUserId: "", email: emailText.text ?? "", password: passwordText.text ?? "")
     }
     
     @IBAction func googleSignIn(_ sender: Any) {
@@ -83,7 +83,7 @@ class LoginViewController: UIViewController {
         if let user = GIDSignIn.sharedInstance()?.currentUser {
             let email: String = user.profile.email
             let password: String = user.userID
-            loginUser(email: email, password: password)
+            loginUser(googleUserId: user.userID, email: email, password: password)
         }
     }
 }

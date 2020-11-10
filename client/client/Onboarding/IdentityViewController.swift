@@ -12,6 +12,8 @@ class IdentityViewController: UIViewController, UIImagePickerControllerDelegate,
     
     let locationSegueIdentifier: String = "LocationSegue"
     
+    var googleUserId: String = ""
+    
     var email: String = ""
     
     var password: String = ""
@@ -74,6 +76,7 @@ class IdentityViewController: UIViewController, UIImagePickerControllerDelegate,
         if segue.identifier == locationSegueIdentifier {
             if let locationVC = segue.destination as? LocationViewController {
                 // pass over the identity view controller's variables
+                locationVC.googleUserId = googleUserId
                 locationVC.email = email
                 locationVC.password = password
                 locationVC.profilePhoto = profilePhoto.backgroundImage(for: .normal)

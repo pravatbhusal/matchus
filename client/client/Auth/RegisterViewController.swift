@@ -23,9 +23,11 @@ class RegisterViewController: UIViewController {
     
     @IBOutlet weak var googleButton: UIButton!
     
+    var googleUserId: String = ""
     
-    var email: String = ""
-    var password: String = ""
+    var oAuthEmail: String = ""
+    
+    var oAuthPassword: String = ""
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -82,8 +84,9 @@ class RegisterViewController: UIViewController {
         if let user = GIDSignIn.sharedInstance()?.currentUser {
             let email: String = user.profile.email
             let password: String = user.userID
-            self.email = email
-            self.password = password
+            self.googleUserId = user.userID
+            self.oAuthEmail = email
+            self.oAuthPassword = password
             verifyCredentials(email: email, password: password)
         }
     }
@@ -91,13 +94,15 @@ class RegisterViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == identitySegueIdentifier {
             if let identityVC = segue.destination as? IdentityViewController {
-                // pass over the register view controller's variables
-                if (self.email == "" || self.password == "") {
+                if self.oAuthEmail == "" || self.oAuthPassword == "" {
+                    // register using the account system
                     identityVC.email = emailText.text!
                     identityVC.password = passwordText.text!
                 } else {
-                    identityVC.email = self.email
-                    identityVC.password = self.password
+                    // register using OAuth
+                    identityVC.googleUserId = self.googleUserId
+                    identityVC.email = self.oAuthEmail
+                    identityVC.password = self.oAuthPassword
                 }
             }
         }

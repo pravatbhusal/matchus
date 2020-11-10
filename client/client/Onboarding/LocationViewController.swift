@@ -12,6 +12,8 @@ import GooglePlaces
 
 class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
     
+    var googleUserId: String = ""
+    
     var email: String = ""
     
     var password: String = ""
@@ -114,6 +116,7 @@ class LocationViewController: UIViewController, CLLocationManagerDelegate, GMSAu
         if segue.identifier == interestsSegueIdentifier {
             if let interestsVC = segue.destination as? InterestsViewController {
                 // pass over the location view controller's variables
+                interestsVC.googleUserId = googleUserId
                 interestsVC.email = email
                 interestsVC.password = password
                 interestsVC.profilePhoto = profilePhoto
