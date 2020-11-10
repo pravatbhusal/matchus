@@ -71,4 +71,33 @@ class AccountSettingsViewController: UIViewController {
                 }
         }
     }
+    
+    func logout() {
+        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        UserDefaults.standard.removeObject(forKey: User.token)
+    }
+    
+    func deleteUser() {
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
+        
+        AF.request(APIs.settings, method: .delete, parameters: nil, headers: headers).responseJSON { [self]
+         response in
+            switch response.response?.statusCode {
+                    case 200?:
+                        self.logout()
+                     break
+            default:
+                // create a failure to delete account alert
+                let alert = UIAlertController(title: "Failed to Delete Account", message: "Could not delete your account, is your internet down?", preferredStyle: UIAlertController.Style.alert)
+                
+                // add an OK button to cancel the alert
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                
+                // present the alert
+                self.present(alert, animated: true, completion: nil)
+                break
+            }
+        }
+    }
 }
