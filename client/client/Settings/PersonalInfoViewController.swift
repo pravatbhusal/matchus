@@ -26,9 +26,8 @@ class PersonalInfoViewController: UIViewController {
     func loadInfo() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
-        let url = "\(APIs.serverURI)/profile/settings"
         
-        AF.request(url, method: .get, parameters: nil, headers: headers).responseJSON { [self]
+        AF.request(APIs.settings, method: .get, parameters: nil, headers: headers).responseJSON { [self]
          response in
             switch response.response?.statusCode {
                     case 200?:
@@ -40,7 +39,7 @@ class PersonalInfoViewController: UIViewController {
                      }
                      break
             default:
-                // create a failure to load chat history alert
+                // create a failure to load profile info alert
                 let alert = UIAlertController(title: "Failed to Load Profile Info", message: "Could not load your profile, is your internet down?", preferredStyle: UIAlertController.Style.alert)
                 
                 // add an OK button to cancel the alert
@@ -52,15 +51,30 @@ class PersonalInfoViewController: UIViewController {
             }
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func updateInfo() {
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
+        let parameters = [ "profile_photo": profilePhoto!, "name": profileName!, "biography": profileBio!, "location": profileLocation! ] as [String : Any]
+        
+        AF.request(APIs.settings, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+                switch response.response?.statusCode {
+                    case 200?:
+                        if let json = response.value as! NSDictionary? {
+                            print(json)
+                        }
+                        break
+                    default:
+                        // create a failure to update profile info alert
+                        let alert = UIAlertController(title: "Failed to Update Profile Info", message: "Could not update profile info, is your internet down?", preferredStyle: UIAlertController.Style.alert)
+                        
+                        // add an OK button to cancel the alert
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                        
+                        // present the alert
+                        self.present(alert, animated: true, completion: nil)
+                        break
+                }
+        }
     }
-    */
-
 }

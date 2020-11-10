@@ -29,6 +29,8 @@ struct APIs {
     
     static let profilePhoto: String = "\(serverURI)/profile/profile-photo"
     
+    static let settings: String = "\(serverURI)/profile/settings"
+    
     static let chats: String = "\(serverURI)/chats"
     
     static let interests: String = "\(serverURI)/profile/interests"
