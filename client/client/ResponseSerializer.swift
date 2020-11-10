@@ -44,6 +44,27 @@ class ResponseSerializer {
         return profileName
     }
     
+    static func getProfileBio(json: Any?) -> String? {
+        let bio = json as! [String: AnyObject]
+        let profileBio: String? = bio["biography"] as? String
+        
+        return profileBio
+    }
+    
+    static func getProfileLocation(json: Any?) -> String? {
+        let location = json as! [String: AnyObject]
+        let profileLocation: String? = location["location"] as? String
+        
+        return profileLocation
+    }
+    
+    static func getProfileEmail(json: Any?) -> String? {
+        let email = json as! [String: AnyObject]
+        let profileEmail: String? = email["email"] as? String
+        
+        return profileEmail
+    }
+    
     static func getMatchRate(json: Any?) -> String? {
         let match = json as! [String: AnyObject]
         let matchRate: Double? = match["match"] as? Double
