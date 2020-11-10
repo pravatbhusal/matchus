@@ -229,6 +229,11 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
             let token: String = UserDefaults.standard.string(forKey: User.token)!
             let message = "{ \"token\": \"\(token)\", \"request\": \(true) }"
             socket?.write(string: message)
+        } else {
+            // segue to the profile of the other user
+            let profileVC = self.storyboard?.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            profileVC.id = otherProfile.id
+            self.navigationController?.pushViewController(profileVC, animated: true)
         }
     }
     
