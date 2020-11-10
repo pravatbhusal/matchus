@@ -28,7 +28,7 @@ class SignUpForm(RequestForm, VerifyCredentialsForm):
     interests = forms.JSONField(required=True, error_messages={
         "required": "Please input enough interests."
     })
-    biography = forms.CharField(required=True, max_length=512, error_messages={
+    biography = forms.CharField(required=True, error_messages={
         "required": "Please input a biography."
     })
     location = forms.CharField(required=True, max_length=128, error_messages={
@@ -86,7 +86,7 @@ class SettingsForm(RequestForm):
     password = forms.CharField(required=False, min_length=4, max_length=128)
     confirm_password = forms.CharField(required=False, min_length=4, max_length=128)
     name = forms.CharField(required=False, max_length=128)
-    biography = forms.CharField(required=False, max_length=512)
+    biography = forms.CharField(required=False)
     location = forms.CharField(required=False, max_length=128)
     latitude = forms.DecimalField(required=False, max_digits=16, decimal_places=12)
     longitude = forms.DecimalField(required=False, max_digits=16, decimal_places=12)
