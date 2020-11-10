@@ -15,13 +15,17 @@ class IdentityViewController: UIViewController, UIImagePickerControllerDelegate,
     var email: String = ""
     
     var password: String = ""
-
-    @IBOutlet weak var firstNameText: UITextField!
     
     @IBOutlet weak var profilePhoto: UIButton!
     
+    @IBOutlet weak var firstNameText: UITextField!
+    
+    @IBOutlet weak var bioText: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        bioText.layer.borderWidth = 1
+        bioText!.layer.borderColor = UIColor.black.cgColor
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -51,9 +55,9 @@ class IdentityViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     @IBAction func nextPressed(_ sender: Any) {
-        if firstNameText.text == nil || firstNameText.text == "" {
+        if firstNameText.text == nil || firstNameText.text == "" || bioText.text == nil || bioText.text == "" {
             // create a failure alert because there were missing fields
-            let alert = UIAlertController(title: "Missing Name", message: "Please enter a first name.", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Missing Info", message: "Please enter all of the fields.", preferredStyle: UIAlertController.Style.alert)
             
             // add an OK button to cancel the alert
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -72,8 +76,9 @@ class IdentityViewController: UIViewController, UIImagePickerControllerDelegate,
                 // pass over the identity view controller's variables
                 locationVC.email = email
                 locationVC.password = password
-                locationVC.name = firstNameText.text!
                 locationVC.profilePhoto = profilePhoto.backgroundImage(for: .normal)
+                locationVC.name = firstNameText.text!
+                locationVC.biography = bioText.text!
             }
         }
     }
