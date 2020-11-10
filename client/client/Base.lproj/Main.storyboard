@@ -585,7 +585,7 @@
         <!--Profile View Controller-->
         <scene sceneID="QGh-cK-2LJ">
             <objects>
-                <viewController id="XaQ-lE-asI" customClass="ProfileViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" id="XaQ-lE-asI" customClass="ProfileViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dAq-SM-DPv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
