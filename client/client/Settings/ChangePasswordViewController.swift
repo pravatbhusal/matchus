@@ -11,14 +11,21 @@ import Alamofire
 
 class ChangePasswordViewController: UIViewController {
     
-    var oldPassword: String!
-    var newPassword: String!
-    var confirmPassword: String!
-
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var oldPassword: UITextField!
+    @IBOutlet weak var newPassword: UITextField!
+    @IBOutlet weak var confirmPassword: UITextField!
+    
+//    var oldPassword: String!
+//    var newPassword: String!
+//    var confirmPassword: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        saveButton.layer.cornerRadius = 6
+        oldPassword.layer.borderWidth = 2
+        newPassword.layer.borderWidth = 2
+        confirmPassword.layer.borderWidth = 2
     }
     
     func updatePassword() {

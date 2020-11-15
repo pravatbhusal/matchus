@@ -11,6 +11,11 @@ import Alamofire
 
 class PersonalInfoViewController: UIViewController {
     
+    @IBOutlet weak var myNameLabel: UITextField!
+    @IBOutlet weak var myLocationLabel: UITextField!
+    @IBOutlet weak var myBioLabel: UITextField!
+    @IBOutlet weak var saveButton: UIButton!
+    
     var profilePhoto: String!
     var profileName: String!
     var profileBio: String!
@@ -20,6 +25,10 @@ class PersonalInfoViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        myNameLabel.layer.borderWidth = 2
+        myLocationLabel.layer.borderWidth = 2
+        myBioLabel.layer.borderWidth = 2
+        saveButton.layer.borderWidth = 2
         loadInfo()
     }
     
