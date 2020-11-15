@@ -13,10 +13,12 @@ class EditInterestsViewController: UIViewController {
     
     var interestsList: [String]!
 
+    @IBOutlet weak var saveButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        saveButton.layer.borderWidth = 2
         loadInterests()
     }
     
