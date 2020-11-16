@@ -34,7 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = User
-            fields = ['id', 'match', 'name', 'interests', 'profile_photo', 'photo']
+            fields = ['id', 'match', 'name', 'biography', 'interests', 'profile_photo', 'photo']
 
         def get_match(self, obj):
             user = self.context.get("user")
