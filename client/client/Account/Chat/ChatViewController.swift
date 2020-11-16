@@ -34,7 +34,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        plusButton.layer.cornerRadius = 18
         tableView.delegate = self
         tableView.dataSource = self
         loadChats()

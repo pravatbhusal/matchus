@@ -20,8 +20,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var loading: UIActivityIndicatorView!
     
-    @IBOutlet weak var plusButton: UIButton!
-    
     @IBOutlet weak var messageButton: UIBarButtonItem!
     
     @IBOutlet weak var matchLabel: UILabel!
@@ -46,7 +44,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        plusButton.layer.cornerRadius = 18
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
         
