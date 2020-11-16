@@ -41,7 +41,6 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.dataSource = self
         navigationItem.hidesBackButton = true
-        plusButton.layer.cornerRadius = 18
         loadProfiles(page: page)
     }
     
