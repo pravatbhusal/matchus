@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var interestsTableView: UITableView!
     
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var bioLabel: UILabel!
     
     var id: Int = 0
     
