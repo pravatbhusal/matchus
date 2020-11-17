@@ -155,16 +155,19 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
       dismiss(animated: true, completion: nil)
     }
     
-    func updateInfo() {
+    func updateInfo(parameters: [String: Any], photoModified: Bool) {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
-        let parameters = ["name": profileName!, "biography": profileBio!, "location": profileLocation! ] as [String : Any]
         
-        AF.request(APIs.settings, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+        AF.request(APIs.settings, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
-                        if let json = response.value as! NSDictionary? {
-                            print(json)
+                        if (response.value as! NSDictionary?) != nil {
+                            if (photoModified) {
+                                self.uploadProfilePhoto(photo: self.myProfilePhotoButton.currentBackgroundImage!)
+                            } else {
+                                self.navigationController?.popViewController(animated: true)
+                            }
                         }
                         break
                     default:
@@ -202,19 +205,23 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
     }
     
     @IBAction func savePressed(_ sender: Any) {
-        print("what was modified?")
+        var photoModified = false
+        var parameters: [String: Any] = [:]
         if (profileName != myNameLabel.text) {
-            print("name")
+            parameters["name"] = myNameLabel.text
         }
         if (profileLocation != myLocationLabel.text) {
-            print("location")
+            parameters["location"] = myLocationLabel.text
+            parameters["latitude"] = latitude
+            parameters["longitude"] = longitude
         }
         if (profileBio != myBioLabel.text) {
-            print("bio")
+            parameters["biography"] = myBioLabel.text
         }
         if (originalPhoto != myProfilePhotoButton.currentBackgroundImage) {
-            print("photo")
+            photoModified = true
         }
+        updateInfo(parameters: parameters, photoModified: photoModified)
     }
     
 }
