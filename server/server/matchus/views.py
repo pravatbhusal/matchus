@@ -10,6 +10,15 @@ from .serializers import ChatRoomSerializer, PhotoSerializer, UserSerializer
 from .forms import ChatRoomForm, InterestForm, LoginForm, PhotoForm, SettingsForm, SignUpForm, VerifyCredentialsForm
 from .queries import get_users_nearby
 
+class VerifyAuthenticationView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        if not request.user or request.user.is_anonymous:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response()
+
 class VerifyCredentialsView(APIView):
     def post(self, request):
         verify_credentials_form = VerifyCredentialsForm(request.data)

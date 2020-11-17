@@ -4,6 +4,7 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
+    path('verify-authentication', views.VerifyAuthenticationView.as_view()),
     path('verify-credentials', views.VerifyCredentialsView.as_view()),
     path('signup', views.SignUpView.as_view()),
     path('login', views.LoginView.as_view()),
