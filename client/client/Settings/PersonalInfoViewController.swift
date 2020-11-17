@@ -9,11 +9,12 @@
 import UIKit
 import Alamofire
 
-class PersonalInfoViewController: UIViewController {
+class PersonalInfoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
     @IBOutlet weak var myNameLabel: UITextField!
     @IBOutlet weak var myLocationLabel: UITextField!
     @IBOutlet weak var myBioLabel: UITextField!
+    @IBOutlet weak var myProfilePhotoButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
     var profilePhoto: String!
@@ -45,6 +46,11 @@ class PersonalInfoViewController: UIViewController {
                         self.profileName = ResponseSerializer.getProfileName(json: json)
                         self.profileBio = ResponseSerializer.getProfileBio(json: json)
                         self.profileLocation = ResponseSerializer.getProfileLocation(json: json)
+                        
+                        self.myNameLabel.text = self.profileName
+                        self.myLocationLabel.text = self.profileLocation
+                        self.myBioLabel.text = self.profileBio
+                        self.downloadImage(from: URL(string: profilePhoto)!, to: self.myProfilePhotoButton)
                      }
                      break
             default:
@@ -59,6 +65,41 @@ class PersonalInfoViewController: UIViewController {
                 break
             }
         }
+    }
+    
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    
+    func downloadImage(from url: URL, to imageButton: UIButton) {
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async() {
+                imageButton.setBackgroundImage(UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75)), for: .normal)
+            }
+        }
+    }
+    
+    @IBAction func profilePhotoPressed(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let image = info[.editedImage] as? UIImage else {
+            return
+        }
+        
+        myProfilePhotoButton.setBackgroundImage(image, for: .normal)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
     
     func updateInfo() {
