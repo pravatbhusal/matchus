@@ -8,8 +8,9 @@
 
 import UIKit
 import Alamofire
+import GooglePlaces
 
-class PersonalInfoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class PersonalInfoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GMSAutocompleteViewControllerDelegate {
     
     @IBOutlet weak var myNameLabel: UITextField!
     @IBOutlet weak var myLocationLabel: UITextField!
@@ -21,6 +22,8 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
     var profileName: String!
     var profileBio: String!
     var profileLocation: String!
+    var latitude: Double = 0
+    var longitude: Double = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +83,7 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
         }
     }
     
+    // Profile photo selector
     @IBAction func profilePhotoPressed(_ sender: Any) {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
@@ -100,6 +104,46 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    // Location selector
+    @IBAction func autocompleteClicked(_ sender: Any) {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+
+        // specify the place data types to return
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.addressComponents.rawValue) | UInt(GMSPlaceField.coordinate.rawValue))
+        autocompleteController.placeFields = fields
+
+        // specify a filter
+        let filter = GMSAutocompleteFilter()
+        filter.type = .city
+        filter.country = "us"
+        autocompleteController.autocompleteFilter = filter
+
+        // display the autocomplete view controller
+        present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    func setLocationText(place: GMSPlace) {
+        let placeComponents = place.addressComponents?.filter{$0.types.contains("locality") || $0.types.contains("administrative_area_level_1")}
+        self.longitude = place.coordinate.longitude
+        self.latitude = place.coordinate.latitude
+        self.myLocationLabel.text = "\(placeComponents?[0].name ?? ""), \(placeComponents?[1].shortName ?? "")"
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        setLocationText(place: place)
+        dismiss(animated: true, completion: nil)
+    }
+
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+      print("Error: ", error.localizedDescription)
+    }
+
+    // User canceled the operation.
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+      dismiss(animated: true, completion: nil)
     }
     
     func updateInfo() {
