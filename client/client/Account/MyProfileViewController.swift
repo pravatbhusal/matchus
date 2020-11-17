@@ -14,8 +14,6 @@ class MyProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        settingsButton.layer.cornerRadius = 6
-        settingsButton.layer.borderWidth = 2
     }
 
 }
