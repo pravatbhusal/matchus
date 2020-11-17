@@ -1030,7 +1030,7 @@
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HSJ-q6-Jdn">
                                 <rect key="frame" x="20" y="219" width="382" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
@@ -1061,22 +1061,26 @@
                                 <connections>
                                     <action selector="googleButtonPressed:" destination="iyf-J1-zYc" eventType="touchUpInside" id="MdN-Hn-pAL"/>
                                     <action selector="googleSignIn:" destination="ska-e7-uJe" eventType="touchUpInside" id="tv3-tS-fiQ"/>
+                                    <action selector="savePressed:" destination="GVK-Az-MVO" eventType="touchUpInside" id="5W4-KP-jmg"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xf8-bJ-ymS">
-                                <rect key="frame" x="20" y="395" width="374" height="30"/>
+                                <rect key="frame" x="180" y="399" width="63" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Log Out"/>
+                                <connections>
+                                    <action selector="logoutPressed:" destination="GVK-Az-MVO" eventType="touchUpInside" id="c9W-tf-3np"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3h-Kj-Xej">
-                                <rect key="frame" x="20" y="525" width="374" height="30"/>
+                                <rect key="frame" x="159" y="525" width="105" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Delete Account">
                                     <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
-				<connections>
-                                     <action selector="deletePressed:" destination="GVK-Az-MVO" eventType="touchUpInside" id="ulJ-hK-SKK"/>
-                                 </connections>
+                                <connections>
+                                    <action selector="deletePressed:" destination="GVK-Az-MVO" eventType="touchUpInside" id="ulJ-hK-SKK"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mzw-L6-fEf"/>
@@ -1086,6 +1090,7 @@
                     <connections>
                         <outlet property="changePassword" destination="cUR-Ci-Mhc" id="vCx-ug-nlR"/>
                         <outlet property="emailAddressLabel" destination="HSJ-q6-Jdn" id="0JM-0S-Uzj"/>
+                        <outlet property="emailField" destination="HSJ-q6-Jdn" id="ulH-oy-oGm"/>
                         <outlet property="saveButton" destination="WWq-VH-U69" id="Oyq-mz-2yT"/>
                     </connections>
                 </viewController>
@@ -1497,12 +1502,12 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="old password" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lZb-Yp-MK2">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lZb-Yp-MK2">
                                 <rect key="frame" x="20" y="223" width="382" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <action selector="emailAddressLabel:" destination="LvX-Gs-Ub3" eventType="editingDidEnd" id="XiJ-el-itZ"/>
                                     <action selector="myNameLabel:" destination="NCj-qd-HJo" eventType="editingDidEnd" id="1Gf-2R-Cac"/>
@@ -1514,12 +1519,12 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="new password" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Amv-iE-gqg">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Amv-iE-gqg">
                                 <rect key="frame" x="20" y="331" width="382" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <action selector="emailAddressLabel:" destination="LvX-Gs-Ub3" eventType="editingDidEnd" id="vvT-De-PQT"/>
                                     <action selector="myNameLabel:" destination="NCj-qd-HJo" eventType="editingDidEnd" id="LQj-jL-yYz"/>
@@ -1531,12 +1536,12 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="confirm new password" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NRZ-Pl-ZTe">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NRZ-Pl-ZTe">
                                 <rect key="frame" x="20" y="444" width="382" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <action selector="emailAddressLabel:" destination="LvX-Gs-Ub3" eventType="editingDidEnd" id="ICq-ye-xMO"/>
                                     <action selector="myNameLabel:" destination="NCj-qd-HJo" eventType="editingDidEnd" id="ljZ-MQ-zB4"/>
@@ -1552,6 +1557,7 @@
                                 <connections>
                                     <action selector="googleButtonPressed:" destination="iyf-J1-zYc" eventType="touchUpInside" id="W6o-EA-rRn"/>
                                     <action selector="googleSignIn:" destination="ska-e7-uJe" eventType="touchUpInside" id="8Jh-dX-XsV"/>
+                                    <action selector="savePressed:" destination="TkA-am-Wbl" eventType="touchUpInside" id="h7X-kR-a0I"/>
                                 </connections>
                             </button>
                         </subviews>
