@@ -14,9 +14,7 @@ class VerifyAuthenticationView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        if not request.user or request.user.is_anonymous:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
-
+        # if the user was authenticated by the permissions middleware, then return a success response
         return Response()
 
 class VerifyCredentialsView(APIView):
