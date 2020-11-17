@@ -16,6 +16,7 @@ class AccountSettingsViewController: UIViewController {
     
     @IBOutlet weak var changePassword: UIButton!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var emailField: UITextField!
     
     var email: String!
 
@@ -30,6 +31,10 @@ class AccountSettingsViewController: UIViewController {
         loadEmail()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     func loadEmail() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
@@ -40,6 +45,7 @@ class AccountSettingsViewController: UIViewController {
                     case 200?:
                      if let json = response.value as! NSDictionary? {
                         self.email = ResponseSerializer.getProfileEmail(json: json)
+                        self.emailField.text = self.email
                      }
                      break
             default:
@@ -59,13 +65,25 @@ class AccountSettingsViewController: UIViewController {
     func updateEmail() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
-        let parameters = [ "email": email! ] as [String : Any]
+        let parameters = [ "email": emailField.text! ] as [String : Any]
         
-        AF.request(APIs.settings, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+        AF.request(APIs.settings, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
-                        if let json = response.value as! NSDictionary? {
-                            print(json)
+                        if (response.value as! NSDictionary?) != nil {
+                            self.navigationController?.popViewController(animated: true)
+                        }
+                        break
+                    case 422?:
+                        if (response.value as! NSDictionary?) != nil {
+                            // create an alert that notifies the user their email is invalid
+                            let alert = UIAlertController(title: "Invalid email field", message: "You must enter a valid email.", preferredStyle: UIAlertController.Style.alert)
+                            
+                            // add an OK button to cancel the alert
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                            
+                            // present the alert
+                            self.present(alert, animated: true, completion: nil)
                         }
                         break
                     default:
@@ -83,8 +101,12 @@ class AccountSettingsViewController: UIViewController {
     }
     
     func logout() {
-        self.view.window?.rootViewController?.dismiss(animated: true, completion: nil)
+        self.navigationController?.popToRootViewController(animated: true)
         UserDefaults.standard.removeObject(forKey: User.token)
+    }
+    
+    @IBAction func logoutPressed(_ sender: Any) {
+        logout()
     }
     
     func deleteUser() {
@@ -110,4 +132,22 @@ class AccountSettingsViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func savePressed(_ sender: Any) {
+        if (email != emailField.text && emailField.text!.count > 0) {
+            updateEmail()
+        } else if (emailField.text!.count == 0) {
+            // create an alert that notifies the user they can't leave email blank
+            let alert = UIAlertController(title: "Invalid email field", message: "You must enter a valid email.", preferredStyle: UIAlertController.Style.alert)
+            
+            // add an OK button to cancel the alert
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            // present the alert
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
 }
