@@ -170,23 +170,6 @@ class ProfileView(APIView):
             request.user.save()
             return Response(status=status.HTTP_201_CREATED)
 
-        def delete(self, request, *args, **kwargs):
-            # receive the interest index of the interest provided in the URL
-            interest = str(kwargs.get('interest', ''))
-            interest_index = -1
-            try:
-                interest_index = request.user.interests.index(interest)
-            except:
-                pass
-
-            if interest_index == -1:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-
-            # delete this interest from the user's interests
-            del request.user.interests[interest_index]
-            request.user.save()
-            return Response()
-
 class ChatView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 

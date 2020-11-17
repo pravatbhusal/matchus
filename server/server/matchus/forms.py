@@ -97,6 +97,7 @@ class SettingsForm(RequestForm):
     password = forms.CharField(required=False, min_length=4, max_length=128)
     confirm_password = forms.CharField(required=False, min_length=4, max_length=128)
     name = forms.CharField(required=False, max_length=128)
+    interests = forms.JSONField(required=False)
     biography = forms.CharField(required=False)
     location = forms.CharField(required=False, max_length=128)
     latitude = forms.DecimalField(required=False, max_digits=16, decimal_places=12)
