@@ -12,8 +12,6 @@ import Alamofire
 class AccountSettingsViewController: UIViewController {
     @IBOutlet weak var emailAddressLabel: UITextField!
     
-    @IBOutlet weak var usernameLabel: UITextField!
-    
     var interestsList: [String]!
     
     @IBOutlet weak var changePassword: UIButton!
@@ -26,7 +24,6 @@ class AccountSettingsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         emailAddressLabel.layer.borderWidth = 2
-        usernameLabel.layer.borderWidth = 2
         saveButton.layer.cornerRadius = 6
         changePassword.layer.cornerRadius = 6
         

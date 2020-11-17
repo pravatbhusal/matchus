@@ -726,7 +726,7 @@
                     <tabBarItem key="tabBarItem" title="Profile" image="person.fill" catalog="system" id="9Cz-pD-0gQ"/>
                     <navigationItem key="navigationItem" id="2wn-yN-b9u"/>
                     <connections>
-                        <outlet property="settingButton" destination="aO6-Pt-Ddg" id="of8-md-JY8"/>
+                        <outlet property="settingsButton" destination="aO6-Pt-Ddg" id="dd8-an-1rK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mad-Jb-DKf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -836,13 +836,7 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="USERNAME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mgv-do-WpY">
-                                <rect key="frame" x="20" y="386" width="306" height="38"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="email address" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HSJ-q6-Jdn">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HSJ-q6-Jdn">
                                 <rect key="frame" x="20" y="219" width="382" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -851,16 +845,6 @@
                                 <connections>
                                     <action selector="emailAddressLabel:" destination="LvX-Gs-Ub3" eventType="editingDidEnd" id="QWF-NY-fby"/>
                                     <action selector="myNameLabel:" destination="NCj-qd-HJo" eventType="editingDidEnd" id="Et1-nl-vmu"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="your username" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tGf-I8-F9e">
-                                <rect key="frame" x="20" y="432" width="382" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="myNameLabel:" destination="NCj-qd-HJo" eventType="editingDidEnd" id="xkb-sV-yJP"/>
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUR-Ci-Mhc">
@@ -876,13 +860,6 @@
                                     <segue destination="TkA-am-Wbl" kind="push" id="df9-4Q-ipE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3h-Kj-Xej">
-                                <rect key="frame" x="20" y="528" width="374" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Delete Account">
-                                    <color key="titleColor" systemColor="systemRedColor"/>
-                                </state>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WWq-VH-U69">
                                 <rect key="frame" x="16" y="801" width="382" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -895,6 +872,18 @@
                                     <action selector="googleSignIn:" destination="ska-e7-uJe" eventType="touchUpInside" id="tv3-tS-fiQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xf8-bJ-ymS">
+                                <rect key="frame" x="20" y="395" width="374" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Log Out"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3h-Kj-Xej">
+                                <rect key="frame" x="20" y="525" width="374" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Delete Account">
+                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                </state>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mzw-L6-fEf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -904,12 +893,11 @@
                         <outlet property="changePassword" destination="cUR-Ci-Mhc" id="vCx-ug-nlR"/>
                         <outlet property="emailAddressLabel" destination="HSJ-q6-Jdn" id="0JM-0S-Uzj"/>
                         <outlet property="saveButton" destination="WWq-VH-U69" id="Oyq-mz-2yT"/>
-                        <outlet property="usernameLabel" destination="tGf-I8-F9e" id="OpR-kO-SQD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="siQ-BC-vXS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9058" y="1995"/>
+            <point key="canvasLocation" x="9057.971014492754" y="1994.8660714285713"/>
         </scene>
         <!--Edit Interests View Controller-->
         <scene sceneID="KbM-9t-hG8">
@@ -1391,7 +1379,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ms9-eX-H2J"/>
-        <segue reference="kd8-rX-WDt"/>
+        <segue reference="MgK-vv-qLG"/>
         <segue reference="Dbf-5C-C5F"/>
     </inferredMetricsTieBreakers>
     <resources>
