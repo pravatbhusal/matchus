@@ -60,7 +60,7 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
                         self.myNameLabel.text = self.profileName
                         self.myLocationLabel.text = self.profileLocation
                         self.myBioLabel.text = self.profileBio
-                        self.downloadImage(from: URL(string: profilePhoto)!, to: self.myProfilePhotoButton)
+                        self.downloadImage(from: URL(string: self.profilePhoto)!, to: self.myProfilePhotoButton)
                      }
                      break
             default:
