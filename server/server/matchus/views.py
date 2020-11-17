@@ -96,7 +96,7 @@ class ProfileView(APIView):
 
             return JsonResponse({ **user_serializer.data, "photos": photos_serializer.data })
 
-        def put(self, request):
+        def patch(self, request):
             settings_form = SettingsForm(request.data, request=request)
 
             if not settings_form.is_valid():

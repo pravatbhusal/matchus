@@ -14,7 +14,7 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
     
     @IBOutlet weak var myNameLabel: UITextField!
     @IBOutlet weak var myLocationLabel: UITextField!
-    @IBOutlet weak var myBioLabel: UITextField!
+    @IBOutlet weak var myBioLabel: UITextView!
     @IBOutlet weak var myProfilePhotoButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
@@ -31,11 +31,16 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
         // Do any additional setup after loading the view.
         myNameLabel.layer.borderWidth = 2
         myLocationLabel.layer.borderWidth = 2
+        myBioLabel.layer.borderColor = UIColor.black.cgColor
         myBioLabel.layer.borderWidth = 2
         saveButton.layer.borderWidth = 2
         loadInfo()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
     func loadInfo() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
@@ -45,6 +50,7 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
             switch response.response?.statusCode {
                     case 200?:
                      if let json = response.value as! NSDictionary? {
+                        print(json)
                         self.profilePhoto = ResponseSerializer.getProfilePicture(json: json)
                         self.profileName = ResponseSerializer.getProfileName(json: json)
                         self.profileBio = ResponseSerializer.getProfileBio(json: json)
