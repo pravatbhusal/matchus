@@ -42,6 +42,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var imageView3: UIImageView!
     
+    @IBOutlet weak var imageView4: UIImageView!
+    
     let tableRowSpacing: CGFloat = 20
     
     override func viewDidLoad() {
