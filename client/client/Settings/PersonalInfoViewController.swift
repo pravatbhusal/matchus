@@ -8,18 +8,24 @@
 
 import UIKit
 import Alamofire
+import GooglePlaces
 
-class PersonalInfoViewController: UIViewController {
+class PersonalInfoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GMSAutocompleteViewControllerDelegate {
     
     @IBOutlet weak var myNameLabel: UITextField!
     @IBOutlet weak var myLocationLabel: UITextField!
-    @IBOutlet weak var myBioLabel: UITextField!
+    @IBOutlet weak var myBioLabel: UITextView!
+    @IBOutlet weak var myProfilePhotoButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
     var profilePhoto: String!
     var profileName: String!
     var profileBio: String!
     var profileLocation: String!
+    var latitude: Double = 0
+    var longitude: Double = 0
+    
+    var originalPhoto: UIImage!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +33,16 @@ class PersonalInfoViewController: UIViewController {
         // Do any additional setup after loading the view.
         myNameLabel.layer.borderWidth = 2
         myLocationLabel.layer.borderWidth = 2
+        myBioLabel.layer.borderColor = UIColor.black.cgColor
         myBioLabel.layer.borderWidth = 2
         saveButton.layer.borderWidth = 2
         loadInfo()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
     func loadInfo() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
@@ -45,6 +56,11 @@ class PersonalInfoViewController: UIViewController {
                         self.profileName = ResponseSerializer.getProfileName(json: json)
                         self.profileBio = ResponseSerializer.getProfileBio(json: json)
                         self.profileLocation = ResponseSerializer.getProfileLocation(json: json)
+                        
+                        self.myNameLabel.text = self.profileName
+                        self.myLocationLabel.text = self.profileLocation
+                        self.myBioLabel.text = self.profileBio
+                        self.downloadImage(from: URL(string: profilePhoto)!, to: self.myProfilePhotoButton)
                      }
                      break
             default:
@@ -61,16 +77,97 @@ class PersonalInfoViewController: UIViewController {
         }
     }
     
-    func updateInfo() {
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    
+    func downloadImage(from url: URL, to imageButton: UIButton) {
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async() {
+                let image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                imageButton.setBackgroundImage(image, for: .normal)
+                self.originalPhoto = image
+            }
+        }
+    }
+    
+    // Profile photo selector
+    @IBAction func profilePhotoPressed(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let image = info[.editedImage] as? UIImage else {
+            return
+        }
+        
+        myProfilePhotoButton.setBackgroundImage(image, for: .normal)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    // Location selector
+    @IBAction func autocompleteClicked(_ sender: Any) {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = self
+
+        // specify the place data types to return
+        let fields: GMSPlaceField = GMSPlaceField(rawValue: UInt(GMSPlaceField.addressComponents.rawValue) | UInt(GMSPlaceField.coordinate.rawValue))
+        autocompleteController.placeFields = fields
+
+        // specify a filter
+        let filter = GMSAutocompleteFilter()
+        filter.type = .city
+        filter.country = "us"
+        autocompleteController.autocompleteFilter = filter
+
+        // display the autocomplete view controller
+        present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    func setLocationText(place: GMSPlace) {
+        let placeComponents = place.addressComponents?.filter{$0.types.contains("locality") || $0.types.contains("administrative_area_level_1")}
+        self.longitude = place.coordinate.longitude
+        self.latitude = place.coordinate.latitude
+        self.myLocationLabel.text = "\(placeComponents?[0].name ?? ""), \(placeComponents?[1].shortName ?? "")"
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        setLocationText(place: place)
+        dismiss(animated: true, completion: nil)
+    }
+
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+      print("Error: ", error.localizedDescription)
+    }
+
+    // User canceled the operation.
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+      dismiss(animated: true, completion: nil)
+    }
+    
+    func updateInfo(parameters: [String: Any], photoModified: Bool) {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
-        let parameters = [ "profile_photo": profilePhoto!, "name": profileName!, "biography": profileBio!, "location": profileLocation! ] as [String : Any]
         
-        AF.request(APIs.settings, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+        AF.request(APIs.settings, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
-                        if let json = response.value as! NSDictionary? {
-                            print(json)
+                        if (response.value as! NSDictionary?) != nil {
+                            if (photoModified) {
+                                self.uploadProfilePhoto(photo: self.myProfilePhotoButton.currentBackgroundImage!)
+                            } else {
+                                self.navigationController?.popViewController(animated: true)
+                            }
                         }
                         break
                     default:
@@ -86,4 +183,45 @@ class PersonalInfoViewController: UIViewController {
                 }
         }
     }
+    
+    func uploadProfilePhoto(photo: UIImage) {
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
+        
+        // format the image into an acceptable form data for the server
+        let photoData = photo.jpegData(compressionQuality: 0.5)!
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(photoData, withName: "photo", fileName: "\(String(describing: self.profileName)).jpeg", mimeType: "image/jpeg")
+        }, to: APIs.profilePhoto, method: .post, headers: headers).response { response in
+            switch response.result {
+                case .success(_ ):
+                    self.navigationController?.popViewController(animated: true)
+                    break
+                default:
+                    break
+            }
+        };
+    }
+    
+    @IBAction func savePressed(_ sender: Any) {
+        var photoModified = false
+        var parameters: [String: Any] = [:]
+        if (profileName != myNameLabel.text) {
+            parameters["name"] = myNameLabel.text
+        }
+        if (profileLocation != myLocationLabel.text) {
+            parameters["location"] = myLocationLabel.text
+            parameters["latitude"] = latitude
+            parameters["longitude"] = longitude
+        }
+        if (profileBio != myBioLabel.text) {
+            parameters["biography"] = myBioLabel.text
+        }
+        if (originalPhoto != myProfilePhotoButton.currentBackgroundImage) {
+            photoModified = true
+        }
+        updateInfo(parameters: parameters, photoModified: photoModified)
+    }
+    
 }
