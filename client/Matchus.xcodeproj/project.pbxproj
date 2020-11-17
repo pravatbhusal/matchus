@@ -20,6 +20,7 @@
 		A206939A255B1FF400A9D1B6 /* EditInterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2069399255B1FF400A9D1B6 /* EditInterestsViewController.swift */; };
 		A206939C255B200A00A9D1B6 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A206939B255B200A00A9D1B6 /* AccountSettingsViewController.swift */; };
 		A206939E255B201A00A9D1B6 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A206939D255B201A00A9D1B6 /* ChangePasswordViewController.swift */; };
+		B533F0601E1D5FB4D72D3E38 /* libPods-Matchus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A9B83069DD84F6F0FFEE1CB /* libPods-Matchus.a */; };
 		DA16E23A2542712900F179F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16E2392542712900F179F0 /* Constants.swift */; };
 		DA3A630C25548EAF0066DB48 /* IdentityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */; };
 		DA3C88972553A20A003A3714 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3C88962553A20A003A3714 /* Extensions.swift */; };
@@ -31,15 +32,13 @@
 		DABA159D252BAB9D00083305 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DABA159B252BAB9D00083305 /* Main.storyboard */; };
 		DABA159F252BAB9E00083305 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DABA159E252BAB9E00083305 /* Assets.xcassets */; };
 		DABA15A2252BAB9E00083305 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DABA15A0252BAB9E00083305 /* LaunchScreen.storyboard */; };
-		E1BA5AF25ACC032BC106870B /* libPods-Matchus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12D9EF669AD44D56689A04DE /* libPods-Matchus.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		03FE665F2536C38700A4C1C2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		03FE66672536D22100A4C1C2 /* client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = client.entitlements; sourceTree = "<group>"; };
-		08A1A836B3955ABAC3BF81A2 /* Pods-Matchus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.debug.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.debug.xcconfig"; sourceTree = "<group>"; };
-		12D9EF669AD44D56689A04DE /* libPods-Matchus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Matchus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		68BFAC16E2487A0A691C241A /* Pods-Matchus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.release.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.release.xcconfig"; sourceTree = "<group>"; };
+		48175D3BD193ECC739C32544 /* Pods-Matchus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.debug.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.debug.xcconfig"; sourceTree = "<group>"; };
+		6A9B83069DD84F6F0FFEE1CB /* libPods-Matchus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Matchus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		910C0F492533A55800DCDBE7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsViewController.swift; sourceTree = "<group>"; };
@@ -65,6 +64,7 @@
 		DABA159E252BAB9E00083305 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DABA15A1252BAB9E00083305 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DABA15A3252BAB9E00083305 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC52F2D157F836F4260C0D99 /* Pods-Matchus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.release.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,17 +72,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1BA5AF25ACC032BC106870B /* libPods-Matchus.a in Frameworks */,
+				B533F0601E1D5FB4D72D3E38 /* libPods-Matchus.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		54DF053988DFC47847B4B971 /* Frameworks */ = {
+		85F688759CB518CC8959EE9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				12D9EF669AD44D56689A04DE /* libPods-Matchus.a */,
+				6A9B83069DD84F6F0FFEE1CB /* libPods-Matchus.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -141,8 +141,8 @@
 		B58098E18A3EA6FFE20B3CF0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				08A1A836B3955ABAC3BF81A2 /* Pods-Matchus.debug.xcconfig */,
-				68BFAC16E2487A0A691C241A /* Pods-Matchus.release.xcconfig */,
+				48175D3BD193ECC739C32544 /* Pods-Matchus.debug.xcconfig */,
+				FC52F2D157F836F4260C0D99 /* Pods-Matchus.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -153,7 +153,7 @@
 				DABA1594252BAB9D00083305 /* client */,
 				DABA1593252BAB9D00083305 /* Products */,
 				B58098E18A3EA6FFE20B3CF0 /* Pods */,
-				54DF053988DFC47847B4B971 /* Frameworks */,
+				85F688759CB518CC8959EE9B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -194,11 +194,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DABA15A6252BAB9E00083305 /* Build configuration list for PBXNativeTarget "Matchus" */;
 			buildPhases = (
-				18BC35DE24362956344511D0 /* [CP] Check Pods Manifest.lock */,
+				06EB0E539B3BF146714E1DAD /* [CP] Check Pods Manifest.lock */,
 				DABA158E252BAB9D00083305 /* Sources */,
 				DABA158F252BAB9D00083305 /* Frameworks */,
 				DABA1590252BAB9D00083305 /* Resources */,
-				AF551FFF7F960389799C7D11 /* [CP] Copy Pods Resources */,
+				8784BE19A91387037F1CBEAB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -256,7 +256,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		18BC35DE24362956344511D0 /* [CP] Check Pods Manifest.lock */ = {
+		06EB0E539B3BF146714E1DAD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -278,7 +278,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AF551FFF7F960389799C7D11 /* [CP] Copy Pods Resources */ = {
+		8784BE19A91387037F1CBEAB /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -464,7 +464,7 @@
 		};
 		DABA15A7252BAB9E00083305 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 08A1A836B3955ABAC3BF81A2 /* Pods-Matchus.debug.xcconfig */;
+			baseConfigurationReference = 48175D3BD193ECC739C32544 /* Pods-Matchus.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
@@ -484,7 +484,7 @@
 		};
 		DABA15A8252BAB9E00083305 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68BFAC16E2487A0A691C241A /* Pods-Matchus.release.xcconfig */;
+			baseConfigurationReference = FC52F2D157F836F4260C0D99 /* Pods-Matchus.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
