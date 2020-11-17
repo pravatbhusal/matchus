@@ -24,6 +24,8 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
     var profileLocation: String!
     var latitude: Double = 0
     var longitude: Double = 0
+    
+    var originalPhoto: UIImage!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +52,6 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
             switch response.response?.statusCode {
                     case 200?:
                      if let json = response.value as! NSDictionary? {
-                        print(json)
                         self.profilePhoto = ResponseSerializer.getProfilePicture(json: json)
                         self.profileName = ResponseSerializer.getProfileName(json: json)
                         self.profileBio = ResponseSerializer.getProfileBio(json: json)
@@ -84,7 +85,9 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                imageButton.setBackgroundImage(UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75)), for: .normal)
+                let image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                imageButton.setBackgroundImage(image, for: .normal)
+                self.originalPhoto = image
             }
         }
     }
@@ -155,7 +158,7 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
     func updateInfo() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
-        let parameters = [ "profile_photo": profilePhoto!, "name": profileName!, "biography": profileBio!, "location": profileLocation! ] as [String : Any]
+        let parameters = ["name": profileName!, "biography": profileBio!, "location": profileLocation! ] as [String : Any]
         
         AF.request(APIs.settings, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
                 switch response.response?.statusCode {
@@ -177,4 +180,41 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
                 }
         }
     }
+    
+    func uploadProfilePhoto(photo: UIImage) {
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
+        
+        // format the image into an acceptable form data for the server
+        let photoData = photo.jpegData(compressionQuality: 0.5)!
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(photoData, withName: "photo", fileName: "\(String(describing: self.profileName)).jpeg", mimeType: "image/jpeg")
+        }, to: APIs.profilePhoto, method: .post, headers: headers).response { response in
+            switch response.result {
+                case .success(_ ):
+                    self.navigationController?.popViewController(animated: true)
+                    break
+                default:
+                    break
+            }
+        };
+    }
+    
+    @IBAction func savePressed(_ sender: Any) {
+        print("what was modified?")
+        if (profileName != myNameLabel.text) {
+            print("name")
+        }
+        if (profileLocation != myLocationLabel.text) {
+            print("location")
+        }
+        if (profileBio != myBioLabel.text) {
+            print("bio")
+        }
+        if (originalPhoto != myProfilePhotoButton.currentBackgroundImage) {
+            print("photo")
+        }
+    }
+    
 }

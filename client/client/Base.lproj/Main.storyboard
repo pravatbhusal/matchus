@@ -1005,6 +1005,7 @@
                                 <connections>
                                     <action selector="googleButtonPressed:" destination="iyf-J1-zYc" eventType="touchUpInside" id="4WE-Gb-IKY"/>
                                     <action selector="googleSignIn:" destination="ska-e7-uJe" eventType="touchUpInside" id="Z7M-qy-Ywt"/>
+                                    <action selector="savePressed:" destination="Afw-bv-3sT" eventType="touchUpInside" id="llc-V6-9Er"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPs-nF-iCE">
@@ -1032,7 +1033,7 @@
                                     <action selector="autocompleteClicked:" destination="Afw-bv-3sT" eventType="touchUpInside" id="juB-2p-y9J"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SjO-DR-D2x">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SjO-DR-D2x">
                                 <rect key="frame" x="16" y="440" width="382" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
