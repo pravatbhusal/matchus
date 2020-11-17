@@ -887,6 +887,9 @@
                                 <state key="normal" title="Delete Account">
                                     <color key="titleColor" systemColor="systemRedColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="deletePressed:" destination="GVK-Az-MVO" eventType="touchUpInside" id="ulJ-hK-SKK"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mzw-L6-fEf"/>
@@ -1386,7 +1389,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="ms9-eX-H2J"/>
         <segue reference="MgK-vv-qLG"/>
-        <segue reference="Dbf-5C-C5F"/>
+        <segue reference="q6S-yz-jLA"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.right" catalog="system" width="128" height="98"/>

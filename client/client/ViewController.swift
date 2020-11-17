@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
+    
+    let dashboardSegueIdentifier: String = "DashboardSegueIdentifier"
     
     @IBOutlet weak var loginButton: UIButton!
     
@@ -26,6 +29,15 @@ class ViewController: UIViewController {
         registerButton.layer.cornerRadius = 6
         registerButton.layer.borderWidth = 2
         registerButton.layer.borderColor = UIColor.systemBlue.cgColor
+        
+        autoLogin()
+    }
+    
+    func autoLogin() {
+        // TODO: actually get this to work
+        if (UserDefaults.standard.object(forKey: User.token) != nil) {
+            print("auto login")
+        }
     }
     
 }

@@ -133,6 +133,19 @@ class AccountSettingsViewController: UIViewController {
         }
     }
     
+    @IBAction func deletePressed(_ sender: Any) {
+        // create an alert that notifies the user they can't leave email blank
+        let alert = UIAlertController(title: "Account Deletion Confirmation", message: "Are you sure you want to delete your account? This action cannot be undone.", preferredStyle: UIAlertController.Style.alert)
+        
+        // add an OK button to cancel the alert
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Delete", style: UIAlertAction.Style.destructive, handler: {(action) in self.deleteUser()}))
+        
+        // present the alert
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func savePressed(_ sender: Any) {
         if (email != emailField.text && emailField.text!.count > 0) {
             updateEmail()
