@@ -10,7 +10,9 @@ import UIKit
 import Alamofire
 
 
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+    
+    @IBOutlet weak var scrollView: UIScrollView!
     
     let chatRoomSegueIdentifier: String = "ChatRoomSegueIdentifier"
     
@@ -20,15 +22,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var loading: UIActivityIndicatorView!
     
-    @IBOutlet weak var plusButton: UIButton!
-    
     @IBOutlet weak var messageButton: UIBarButtonItem!
     
     @IBOutlet weak var matchLabel: UILabel!
     
     @IBOutlet weak var interestsTableView: UITableView!
     
-    @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var bioLabel: UILabel!
     
     var id: Int = 0
     
@@ -46,10 +46,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        plusButton.layer.cornerRadius = 18
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
-        
+        scrollView.delegate = self;
         loadProfile()
         toggleVisible(visible: false)
     
@@ -81,6 +80,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             // add download profilephoto from url and set the imageview image
                             let profilePhotoURL: String = ResponseSerializer.getProfilePicture(json: json)!
                             self.downloadImage(from: URL(string: profilePhotoURL)!, to: self.profilePhoto)
+                            
+                            self.bioLabel.text = ResponseSerializer.getProfileBio(json: json)! + "dadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdaw dja wd awkjdjlawbdlawbdlkawndlkawndlkawnkldnwkalndklawndlkawndlkawndklawndlkawndlkawdnklawndlkawndlkawndalkwndklawndlkawdnalkdnalkdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdaw"
                             
                             // set profile name
                             let profileName: String = ResponseSerializer.getProfileName(json: json)!
