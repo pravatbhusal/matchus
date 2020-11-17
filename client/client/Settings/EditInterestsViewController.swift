@@ -9,17 +9,103 @@
 import UIKit
 import Alamofire
 
-class EditInterestsViewController: UIViewController {
+class EditInterestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var interestsList: [String]!
-
+    var interestsList: [String] = []
+    
+    let maxInterests: Int = 4
+    let textCellIdentifier: String = "EditTextCell"
+    let tableRowSpacing: CGFloat = 20
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var interestText: UITextField!
     @IBOutlet weak var saveButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        tableView.delegate = self
+        tableView.dataSource = self
         saveButton.layer.borderWidth = 2
         loadInterests()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return interestsList.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return tableRowSpacing
+    }
+    
+    // clears out the section background color
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = UIColor.clear
+        return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
+
+        let row = indexPath.section
+        cell.textLabel?.text = interestsList[row]
+        cell.contentView.layer.borderWidth = 2.0
+        cell.contentView.layer.cornerRadius = 6.0
+        
+        return cell
+    }
+    
+    @IBAction func xButton(_ sender: Any) {
+        let buttonPosition = (sender as AnyObject).convert(CGPoint.zero, to: self.tableView)
+        let indexPath = self.tableView.indexPathForRow(at: buttonPosition)
+        
+        interestsList.remove(at: indexPath!.section)
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    @IBAction func addButton(_ sender: Any) {
+        var alertTitle: String?
+        var alertMessage: String?
+        
+        if interestsList.count >= maxInterests {
+            alertTitle = "Too many interests"
+            alertMessage = "Please enter only \(maxInterests) interests."
+        } else if(interestText.text == nil || interestText.text == "") {
+            alertTitle = "Invalid input"
+            alertMessage = "Please enter text into the interest box."
+        }
+        
+        if alertTitle != nil {
+            let alert = UIAlertController(title: alertTitle!, message: alertMessage!, preferredStyle: UIAlertController.Style.alert)
+            
+            // add an OK button to cancel the alert
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            // present the alert
+            self.present(alert, animated: true, completion: nil)
+            
+            return
+        }
+        
+        interestsList.append(interestText.text!)
+        interestText.text = ""
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func loadInterests() {
@@ -31,7 +117,8 @@ class EditInterestsViewController: UIViewController {
             switch response.response?.statusCode {
                     case 200?:
                      if let json = response.value as! NSDictionary? {
-                        self.interestsList = ResponseSerializer.getInterestsList(json: json)
+                        self.interestsList = ResponseSerializer.getInterestsList(json: json)!
+                        self.tableView.reloadData()
                      }
                      break
             default:
@@ -51,13 +138,13 @@ class EditInterestsViewController: UIViewController {
     func updateInterests() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
-        let parameters = [ "interests": interestsList! ] as [String : Any]
+        let parameters = [ "interests": interestsList ] as [String : Any]
         
-        AF.request(APIs.settings, method: .put, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
+        AF.request(APIs.settings, method: .patch, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
                 switch response.response?.statusCode {
                     case 200?:
-                        if let json = response.value as! NSDictionary? {
-                            print(json)
+                        if (response.value as! NSDictionary?) != nil {
+                            self.navigationController?.popViewController(animated: true)
                         }
                         break
                     default:
@@ -73,4 +160,20 @@ class EditInterestsViewController: UIViewController {
                 }
         }
     }
+    
+    @IBAction func savePressed(_ sender: Any) {
+        if interestsList.count == maxInterests {
+            updateInterests()
+        } else {
+            // create an alert that notifies the user they need more interests
+            let alert = UIAlertController(title: "Not enough interests", message: "Please input at least \(maxInterests) interests.", preferredStyle: UIAlertController.Style.alert)
+            
+            // add an OK button to cancel the alert
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            
+            // present the alert
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
 }

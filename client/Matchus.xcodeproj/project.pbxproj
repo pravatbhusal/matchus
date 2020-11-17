@@ -14,12 +14,12 @@
 		913FC533254E1E3D008881C6 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC532254E1E3C008881C6 /* DashboardViewController.swift */; };
 		913FC538254E29CF008881C6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC537254E29CF008881C6 /* ProfileViewController.swift */; };
 		913FC53C254E2AF2008881C6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC53B254E2AF2008881C6 /* ChatViewController.swift */; };
-		917EDDFC2560BB7200D127E7 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917EDDFB2560BB7200D127E7 /* MyProfileViewController.swift */; };
 		A2069396255B1FA900A9D1B6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2069395255B1FA900A9D1B6 /* SettingsViewController.swift */; };
 		A2069398255B1FE400A9D1B6 /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2069397255B1FE400A9D1B6 /* PersonalInfoViewController.swift */; };
 		A206939A255B1FF400A9D1B6 /* EditInterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2069399255B1FF400A9D1B6 /* EditInterestsViewController.swift */; };
 		A206939C255B200A00A9D1B6 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A206939B255B200A00A9D1B6 /* AccountSettingsViewController.swift */; };
 		A206939E255B201A00A9D1B6 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A206939D255B201A00A9D1B6 /* ChangePasswordViewController.swift */; };
+		A25E398E25645A1B00F1D11E /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25E398D25645A1B00F1D11E /* MyProfileViewController.swift */; };
 		B533F0601E1D5FB4D72D3E38 /* libPods-Matchus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A9B83069DD84F6F0FFEE1CB /* libPods-Matchus.a */; };
 		DA16E23A2542712900F179F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16E2392542712900F179F0 /* Constants.swift */; };
 		DA3A630C25548EAF0066DB48 /* IdentityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */; };
@@ -45,12 +45,12 @@
 		913FC532254E1E3C008881C6 /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		913FC537254E29CF008881C6 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		913FC53B254E2AF2008881C6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		917EDDFB2560BB7200D127E7 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MyProfileViewController.swift; path = Chat/MyProfileViewController.swift; sourceTree = "<group>"; };
 		A2069395255B1FA900A9D1B6 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		A2069397255B1FE400A9D1B6 /* PersonalInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoViewController.swift; sourceTree = "<group>"; };
 		A2069399255B1FF400A9D1B6 /* EditInterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInterestsViewController.swift; sourceTree = "<group>"; };
 		A206939B255B200A00A9D1B6 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		A206939D255B201A00A9D1B6 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		A25E398D25645A1B00F1D11E /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
 		DA16E2392542712900F179F0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityViewController.swift; sourceTree = "<group>"; };
 		DA3C88962553A20A003A3714 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -112,7 +112,7 @@
 				A2069394255B175100A9D1B6 /* Chat */,
 				913FC532254E1E3C008881C6 /* DashboardViewController.swift */,
 				913FC537254E29CF008881C6 /* ProfileViewController.swift */,
-				917EDDFB2560BB7200D127E7 /* MyProfileViewController.swift */,
+				A25E398D25645A1B00F1D11E /* MyProfileViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -311,7 +311,7 @@
 				DABA159A252BAB9D00083305 /* ViewController.swift in Sources */,
 				DABA1596252BAB9D00083305 /* AppDelegate.swift in Sources */,
 				913FC533254E1E3D008881C6 /* DashboardViewController.swift in Sources */,
-				917EDDFC2560BB7200D127E7 /* MyProfileViewController.swift in Sources */,
+				A25E398E25645A1B00F1D11E /* MyProfileViewController.swift in Sources */,
 				A206939C255B200A00A9D1B6 /* AccountSettingsViewController.swift in Sources */,
 				A2069396255B1FA900A9D1B6 /* SettingsViewController.swift in Sources */,
 				DA6537DA254F628C0085ED03 /* ResponseSerializer.swift in Sources */,

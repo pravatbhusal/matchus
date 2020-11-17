@@ -2,20 +2,20 @@
 //  MyProfileViewController.swift
 //  Matchus
 //
-//  Created by Jinho Yoon on 11/14/20.
+//  Created by promazo on 11/17/20.
 //  Copyright © 2020 MatchUs. All rights reserved.
 //
 
 import UIKit
 
 class MyProfileViewController: UIViewController {
-
-    @IBOutlet weak var settingButton: UIButton!
+    
+    @IBOutlet weak var settingsButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        settingButton.layer.cornerRadius = 6
-        settingButton.layer.borderWidth = 2
+        settingsButton.layer.cornerRadius = 6
+        settingsButton.layer.borderWidth = 2
     }
 
 }
