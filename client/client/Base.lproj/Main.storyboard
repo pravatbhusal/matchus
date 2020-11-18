@@ -1064,7 +1064,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WWq-VH-U69">
-                                <rect key="frame" x="16" y="801" width="382" height="61"/>
+                                <rect key="frame" x="20" y="653" width="382" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.54572493649999998" green="0.13016208909999999" blue="0.1496483901" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
@@ -1077,7 +1077,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xf8-bJ-ymS">
-                                <rect key="frame" x="180" y="399" width="63" height="30"/>
+                                <rect key="frame" x="180" y="450" width="63" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Log Out"/>
                                 <connections>
@@ -1085,7 +1085,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3h-Kj-Xej">
-                                <rect key="frame" x="159" y="525" width="105" height="30"/>
+                                <rect key="frame" x="159" y="542" width="105" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Delete Account">
                                     <color key="titleColor" systemColor="systemRedColor"/>
@@ -1125,19 +1125,6 @@
                                 <color key="textColor" red="0.56608154600000005" green="0.1851875171" blue="0.1480361053" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P6a-h9-rAy">
-                                <rect key="frame" x="16" y="801" width="382" height="61"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.54572493649999998" green="0.13016208909999999" blue="0.1496483901" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="tintColor" systemColor="systemBackgroundColor"/>
-                                <state key="normal" title="SAVE"/>
-                                <connections>
-                                    <action selector="googleButtonPressed:" destination="iyf-J1-zYc" eventType="touchUpInside" id="Wa5-Ev-eem"/>
-                                    <action selector="googleSignIn:" destination="ska-e7-uJe" eventType="touchUpInside" id="3IQ-Ip-oeF"/>
-                                    <action selector="savePressed:" destination="Z4M-5h-KcL" eventType="touchUpInside" id="siw-31-4zq"/>
-                                </connections>
-                            </button>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Type your interest (e.g. writing code)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7QF-5F-w2i">
                                 <rect key="frame" x="16" y="161" width="382" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1181,6 +1168,19 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P6a-h9-rAy">
+                                <rect key="frame" x="16" y="681" width="382" height="61"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.54572493649999998" green="0.13016208909999999" blue="0.1496483901" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="tintColor" systemColor="systemBackgroundColor"/>
+                                <state key="normal" title="SAVE"/>
+                                <connections>
+                                    <action selector="googleButtonPressed:" destination="iyf-J1-zYc" eventType="touchUpInside" id="Wa5-Ev-eem"/>
+                                    <action selector="googleSignIn:" destination="ska-e7-uJe" eventType="touchUpInside" id="3IQ-Ip-oeF"/>
+                                    <action selector="savePressed:" destination="Z4M-5h-KcL" eventType="touchUpInside" id="siw-31-4zq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lAE-ND-IEY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1560,7 +1560,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gHV-Wn-KxP">
-                                <rect key="frame" x="16" y="801" width="382" height="61"/>
+                                <rect key="frame" x="16" y="549" width="382" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.54572493649999998" green="0.13016208909999999" blue="0.1496483901" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>

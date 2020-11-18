@@ -75,9 +75,11 @@ class AccountSettingsViewController: UIViewController {
                         }
                         break
                     case 422?:
-                        if (response.value as! NSDictionary?) != nil {
+                        if let json = response.value {
+                            let errorMessage: String? = ResponseSerializer.getErrorMessage(json: json)
+                            
                             // create an alert that notifies the user their email is invalid
-                            let alert = UIAlertController(title: "Invalid email field", message: "You must enter a valid email.", preferredStyle: UIAlertController.Style.alert)
+                            let alert = UIAlertController(title: "Invalid email field", message: errorMessage, preferredStyle: UIAlertController.Style.alert)
                             
                             // add an OK button to cancel the alert
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
