@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import AuthenticationServices
+import GoogleSignIn
 
 class AccountSettingsViewController: UIViewController {
     @IBOutlet weak var emailAddressLabel: UITextField!
@@ -28,6 +30,7 @@ class AccountSettingsViewController: UIViewController {
         saveButton.layer.cornerRadius = 6
         changePassword.layer.cornerRadius = 6
         
+        GIDSignIn.sharedInstance()?.presentingViewController = self
         loadEmail()
     }
     
@@ -75,9 +78,11 @@ class AccountSettingsViewController: UIViewController {
                         }
                         break
                     case 422?:
-                        if (response.value as! NSDictionary?) != nil {
+                        if let json = response.value {
+                            let errorMessage: String? = ResponseSerializer.getErrorMessage(json: json)
+                            
                             // create an alert that notifies the user their email is invalid
-                            let alert = UIAlertController(title: "Invalid email field", message: "You must enter a valid email.", preferredStyle: UIAlertController.Style.alert)
+                            let alert = UIAlertController(title: "Invalid email field", message: errorMessage, preferredStyle: UIAlertController.Style.alert)
                             
                             // add an OK button to cancel the alert
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -103,6 +108,9 @@ class AccountSettingsViewController: UIViewController {
     func logout() {
         self.navigationController?.popToRootViewController(animated: true)
         UserDefaults.standard.removeObject(forKey: User.token)
+        if (GIDSignIn.sharedInstance()?.currentUser != nil) {
+            GIDSignIn.sharedInstance()?.signOut()
+        }
     }
     
     @IBAction func logoutPressed(_ sender: Any) {

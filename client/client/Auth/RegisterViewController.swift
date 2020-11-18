@@ -41,9 +41,7 @@ class RegisterViewController: UIViewController {
         emailText.layer.borderColor = UIColor.black.cgColor
         passwordText.layer.borderWidth = 2
         passwordText.layer.borderColor = UIColor.black.cgColor
-        
         GIDSignIn.sharedInstance()?.presentingViewController = self
-        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
     }
     
     func verifyCredentials(email: String, password: String) {
@@ -80,14 +78,6 @@ class RegisterViewController: UIViewController {
     @IBAction func googleButtonPressed(_ sender: Any) {
         if (GIDSignIn.sharedInstance()?.currentUser == nil) {
             GIDSignIn.sharedInstance()?.signIn()
-        }
-        if let user = GIDSignIn.sharedInstance()?.currentUser {
-            let email: String = user.profile.email
-            let password: String = user.userID
-            self.googleUserId = user.userID
-            self.oAuthEmail = email
-            self.oAuthPassword = password
-            verifyCredentials(email: email, password: password)
         }
     }
     

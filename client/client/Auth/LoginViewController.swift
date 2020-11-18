@@ -35,9 +35,7 @@ class LoginViewController: UIViewController {
         passwordText.layer.borderWidth = 2
         passwordText.layer.borderColor = UIColor.black.cgColor
         googleSignInButton.layer.cornerRadius = 6
-        
         GIDSignIn.sharedInstance()?.presentingViewController = self
-        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
     }
     
     
@@ -79,11 +77,6 @@ class LoginViewController: UIViewController {
     @IBAction func googleSignIn(_ sender: Any) {
         if (GIDSignIn.sharedInstance()?.currentUser == nil) {
             GIDSignIn.sharedInstance()?.signIn()
-        }
-        if let user = GIDSignIn.sharedInstance()?.currentUser {
-            let email: String = user.profile.email
-            let password: String = user.userID
-            loginUser(googleUserId: user.userID, email: email, password: password)
         }
     }
 }

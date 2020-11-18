@@ -41,9 +41,11 @@ class ChangePasswordViewController: UIViewController {
                         }
                         break
                     case 422?:
-                        if (response.value as! NSDictionary?) != nil {
+                        if let json = response.value {
+                            let errorMessage: String? = ResponseSerializer.getErrorMessage(json: json)
+                            
                             // create an alert that notifies the user they need to input a password
-                            let alert = UIAlertController(title: "Invalid old password", message: "You must correctly input your old password.", preferredStyle: UIAlertController.Style.alert)
+                            let alert = UIAlertController(title: "Invalid password", message: errorMessage, preferredStyle: UIAlertController.Style.alert)
                             
                             // add an OK button to cancel the alert
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))

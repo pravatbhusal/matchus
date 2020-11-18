@@ -146,7 +146,10 @@ class SettingsForm(RequestForm):
             if getattr(self.request.user, prop, False):
                 if bool(self.cleaned_data[prop]):
                     # update this property in the user since the user inputted a new property
-                    setattr(self.request.user, prop, self.cleaned_data[prop])
+                    if prop == 'password':
+                        self.request.user.set_password(self.cleaned_data[prop])
+                    else:
+                        setattr(self.request.user, prop, self.cleaned_data[prop])
 
         self.request.user.save()
         return self.request.user
