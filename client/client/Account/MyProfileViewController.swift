@@ -28,5 +28,4 @@ class MyProfileViewController: UIViewController {
         settingsButton.layer.cornerRadius = 6
         settingsButton.layer.borderWidth = 2
     }
-
 }
