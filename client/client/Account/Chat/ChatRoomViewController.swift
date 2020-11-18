@@ -36,8 +36,6 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     var roomId: Int = 0
     
-    var loading: Bool = true
-    
     var totalsChats: Int = 0
     
     var chatsPerPage: Int = 0
@@ -67,9 +65,10 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         // reset this view whenever loading it again
-        self.loading = true
         self.page = 1
         self.meProfile = ChatProfile()
         self.otherProfile = ChatProfile()
@@ -112,7 +111,6 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
         let chatAPIURL = "\(APIs.chats)/\(roomId)/\(page)"
-        self.loading = true
         
         AF.request(URL.init(string: chatAPIURL)!, method: .get, headers: headers).responseJSON { (response) in
                 switch response.response?.statusCode {
@@ -157,7 +155,6 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                                 let indexPath = IndexPath(row: chats.count - 1, section: 0)
                                 self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
                             }
-                            self.loading = false
                         }
                         break
                     default:
@@ -169,7 +166,6 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                         
                         // present the alert
                         self.present(alert, animated: true, completion: nil)
-                        self.loading = false
                         break
                 }
         }
@@ -296,7 +292,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         let firstVisibleIndexPath = self.tableView.indexPathsForVisibleRows?[0]
         let lastPage: Float = Float(totalsChats) / Float(chatsPerPage)
         
-        if firstVisibleIndexPath!.row == 0 && Float(page) < lastPage && !self.loading {
+        if firstVisibleIndexPath!.row == 0 && Float(page) < lastPage {
             // reached the top of the table view and there exists more chat history, so load the next page
             page += 1
             loadChatHistory(page: page)
