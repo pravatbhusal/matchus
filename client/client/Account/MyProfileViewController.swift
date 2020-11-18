@@ -67,7 +67,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
                             let imageViewsToLoad : [UIButton] = [self.image1, self.image2, self.image3, self.image3]
                             
                             var index = 0
-                            var total = 4
+                            var total = featuredPhotoURLs.count
                             if featuredPhotoURLs.count < 4 {
                                 total = featuredPhotoURLs.count
                             }
