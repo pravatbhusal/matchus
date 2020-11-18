@@ -663,8 +663,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Biography" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kJq-XO-Q15">
-                                                <rect key="frame" x="20" y="194" width="374" height="113"/>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Biography" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kJq-XO-Q15">
+                                                <rect key="frame" x="20" y="199" width="374" height="108"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="113" id="X12-7Q-F0H"/>
@@ -867,7 +867,7 @@
                                                     <action selector="profilePhotoPressed:" destination="F8d-rm-6as" eventType="touchDown" id="PU6-XU-3qR"/>
                                                 </connections>
                                             </button>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Biography" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fWU-yU-23B">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Biography" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fWU-yU-23B">
                                                 <rect key="frame" x="20" y="221" width="374" height="98"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
