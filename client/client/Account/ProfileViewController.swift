@@ -83,7 +83,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             let profilePhotoURL: String = ResponseSerializer.getProfilePicture(json: json)!
                             self.downloadImage(from: URL(string: profilePhotoURL)!, to: self.profilePhoto)
                             
-                            self.bioLabel.text = ResponseSerializer.getProfileBio(json: json)! + "dadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdaw dja wd awkjdjlawbdlawbdlkawndlkawndlkawnkldnwkalndklawndlkawndlkawndklawndlkawndlkawdnklawndlkawndlkawndalkwndklawndlkawdnalkdnalkdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdawdadadawdadddadwdasddawdhawdbhwabdawbdjawbdjawbdjwabdjawbdkawbdawbdaw"
+                            self.bioLabel.text = ResponseSerializer.getProfileBio(json: json)!
                             
                             // set profile name
                             let profileName: String = ResponseSerializer.getProfileName(json: json)!
@@ -97,8 +97,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             let imageViewsToLoad : [UIImageView] = [self.imageView1, self.imageView2, self.imageView3]
                             
                             var index = 0
-                            var total = 3
-                            if featuredPhotoURLs.count < 3 {
+                            var total = 4
+                            if featuredPhotoURLs.count < 4 {
                                 total = featuredPhotoURLs.count
                             }
                             
