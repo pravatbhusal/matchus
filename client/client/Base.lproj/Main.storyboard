@@ -208,7 +208,7 @@
                                 <color key="backgroundColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <color key="tintColor" systemColor="systemBackgroundColor"/>
-                                <state key="normal" title="Sign in with Google"/>
+                                <state key="normal" title="Sign up with Google"/>
                                 <connections>
                                     <action selector="googleButtonPressed:" destination="iyf-J1-zYc" eventType="touchUpInside" id="53z-Bb-CAv"/>
                                     <action selector="googleSignIn:" destination="ska-e7-uJe" eventType="touchUpInside" id="Zeq-hh-ZzB"/>

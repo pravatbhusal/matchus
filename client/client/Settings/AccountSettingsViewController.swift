@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import AuthenticationServices
+import GoogleSignIn
 
 class AccountSettingsViewController: UIViewController {
     @IBOutlet weak var emailAddressLabel: UITextField!
@@ -28,6 +30,7 @@ class AccountSettingsViewController: UIViewController {
         saveButton.layer.cornerRadius = 6
         changePassword.layer.cornerRadius = 6
         
+        GIDSignIn.sharedInstance()?.presentingViewController = self
         loadEmail()
     }
     
@@ -105,6 +108,9 @@ class AccountSettingsViewController: UIViewController {
     func logout() {
         self.navigationController?.popToRootViewController(animated: true)
         UserDefaults.standard.removeObject(forKey: User.token)
+        if (GIDSignIn.sharedInstance()?.currentUser != nil) {
+            GIDSignIn.sharedInstance()?.signOut()
+        }
     }
     
     @IBAction func logoutPressed(_ sender: Any) {

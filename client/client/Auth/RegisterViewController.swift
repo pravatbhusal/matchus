@@ -41,9 +41,7 @@ class RegisterViewController: UIViewController {
         emailText.layer.borderColor = UIColor.black.cgColor
         passwordText.layer.borderWidth = 2
         passwordText.layer.borderColor = UIColor.black.cgColor
-        
         GIDSignIn.sharedInstance()?.presentingViewController = self
-        GIDSignIn.sharedInstance()?.restorePreviousSignIn()
     }
     
     func verifyCredentials(email: String, password: String) {
