@@ -26,7 +26,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var interestsTableView: UITableView!
     
-    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak var biography: UITextView!
     
     var loadingView: UIActivityIndicatorView!
     
@@ -85,7 +85,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             let profilePhotoURL: String = ResponseSerializer.getProfilePicture(json: json)!
                             self.downloadImage(from: URL(string: profilePhotoURL)!, to: self.profilePhoto)
                             
-                            self.bioLabel.text = ResponseSerializer.getProfileBio(json: json)!
+                            self.biography.text = ResponseSerializer.getProfileBio(json: json)!
                             
                             // set profile name
                             let profileName: String = ResponseSerializer.getProfileName(json: json)!

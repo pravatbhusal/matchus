@@ -18,7 +18,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
     
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var bioLabel: UILabel!
+    @IBOutlet weak var biography: UITextView!
     
     @IBOutlet weak var image1: UIButton!
     
@@ -72,7 +72,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
                             let profilePhotoURL: String = ResponseSerializer.getProfilePicture(json: json)!
                             self.downloadToImageView(from: URL(string: profilePhotoURL)!, to: self.profilePhoto)
                             
-                            self.bioLabel.text = ResponseSerializer.getProfileBio(json: json)!
+                            self.biography.text = ResponseSerializer.getProfileBio(json: json)!
                             
                             // set profile name
                             let profileName: String = ResponseSerializer.getProfileName(json: json)!
