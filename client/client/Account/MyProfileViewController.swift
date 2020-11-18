@@ -132,6 +132,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         picker.allowsEditing = true
         present(picker, animated: true)
     }
+    
     @IBAction func image3Pressed(_ sender: Any) {
         self.modifiedImage = self.image3
         let picker = UIImagePickerController()
@@ -140,6 +141,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         picker.allowsEditing = true
         present(picker, animated: true)
     }
+    
     @IBAction func image4Pressed(_ sender: Any) {
         self.modifiedImage = self.image4
         let picker = UIImagePickerController()
@@ -157,9 +159,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         }
         
         self.modifiedImage.setBackgroundImage(image, for: .normal)
-        
         uploadProfilePhoto(photo: image)
-        
     }
     
     func uploadProfilePhoto(photo: UIImage) {

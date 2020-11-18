@@ -96,7 +96,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             
                             // get all photo urls, then download them and add to the scrollview
                             let featuredPhotoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
-                            let imageViewsToLoad : [UIImageView] = [self.imageView1, self.imageView2, self.imageView3]
+                            let imageViewsToLoad : [UIImageView] = [self.imageView1, self.imageView2, self.imageView3, self.imageView4]
                             
                             var index = 0
                             var total = 4
@@ -105,10 +105,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
                             }
                             
                             // download each image that this user owns
-                            while index < total{
-                                if imageViewsToLoad[index].image == nil {
-                                    self.downloadImage(from: URL(string: featuredPhotoURLs[index])!, to: imageViewsToLoad[index])
-                                }
+                            while index < total {
+                                self.downloadImage(from: URL(string: featuredPhotoURLs[index])!, to: imageViewsToLoad[index])
                                 index += 1
                             }
                             
@@ -234,7 +232,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func likeInterest(interest: String) {
         let parameters: [String: Any] = ["interest" : interest]
         let token: String = UserDefaults.standard.string(forKey: User.token)!
-        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
         
         AF.request(URL.init(string: APIs.interests)!, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers).responseJSON { (response) in
         }
