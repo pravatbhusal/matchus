@@ -26,21 +26,24 @@ class DashboardCell: UITableViewCell {
 class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var plusButton: UIButton!
-    @IBOutlet weak var navigationBar: UINavigationItem!
     
     let profileSegueIdentifier = "ProfileSegue"
 
     var profiles: [DashboardProfile] = []
+    
     var totalProfiles: Int = 0
+    
     var profilesPerPage: Int = 0
+    
     var page: Int = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        navigationItem.hidesBackButton = true
+        navigationController?.navigationBar.isUserInteractionEnabled = false
         loadProfiles(page: page)
     }
     
