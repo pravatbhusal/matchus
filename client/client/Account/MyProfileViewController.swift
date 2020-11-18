@@ -38,10 +38,11 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         settingsButton.layer.borderWidth = 2
         tableView.delegate = self
         tableView.dataSource = self
-        
-        loadProfile()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        loadProfile()
+    }
     
     func loadProfile() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
@@ -70,7 +71,6 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
                             
                             var index = 0
                             var total = 4
-                            print(featuredPhotoURLs.count)
                             if featuredPhotoURLs.count < 4 {
                                 total = featuredPhotoURLs.count
                             }
@@ -159,7 +159,6 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         }, to: APIs.featuredPhotos, method: .post, headers: headers).response { response in
             switch response.result {
                 case .success(_ ):
-                    print("success")
                     break
                 default:
                     break

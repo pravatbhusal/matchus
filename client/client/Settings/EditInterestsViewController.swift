@@ -28,6 +28,9 @@ class EditInterestsViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         saveButton.layer.borderWidth = 2
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         loadInterests()
     }
     

@@ -183,7 +183,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                 // add a click event to the message bar button item
                 self.profileButton.target = self
                 self.profileButton.action = #selector(viewProfile(sender:))
-            case .disconnected(_ ):
+            case .disconnected(_ , _):
                 self.isConnected = false
                 break
             case .text(let string):

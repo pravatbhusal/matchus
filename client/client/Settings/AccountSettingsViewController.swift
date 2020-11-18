@@ -31,6 +31,9 @@ class AccountSettingsViewController: UIViewController {
         changePassword.layer.cornerRadius = 6
         
         GIDSignIn.sharedInstance()?.presentingViewController = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         loadEmail()
     }
     

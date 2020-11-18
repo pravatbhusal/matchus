@@ -36,6 +36,9 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
         myBioLabel.layer.borderColor = UIColor.black.cgColor
         myBioLabel.layer.borderWidth = 2
         saveButton.layer.borderWidth = 2
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         loadInfo()
     }
     

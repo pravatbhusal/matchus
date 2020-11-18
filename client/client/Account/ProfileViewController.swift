@@ -51,7 +51,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
         scrollView.delegate = self;
-        loadProfile()
         toggleVisible(visible: false)
     
         // add a click event to the message bar button item
@@ -61,10 +60,15 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         interestsTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0);
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        loadProfile()
+    }
+    
     func toggleVisible(visible: Bool) {
         loading.isHidden = visible
         profilePhoto.isHidden = !visible
         profileName.isHidden = !visible
+        bioLabel.isHidden = !visible
         interestsTableView.isHidden = !visible
         matchLabel.isHidden = !visible
     }
