@@ -1,47 +1,48 @@
-# MatchUS
-An IOS app that matches people based on preferences and interests.
+Group number: 7  
+Team members: Pravat Bhusal, Taehyoung Kim, Andrew Le, Jinho Yoon  
+Name of project: MatchUs  
+Dependencies: Xcode 12.2, Swift 5  
 
-DISCLAIMER: The app only supports the viewports of the IPhone 11 Pro Max.
+# Special Instructions:
+PLEASE OPEN THIS README.md file IN A MARKDOWN RENDERER.
 
-### Tech Stack
-Front-end uses Swift.  
-Back-end uses Django.  
-Database uses SQLite (apart of the Django REST framework).
+You must first run the Django web server and web socket.  
+1. Go inside of the server folder and run ```pip install -r requirements.txt``` for Python v3.8.6.  
+2. cd into the server/server directory, then run the migrations using ```python manage.py makemigrations```. 
+3. Then migrate using ```python manage.py migrate```.  
+4. Lastly, run the server using ```python manage.py runserver```.  
 
-### Run the client
-Open the Matchus.xcworkspace and run the app in Xcode
+Next, you need to run the Xcode simulator and register an account .  
+1. Inside the client folder, run ```pod install``` to install the podfile dependencies.  
+2. Now open the Matchus.xcworkspace file with Xcode.  
+3. Run the app on an IPhone 11 Pro Max simulator on Xcode. If the build fails, you may want to use the Xcode Legacy Build system under Workspace Settings > Build System.  
+4. The app will load the landing page, click the "Register" button and fill out the form to register your account.
 
-### Run the server
-The server is required in order for the client to send requests and handle server-side logic.
+Once you are finished registering your account, you will be directed to the dashboard page. The dashboard page will be empty if there's no users near your
+location. Therefore, to test the dashboard out we need to register more users.
 
-Please read the README.md file in the server folder to understand how to start the server.
+Log out of the current user by clicking Profile Icon in the bottom tab bar. Then click the "Go to Settings" button, click "Account settings" button, then click the "Logout" button. You'll now be redirected to the home page, so create another account at a nearby location of the first user. Once this new user is created, if the account is close enough to the other user in terms of latitude/longitude, then it will show the other user on the dashboard.
+
+To test chatting with another user, you need two simulators open. One simulator is the first user, and the other simulator is the other user. The chat system works
+in real-time because it uses web sockets.
 
 # Contributions
-### Andrew Le (25%)
-1. Programmed the Dashboard front-end view and implemented lazy loading for the dashboard table
-view.  
-2. Programmed chat room view controller's keyboard avoiding view logic.  
-3. Programmed segues from dashboard to the profile view.  
+The contributions table will not look pretty if this README.md file isn't rendered on a Markdown viewer.
 
-### Jinho Yoon (25%)
-1. Programmed the entire UI in the storyboard and edited UI component properties to match the
-Figma design.  
-2. Programmed segues between view controllers for testing and production.  
-3. Created the identity view controller UI and uploading data from the user's photo library.  
+Table generated using https://www.tablesgenerator.com/markdown_tables.
 
-### Taehyoung Kim (25%)
-1. Changed Apple authentication to use Google authentication.  
-2. Programmed the profile view and implemented image downloading from the server for profiles.  
-3. Loaded profile's name and photo UI front-end.  
-
-### Pravat Bhusal (25%)
-1. Programmed Django channels (websockets) to perform chat communication between two users.  
-2. Programmed the chat view controller to load the relevant chats of a user.  
-3. Programmed the chat room view controller to send chat messages between users.  
-4. Installed the Starscream websocket client to communicate between users in the chat room.  
-5. Programmed the Django endpoints necessary to create, read, update, and delete the chats and profile of the user.
-
-# Deviations
-1. We planned on using Apple authentication originally but as it turns out we needed to pay for a developers liscense, so we decided to go with Google OAuth instead.  
-2. We didn't realize we needed a view controller to set the user's name and profile photo, so we ended up programming that in the onboarding section (when user registers).  
-3. We wanted the user to be able to upload at least 4 images into their profile, but due to the phone screen size we decided to only go with 3.  
+| Feature                          | Description                                                                                                                                                                                                                                                                                                       | Release planned | Release actual | Deviations (if any)                                                                                                                                                                                                                                                              | Who/Percentage<br>worked on                                           |
+|----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| Login/Register with Google       | Login/Register the user using their Google OAuth credentials.                                                                                                                                                                                                                                                     | Alpha           | Beta           | Originally planned to use Apple, but we instead used Google because<br>Apple required us to pay a $99 developer license fee. The Alpha release<br>did have the Apple credentials working originally, but we switched to<br>Google due to issues with an Apple developer account. | Taehyoung 75%<br><br>Pravat 25%                                       |
+| Login/Register                   | Login/Register the user using their email and store the<br>password in the Django backend. Django handles hashing and<br>salting the passwords for us.                                                                                                                                                            | Alpha           | Alpha          | None                                                                                                                                                                                                                                                                             | Pravat 75% <br> <br>Jinho 25%                                         |
+| Onboarding                       | The "Tell us where you are", "Tell us your interests", and "Tell us about you"<br>view controllers. Including the backend to store the user's information from<br>these forms and store the user's profile photo.                                                                                                 | Alpha           | Alpha          | We finished the onboarding pages in our original design doc for Alpha,<br>but we wanted to enhance the app further to allow the user to add their<br>biography and profile photo in the onboarding as well. This was done in<br>the Beta release.                                | Jinho 75%  <br><br>Pravat 25%                                         |
+| Auto-login                       | Logs the user into their account if there already exists a token in the<br>device's UserDefaults.                                                                                                                                                                                                                 | Final           | Final          | None                                                                                                                                                                                                                                                                             | Andy 100%                                                             |
+| Dashboard                        | Displays the nearby users to the logged-in user sorted in order by the matching<br>interests. Uses a deep learning algorithm from the backend called "Word2Vec" to<br>determine how users' interests are matched to each other.                                                                                   | Beta            | Beta           | None                                                                                                                                                                                                                                                                             | Andy 100%                                                             |
+| Profile View                     | View the user's match percent, interests, biography, profile photo, and featured photos.                                                                                                                                                                                                                          | Beta            | Beta           | Originally the design document did not have a biography section, but<br>we decided to add it into the final release. Also, added a<br>scroll view with photos showing vertically instead of horizontally to<br>make viewing images easier.                                       | Taehyoung 100%                                                        |
+| Accumulate Interests from Others | If the logged-in user swipes right on an interest from another user, then it adds it<br>into the list of interests that they have. This is done to help increase matches with<br>users that have interests similar to the user to the traits that the user just liked.                                            | Beta            | Beta           | None                                                                                                                                                                                                                                                                             | Taehyoung 100%                                                        |
+| Chat List                        | View the list of chats the user has had with other users.                                                                                                                                                                                                                                                         | Beta            | Beta           | None                                                                                                                                                                                                                                                                             | Pravat 50%  <br><br>Jinho 25%  <br><br>Taehyoung 25%                  |
+| Chat Room                        | A chat room connected to a web socket to chat between two users. The users are anonymous<br>at first, but if a user taps the other user's profile photo on the top right then it<br>initiates a request to reveal both profiles. If the other user types "ACCEPT", then both<br>profiles are no longer anonymous. | Beta            | Beta           | None                                                                                                                                                                                                                                                                             | Pravat 50%  <br><br>Jinho 25%  <br><br>Taehyoung 25%                  |
+| Edit Profile View                | Allows the user to edit their profile photos and navigate to settings.                                                                                                                                                                                                                                            | Final           | Final          | Decided to show the biography text on the final release. Also, added a<br>scroll view with photos showing vertically instead of horizontally to<br>make editing images easier.                                                                                                   | Taehyoung 100%                                                        |
+| Settings                         | Edit the personal information (such as profile photo, name, location, biography), edit<br>interests, edit password, and edit email.                                                                                                                                                                               | Final           | Final          | Decided to allow for the user to edit their profile photo in the personal<br>information section.                                                                                                                                                                                | Andy 75%  <br><br>Jinho 25%                                           |
+| UI                               | Colors, buttons, navigations, segues, text, tab bar, tables.                                                                                                                                                                                                                                                      | Final           | Final          | None                                                                                                                                                                                                                                                                             | Jinho 85%  <br><br>Pravat 5%  <br><br>Taehyoung 5%  <br><br>Andy 5%   |
+| Django Web Server and Socket     | Programs the endpoints to create, read, update, and delete user data. Also, the<br>real-time socket connection between users to allow for chatting.                                                                                                                                                               | Final           | Final          | None                                                                                                                                                                                                                                                                             | Pravat 85%  <br><br>Taehyoung 5%  <br><br>Andy 5%  <br><br>Jinho 5%   |

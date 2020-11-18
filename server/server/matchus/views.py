@@ -10,6 +10,13 @@ from .serializers import ChatRoomSerializer, PhotoSerializer, UserSerializer
 from .forms import ChatRoomForm, InterestForm, LoginForm, PhotoForm, SettingsForm, SignUpForm, VerifyCredentialsForm
 from .queries import get_users_nearby
 
+class VerifyAuthenticationView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        # if the user was authenticated by the permissions middleware, then return a success response
+        return Response()
+
 class VerifyCredentialsView(APIView):
     def post(self, request):
         verify_credentials_form = VerifyCredentialsForm(request.data)
