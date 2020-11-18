@@ -46,6 +46,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        profiles = []
+        page = 1
         loadProfiles(page: page)
     }
     
