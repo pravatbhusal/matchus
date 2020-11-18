@@ -44,9 +44,7 @@ class ViewController: UIViewController {
             switch response.response?.statusCode {
                 case 200?:
                     // the user is logged in with a valid token, so go straight to the dashboard
-                    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let dashboardVC = storyboard.instantiateViewController(withIdentifier: "Dashboard") as! DashboardViewController
-                    self.navigationController?.pushViewController(dashboardVC, animated: true)
+                    self.performSegue(withIdentifier: self.dashboardSegueIdentifier, sender: nil)
                     break
                 default:
                     // this user does not have a valid token, so remove the token and load the landing page normally

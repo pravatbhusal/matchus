@@ -61,6 +61,7 @@
                     <connections>
                         <outlet property="loginButton" destination="KiU-qQ-1SP" id="1e8-vL-Dup"/>
                         <outlet property="registerButton" destination="Qj5-hI-VxM" id="XFA-mK-LV3"/>
+                        <segue destination="gk4-Zv-K47" kind="show" identifier="DashboardSegueIdentifier" id="YrA-mJ-cFS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -1579,8 +1580,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="BuF-bP-5U4"/>
-        <segue reference="NGf-Pn-7My"/>
-        <segue reference="q6S-yz-jLA"/>
+        <segue reference="kd8-rX-WDt"/>
+        <segue reference="YrA-mJ-cFS"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
