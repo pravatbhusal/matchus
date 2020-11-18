@@ -14,13 +14,13 @@
 		913FC533254E1E3D008881C6 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC532254E1E3C008881C6 /* DashboardViewController.swift */; };
 		913FC538254E29CF008881C6 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC537254E29CF008881C6 /* ProfileViewController.swift */; };
 		913FC53C254E2AF2008881C6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 913FC53B254E2AF2008881C6 /* ChatViewController.swift */; };
+		9C554E17B60B2B52B9D8FC46 /* libPods-Matchus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B1BD511398FA85FCDDD3D9 /* libPods-Matchus.a */; };
 		A2069396255B1FA900A9D1B6 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2069395255B1FA900A9D1B6 /* SettingsViewController.swift */; };
 		A2069398255B1FE400A9D1B6 /* PersonalInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2069397255B1FE400A9D1B6 /* PersonalInfoViewController.swift */; };
 		A206939A255B1FF400A9D1B6 /* EditInterestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2069399255B1FF400A9D1B6 /* EditInterestsViewController.swift */; };
 		A206939C255B200A00A9D1B6 /* AccountSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A206939B255B200A00A9D1B6 /* AccountSettingsViewController.swift */; };
 		A206939E255B201A00A9D1B6 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A206939D255B201A00A9D1B6 /* ChangePasswordViewController.swift */; };
 		A25E398E25645A1B00F1D11E /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A25E398D25645A1B00F1D11E /* MyProfileViewController.swift */; };
-		B533F0601E1D5FB4D72D3E38 /* libPods-Matchus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A9B83069DD84F6F0FFEE1CB /* libPods-Matchus.a */; };
 		DA16E23A2542712900F179F0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16E2392542712900F179F0 /* Constants.swift */; };
 		DA3A630C25548EAF0066DB48 /* IdentityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */; };
 		DA3C88972553A20A003A3714 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3C88962553A20A003A3714 /* Extensions.swift */; };
@@ -37,8 +37,8 @@
 /* Begin PBXFileReference section */
 		03FE665F2536C38700A4C1C2 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		03FE66672536D22100A4C1C2 /* client.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = client.entitlements; sourceTree = "<group>"; };
-		48175D3BD193ECC739C32544 /* Pods-Matchus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.debug.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.debug.xcconfig"; sourceTree = "<group>"; };
-		6A9B83069DD84F6F0FFEE1CB /* libPods-Matchus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Matchus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FF209B817572A2BC67BBD79 /* Pods-Matchus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.release.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.release.xcconfig"; sourceTree = "<group>"; };
+		42B1BD511398FA85FCDDD3D9 /* libPods-Matchus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Matchus.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		910C0F472533A41F00DCDBE7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		910C0F492533A55800DCDBE7 /* LocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		910C0F4B2533A57E00DCDBE7 /* InterestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsViewController.swift; sourceTree = "<group>"; };
@@ -51,6 +51,7 @@
 		A206939B255B200A00A9D1B6 /* AccountSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsViewController.swift; sourceTree = "<group>"; };
 		A206939D255B201A00A9D1B6 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		A25E398D25645A1B00F1D11E /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		C82769D3D30F10EDD33B9E08 /* Pods-Matchus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.debug.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.debug.xcconfig"; sourceTree = "<group>"; };
 		DA16E2392542712900F179F0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		DA3A630B25548EAF0066DB48 /* IdentityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityViewController.swift; sourceTree = "<group>"; };
 		DA3C88962553A20A003A3714 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		DABA159E252BAB9E00083305 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DABA15A1252BAB9E00083305 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DABA15A3252BAB9E00083305 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FC52F2D157F836F4260C0D99 /* Pods-Matchus.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Matchus.release.xcconfig"; path = "Target Support Files/Pods-Matchus/Pods-Matchus.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,17 +72,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B533F0601E1D5FB4D72D3E38 /* libPods-Matchus.a in Frameworks */,
+				9C554E17B60B2B52B9D8FC46 /* libPods-Matchus.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		85F688759CB518CC8959EE9B /* Frameworks */ = {
+		875CDA0E5228C359680F9288 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6A9B83069DD84F6F0FFEE1CB /* libPods-Matchus.a */,
+				42B1BD511398FA85FCDDD3D9 /* libPods-Matchus.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -141,8 +141,8 @@
 		B58098E18A3EA6FFE20B3CF0 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				48175D3BD193ECC739C32544 /* Pods-Matchus.debug.xcconfig */,
-				FC52F2D157F836F4260C0D99 /* Pods-Matchus.release.xcconfig */,
+				C82769D3D30F10EDD33B9E08 /* Pods-Matchus.debug.xcconfig */,
+				3FF209B817572A2BC67BBD79 /* Pods-Matchus.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -153,7 +153,7 @@
 				DABA1594252BAB9D00083305 /* client */,
 				DABA1593252BAB9D00083305 /* Products */,
 				B58098E18A3EA6FFE20B3CF0 /* Pods */,
-				85F688759CB518CC8959EE9B /* Frameworks */,
+				875CDA0E5228C359680F9288 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -194,11 +194,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DABA15A6252BAB9E00083305 /* Build configuration list for PBXNativeTarget "Matchus" */;
 			buildPhases = (
-				06EB0E539B3BF146714E1DAD /* [CP] Check Pods Manifest.lock */,
+				5E752583335199BD364E1D30 /* [CP] Check Pods Manifest.lock */,
 				DABA158E252BAB9D00083305 /* Sources */,
 				DABA158F252BAB9D00083305 /* Frameworks */,
 				DABA1590252BAB9D00083305 /* Resources */,
-				8784BE19A91387037F1CBEAB /* [CP] Copy Pods Resources */,
+				007EDE78BCE9FE7AAF30C3FE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -256,7 +256,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		06EB0E539B3BF146714E1DAD /* [CP] Check Pods Manifest.lock */ = {
+		007EDE78BCE9FE7AAF30C3FE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Matchus/Pods-Matchus-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Matchus/Pods-Matchus-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Matchus/Pods-Matchus-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E752583335199BD364E1D30 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -276,23 +293,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8784BE19A91387037F1CBEAB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Matchus/Pods-Matchus-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Matchus/Pods-Matchus-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Matchus/Pods-Matchus-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -464,7 +464,7 @@
 		};
 		DABA15A7252BAB9E00083305 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48175D3BD193ECC739C32544 /* Pods-Matchus.debug.xcconfig */;
+			baseConfigurationReference = C82769D3D30F10EDD33B9E08 /* Pods-Matchus.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;
@@ -484,7 +484,7 @@
 		};
 		DABA15A8252BAB9E00083305 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FC52F2D157F836F4260C0D99 /* Pods-Matchus.release.xcconfig */;
+			baseConfigurationReference = 3FF209B817572A2BC67BBD79 /* Pods-Matchus.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = client/client.entitlements;

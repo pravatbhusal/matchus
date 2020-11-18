@@ -26,28 +26,41 @@ class DashboardCell: UITableViewCell {
 class DashboardViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    
     @IBOutlet weak var plusButton: UIButton!
-    @IBOutlet weak var navigationBar: UINavigationItem!
     
     let profileSegueIdentifier = "ProfileSegue"
 
     var profiles: [DashboardProfile] = []
+    
     var totalProfiles: Int = 0
+    
     var profilesPerPage: Int = 0
+    
     var page: Int = 1
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        navigationItem.hidesBackButton = true
+        self.navigationController!.interactivePopGestureRecognizer!.isEnabled = false;
         loadProfiles(page: page)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     func loadProfiles(page: Int) {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
-        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
-        let url = "\(APIs.serverURI)/dashboard/\(String(page))"
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
+        let url = "\(APIs.dashboard)/\(String(page))"
         
         AF.request(url, method: .get, parameters: nil, headers: headers).responseJSON { [self]
          response in
