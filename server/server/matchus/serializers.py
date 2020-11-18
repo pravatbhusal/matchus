@@ -3,9 +3,19 @@ from .models import default_photo, default_profile_photo, ChatRoom, Photo, User
 from notebook.matchus import similarity
 
 class UserSerializer(serializers.ModelSerializer):
+    is_oauth = serializers.SerializerMethodField('get_is_oauth')
+
     class Meta:
         model = User
-        fields = ['id', 'email', 'name', 'location', 'biography', 'interests', 'profile_photo']
+        fields = ['id', 'is_oauth', 'email', 'name', 'location', 'biography', 'interests', 'profile_photo']
+
+    def get_is_oauth(self, obj):
+        user = User.objects.get(id=obj.id)
+
+        if bool(user.google_user_id):
+            print("ok")
+
+        return False
 
     class AnonymousSerializer(serializers.ModelSerializer):
         anonymous = serializers.SerializerMethodField('get_anonymous')
