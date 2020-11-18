@@ -20,8 +20,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     @IBOutlet weak var profileName: UILabel!
     
-    @IBOutlet weak var loading: UIActivityIndicatorView!
-    
     @IBOutlet weak var messageButton: UIBarButtonItem!
     
     @IBOutlet weak var matchLabel: UILabel!
@@ -29,6 +27,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var interestsTableView: UITableView!
     
     @IBOutlet weak var bioLabel: UILabel!
+    
+    var loadingView: UIActivityIndicatorView!
     
     var id: Int = 0
     
@@ -51,6 +51,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         interestsTableView.delegate = self
         interestsTableView.dataSource = self
         scrollView.delegate = self;
+        
+        // initiate the activity indicator
+        loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.center = self.view.center
+        self.view.addSubview(loadingView)
         toggleVisible(visible: false)
     
         // add a click event to the message bar button item
@@ -65,7 +70,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func toggleVisible(visible: Bool) {
-        loading.isHidden = visible
+        // loading.isHidden = visible
+        if !visible {
+            loadingView.startAnimating()
+        } else {
+            loadingView.stopAnimating()
+        }
         profilePhoto.isHidden = !visible
         profileName.isHidden = !visible
         bioLabel.isHidden = !visible

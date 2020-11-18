@@ -550,7 +550,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="asa-HH-Rw7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5184" y="136"/>
+            <point key="canvasLocation" x="5182.608695652174" y="135.9375"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="Wjl-EA-Dwr">
@@ -625,9 +625,6 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="OsP-vu-fN7">
-                                                <rect key="frame" x="217" y="386" width="20" height="20"/>
-                                            </activityIndicatorView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ztj-e9-GJf">
                                                 <rect key="frame" x="20" y="112" width="374" height="42"/>
                                                 <constraints>
@@ -676,12 +673,10 @@
                                         <constraints>
                                             <constraint firstItem="ztj-e9-GJf" firstAttribute="top" secondItem="3Sg-wH-tFs" secondAttribute="bottom" constant="8" id="0sO-3o-hSL"/>
                                             <constraint firstItem="46m-0D-E6P" firstAttribute="trailing" secondItem="F4e-rj-CC0" secondAttribute="trailing" id="5y9-dX-3BC"/>
-                                            <constraint firstAttribute="trailing" secondItem="OsP-vu-fN7" secondAttribute="trailing" constant="177" id="AEZ-Rr-d1H"/>
                                             <constraint firstItem="hdG-nc-U2D" firstAttribute="leading" secondItem="YXl-6B-cFR" secondAttribute="leading" id="CAI-s1-945"/>
                                             <constraint firstItem="F4e-rj-CC0" firstAttribute="top" secondItem="46m-0D-E6P" secondAttribute="bottom" constant="67" id="F21-o7-0q1"/>
                                             <constraint firstItem="3Sg-wH-tFs" firstAttribute="centerX" secondItem="ztj-e9-GJf" secondAttribute="centerX" id="GuN-yn-dYt"/>
                                             <constraint firstItem="yVh-MS-Qp6" firstAttribute="trailing" secondItem="46m-0D-E6P" secondAttribute="trailing" id="HNr-4F-weT"/>
-                                            <constraint firstItem="OsP-vu-fN7" firstAttribute="top" secondItem="hdG-nc-U2D" secondAttribute="bottom" constant="90" id="HVw-B2-Bjy"/>
                                             <constraint firstItem="sYT-Yk-sh9" firstAttribute="leading" secondItem="ztj-e9-GJf" secondAttribute="leading" id="MYK-lM-Jum"/>
                                             <constraint firstItem="hdG-nc-U2D" firstAttribute="top" secondItem="sYT-Yk-sh9" secondAttribute="bottom" constant="24" id="QC4-pF-xcl"/>
                                             <constraint firstItem="sYT-Yk-sh9" firstAttribute="leading" secondItem="hdG-nc-U2D" secondAttribute="leading" id="Rbh-Zu-CFk"/>
@@ -736,7 +731,6 @@
                         <outlet property="imageView3" destination="46m-0D-E6P" id="OYl-g0-1uR"/>
                         <outlet property="imageView4" destination="F4e-rj-CC0" id="EPr-lH-fJt"/>
                         <outlet property="interestsTableView" destination="YXl-6B-cFR" id="nnj-lu-Pxj"/>
-                        <outlet property="loading" destination="OsP-vu-fN7" id="LCL-o2-5GC"/>
                         <outlet property="matchLabel" destination="sYT-Yk-sh9" id="0PH-rg-k5i"/>
                         <outlet property="messageButton" destination="dEC-Yw-1xb" id="s6K-35-PUO"/>
                         <outlet property="profileName" destination="ztj-e9-GJf" id="3cD-ce-bNP"/>

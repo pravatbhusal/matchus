@@ -30,12 +30,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var plusButton: UIButton!
     
+    var loadingView: UIActivityIndicatorView!
+    
     var chats: [RecentChat] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // initiate the activity indicator
+        loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.center = self.view.center
+        self.view.addSubview(loadingView)
+        loadingView.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,6 +60,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                         if let json = response.value {
                             self.chats = ResponseSerializer.getChatsList(json: json)!
                             self.tableView.reloadData()
+                            self.loadingView.stopAnimating()
                         }
                         break
                     default:

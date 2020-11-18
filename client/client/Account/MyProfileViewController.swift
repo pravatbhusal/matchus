@@ -21,15 +21,21 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
     @IBOutlet weak var bioLabel: UILabel!
     
     @IBOutlet weak var image1: UIButton!
+    
     @IBOutlet weak var image2: UIButton!
+    
     @IBOutlet weak var image3: UIButton!
+    
     @IBOutlet weak var image4: UIButton!
+    
+    var loadingView: UIActivityIndicatorView!
     
     var modifiedImage: UIButton!
     
     @IBOutlet weak var profileName: UILabel!
     
     let tableRowSpacing: CGFloat = 20
+    
     var interests: [String] = []
     
     override func viewDidLoad() {
@@ -38,10 +44,29 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         settingsButton.layer.borderWidth = 2
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // initiate the activity indicator
+        loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.center = self.view.center
+        self.view.addSubview(loadingView)
+        toggleVisible(visible: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         loadProfile()
+    }
+    
+    func toggleVisible(visible: Bool) {
+        // loading.isHidden = visible
+        if !visible {
+            loadingView.startAnimating()
+        } else {
+            loadingView.stopAnimating()
+        }
+        profilePhoto.isHidden = !visible
+        profileName.isHidden = !visible
+        bioLabel.isHidden = !visible
+        tableView.isHidden = !visible
     }
     
     func loadProfile() {
@@ -85,6 +110,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
                             let interestsData: [String] = ResponseSerializer.getInterestsList(json: json)!
                             self.interests = interestsData
                             self.tableView.reloadData()
+                            toggleVisible(visible: true)
                         }
                     default:
                         // create a failure to load profile alert

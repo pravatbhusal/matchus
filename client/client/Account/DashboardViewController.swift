@@ -29,6 +29,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBOutlet weak var plusButton: UIButton!
     
+    var loadingView: UIActivityIndicatorView!
+    
     let profileSegueIdentifier = "ProfileSegue"
 
     var profiles: [DashboardProfile] = []
@@ -43,6 +45,12 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // initiate the activity indicator
+        loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.center = self.view.center
+        self.view.addSubview(loadingView)
+        loadingView.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,27 +67,28 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         AF.request(url, method: .get, parameters: nil, headers: headers).responseJSON { [self]
          response in
             switch response.response?.statusCode {
-                    case 200?:
-                     if let json = response.value as! NSDictionary? {
+                case 200?:
+                    if let json = response.value as! NSDictionary? {
                         self.totalProfiles = json["total_profiles"] as! Int
                         self.profilesPerPage = json["profiles_per_page"] as! Int
-                        
+
                         let profiles: [DashboardProfile] = ResponseSerializer.getDashboardList(json: json["profiles"])!
                         self.profiles = self.profiles + profiles
                         self.tableView.reloadData()
-                     }
-                     break
-            default:
-                // create a failure to load chat history alert
-                let alert = UIAlertController(title: "Failed to Load Dashboard", message: "Could not load the dashboard, is your internet down?", preferredStyle: UIAlertController.Style.alert)
-                
-                // add an OK button to cancel the alert
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-                
-                // present the alert
-                self.present(alert, animated: true, completion: nil)
-                break
-            }
+                    }
+                    loadingView.stopAnimating()
+                    break
+                default:
+                    // create a failure to load chat history alert
+                    let alert = UIAlertController(title: "Failed to Load Dashboard", message: "Could not load the dashboard, is your internet down?", preferredStyle: UIAlertController.Style.alert)
+                    
+                    // add an OK button to cancel the alert
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+                    
+                    // present the alert
+                    self.present(alert, animated: true, completion: nil)
+                    break
+                }
         }
     }
     
