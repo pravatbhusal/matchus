@@ -15,7 +15,7 @@ You must first run the Django web server and web socket.
 Next, you need to run the Xcode simulator and register an account .  
 1. Inside the client folder, run ```pod install``` to install the podfile dependencies.  
 2. Now open the Matchus.xcworkspace file with Xcode.  
-3. Run the app on an IPhone 11 Pro Max simulator on Xcode.  
+3. Run the app on an IPhone 11 Pro Max simulator on Xcode. If the build fails, you may want to use the Xcode Legacy Build system under Workspace Settings > Build System.  
 4. The app will load the landing page, click the "Register" button and fill out the form to register your account.
 
 Once you are finished registering your account, you will be directed to the dashboard page. The dashboard page will be empty if there's no users near your
