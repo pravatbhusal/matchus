@@ -36,6 +36,9 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
         myBioLabel.layer.borderColor = UIColor.black.cgColor
         myBioLabel.layer.borderWidth = 2
         saveButton.layer.borderWidth = 2
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -45,7 +48,21 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
-
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            if (self.view.frame.origin.y == 0 && myBioLabel.isFirstResponder) {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
     func loadInfo() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
         let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
