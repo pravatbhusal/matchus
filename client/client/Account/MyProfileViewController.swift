@@ -25,6 +25,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
     @IBOutlet weak var image3: UIButton!
     @IBOutlet weak var image4: UIButton!
     
+    var modifiedImage: UIButton!
     
     @IBOutlet weak var profileName: UILabel!
     
@@ -40,6 +41,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         
         loadProfile()
     }
+    
     
     func loadProfile() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
@@ -64,17 +66,18 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
                             
                             // get all photo urls, then download them and add to the scrollview
                             let featuredPhotoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
-                            let imageViewsToLoad : [UIButton] = [self.image1, self.image2, self.image3, self.image3]
+                            let imageViewsToLoad : [UIButton] = [self.image1, self.image2, self.image3, self.image4]
                             
                             var index = 0
-                            var total = featuredPhotoURLs.count
+                            var total = 4
+                            print(featuredPhotoURLs.count)
                             if featuredPhotoURLs.count < 4 {
                                 total = featuredPhotoURLs.count
                             }
                             
                             // download each image that this user owns
                             while index < total {
-                                self.downloadtoUIbutton(from: URL(string: featuredPhotoURLs[index])!, to: imageViewsToLoad[index])
+                                self.downloadtoUIbutton(from: URL(string: featuredPhotoURLs[featuredPhotoURLs.count - index - 1])!, to: imageViewsToLoad[index])
                                 index += 1
                             }
                             
@@ -98,6 +101,32 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
     }
     
     @IBAction func image1Pressed(_ sender: Any) {
+        self.modifiedImage = self.image1
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true)
+    }
+    
+    @IBAction func image2Pressed(_ sender: Any) {
+        self.modifiedImage = self.image2
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true)
+    }
+    @IBAction func image3Pressed(_ sender: Any) {
+        self.modifiedImage = self.image3
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        present(picker, animated: true)
+    }
+    @IBAction func image4Pressed(_ sender: Any) {
+        self.modifiedImage = self.image4
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary
         picker.delegate = self
@@ -112,10 +141,11 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
             return
         }
         
-        image1.setBackgroundImage(image, for: .normal)
+        self.modifiedImage.setBackgroundImage(image, for: .normal)
         
         uploadProfilePhoto(photo: image)
         loadProfile()
+        self.viewDidLoad()
         
     }
     
@@ -124,7 +154,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         let headers: HTTPHeaders = [ "Authorization": "Token \(token)", "Content-type": "multipart/form-data" ]
         
         // format the image into an acceptable form data for the server
-        let photoData = photo.jpegData(compressionQuality: 0.5)!
+        let photoData = photo.jpegData(compressionQuality: 1)!
         
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(photoData, withName: "photo", fileName: "\(String(describing: self.profileName)).jpeg", mimeType: "image/jpeg")
@@ -188,7 +218,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                imageView.setBackgroundImage(UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75)), for: .normal)
+                imageView.setBackgroundImage(UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 370, height: 370)), for: .normal)
             }
         }
     }

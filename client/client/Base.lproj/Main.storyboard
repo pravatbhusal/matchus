@@ -849,6 +849,7 @@
                                                 </constraints>
                                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
+                                                    <action selector="image2Pressed:" destination="a82-am-LY3" eventType="touchUpInside" id="bfD-zt-Dap"/>
                                                     <action selector="profilePhotoPressed:" destination="F8d-rm-6as" eventType="touchDown" id="lht-yy-lqV"/>
                                                 </connections>
                                             </button>
@@ -860,6 +861,7 @@
                                                 </constraints>
                                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
+                                                    <action selector="image3Pressed:" destination="a82-am-LY3" eventType="touchUpInside" id="RSj-4x-Yyd"/>
                                                     <action selector="profilePhotoPressed:" destination="F8d-rm-6as" eventType="touchDown" id="xgi-k2-kxV"/>
                                                 </connections>
                                             </button>
@@ -871,6 +873,7 @@
                                                 </constraints>
                                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
+                                                    <action selector="image4Pressed:" destination="a82-am-LY3" eventType="touchUpInside" id="1zy-SI-JKp"/>
                                                     <action selector="profilePhotoPressed:" destination="F8d-rm-6as" eventType="touchDown" id="PU6-XU-3qR"/>
                                                 </connections>
                                             </button>
@@ -1616,7 +1619,7 @@
         <segue reference="0YL-pz-8dq"/>
         <segue reference="b98-gU-1Nj"/>
         <segue reference="Sdc-43-fWB"/>
-        <segue reference="kd8-rX-WDt"/>
+        <segue reference="NGf-Pn-7My"/>
         <segue reference="YrA-mJ-cFS"/>
     </inferredMetricsTieBreakers>
     <resources>
