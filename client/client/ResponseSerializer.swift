@@ -65,6 +65,13 @@ class ResponseSerializer {
         return profileEmail
     }
     
+    static func isProfileOAuth(json: Any?) -> Bool? {
+        let email = json as! [String: AnyObject]
+        let isOAuth: Bool? = email["oauth"] as? Bool
+        
+        return isOAuth
+    }
+    
     static func getMatchRate(json: Any?) -> String? {
         let match = json as! [String: AnyObject]
         let matchRate: Double? = match["match"] as? Double

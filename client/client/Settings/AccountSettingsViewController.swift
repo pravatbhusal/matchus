@@ -56,7 +56,7 @@ class AccountSettingsViewController: UIViewController {
     
     func loadEmail() {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
-        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
         
         AF.request(APIs.settings, method: .get, parameters: nil, headers: headers).responseJSON { [self]
          response in
@@ -65,6 +65,19 @@ class AccountSettingsViewController: UIViewController {
                      if let json = response.value as! NSDictionary? {
                         self.email = ResponseSerializer.getProfileEmail(json: json)
                         self.emailField.text = self.email
+                        
+                        // if this is an OAuth user, then it's restricted from modifying account settings
+                        let isOAuth = ResponseSerializer.isProfileOAuth(json: json)
+                        if isOAuth ?? false {
+                            self.emailField.text = "Cannot change 3rd party account settings"
+                            self.emailField.isEnabled = false
+                            self.changePassword.isEnabled = false
+                            self.saveButton.isEnabled = false
+                            self.emailField.backgroundColor = UIColor.lightGray
+                            self.changePassword.backgroundColor = UIColor.lightGray
+                            self.saveButton.backgroundColor = UIColor.lightGray
+                        }
+                        
                         self.loadingView.stopAnimating()
                      }
                      break
