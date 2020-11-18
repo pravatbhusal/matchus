@@ -144,8 +144,6 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         self.modifiedImage.setBackgroundImage(image, for: .normal)
         
         uploadProfilePhoto(photo: image)
-        loadProfile()
-        self.viewDidLoad()
         
     }
     
