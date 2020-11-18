@@ -13,16 +13,27 @@ import GooglePlaces
 class PersonalInfoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, GMSAutocompleteViewControllerDelegate {
     
     @IBOutlet weak var myNameLabel: UITextField!
+    
     @IBOutlet weak var myLocationLabel: UITextField!
+    
     @IBOutlet weak var myBioLabel: UITextView!
+    
     @IBOutlet weak var myProfilePhotoButton: UIButton!
+    
     @IBOutlet weak var saveButton: UIButton!
     
+    var loadingView: UIActivityIndicatorView!
+    
     var profilePhoto: String!
+    
     var profileName: String!
+    
     var profileBio: String!
+    
     var profileLocation: String!
+    
     var latitude: Double = 0
+    
     var longitude: Double = 0
     
     var originalPhoto: UIImage!
@@ -36,6 +47,14 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
         myBioLabel.layer.borderColor = UIColor.black.cgColor
         myBioLabel.layer.borderWidth = 2
         saveButton.layer.borderWidth = 2
+        
+        // initiate the activity indicator
+        loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.frame = self.view.frame
+        loadingView.center = self.view.center
+        loadingView.backgroundColor = UIColor.white
+        self.view.addSubview(loadingView)
+        loadingView.startAnimating()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -81,6 +100,7 @@ class PersonalInfoViewController: UIViewController, UIImagePickerControllerDeleg
                         self.myLocationLabel.text = self.profileLocation
                         self.myBioLabel.text = self.profileBio
                         self.downloadImage(from: URL(string: self.profilePhoto)!, to: self.myProfilePhotoButton)
+                        self.loadingView.stopAnimating()
                      }
                      break
             default:

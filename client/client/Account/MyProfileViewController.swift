@@ -47,26 +47,15 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         
         // initiate the activity indicator
         loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.frame = self.view.frame
         loadingView.center = self.view.center
+        loadingView.backgroundColor = UIColor.white
         self.view.addSubview(loadingView)
-        toggleVisible(visible: false)
+        loadingView.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         loadProfile()
-    }
-    
-    func toggleVisible(visible: Bool) {
-        // loading.isHidden = visible
-        if !visible {
-            loadingView.startAnimating()
-        } else {
-            loadingView.stopAnimating()
-        }
-        profilePhoto.isHidden = !visible
-        profileName.isHidden = !visible
-        bioLabel.isHidden = !visible
-        tableView.isHidden = !visible
     }
     
     func loadProfile() {
@@ -110,7 +99,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
                             let interestsData: [String] = ResponseSerializer.getInterestsList(json: json)!
                             self.interests = interestsData
                             self.tableView.reloadData()
-                            toggleVisible(visible: true)
+                            self.loadingView.stopAnimating()
                         }
                     default:
                         // create a failure to load profile alert

@@ -41,7 +41,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         // initiate the activity indicator
         loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.frame = self.view.frame
         loadingView.center = self.view.center
+        loadingView.backgroundColor = UIColor.white
         self.view.addSubview(loadingView)
         loadingView.startAnimating()
     }

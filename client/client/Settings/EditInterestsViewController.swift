@@ -11,15 +11,21 @@ import Alamofire
 
 class EditInterestsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var interestText: UITextField!
+    
+    @IBOutlet weak var saveButton: UIButton!
+    
+    var loadingView: UIActivityIndicatorView!
+    
     var interestsList: [String] = []
     
     let maxInterests: Int = 4
-    let textCellIdentifier: String = "EditTextCell"
-    let tableRowSpacing: CGFloat = 20
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var interestText: UITextField!
-    @IBOutlet weak var saveButton: UIButton!
+    let textCellIdentifier: String = "EditTextCell"
+    
+    let tableRowSpacing: CGFloat = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +34,14 @@ class EditInterestsViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.delegate = self
         tableView.dataSource = self
         saveButton.layer.borderWidth = 2
+        
+        // initiate the activity indicator
+        loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.frame = self.view.frame
+        loadingView.center = self.view.center
+        loadingView.backgroundColor = UIColor.white
+        self.view.addSubview(loadingView)
+        loadingView.startAnimating()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -122,6 +136,7 @@ class EditInterestsViewController: UIViewController, UITableViewDelegate, UITabl
                      if let json = response.value as! NSDictionary? {
                         self.interestsList = ResponseSerializer.getInterestsList(json: json)!
                         self.tableView.reloadData()
+                        self.loadingView.stopAnimating()
                      }
                      break
             default:

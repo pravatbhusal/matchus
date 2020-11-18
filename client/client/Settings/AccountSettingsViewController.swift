@@ -12,13 +12,18 @@ import AuthenticationServices
 import GoogleSignIn
 
 class AccountSettingsViewController: UIViewController {
+    
     @IBOutlet weak var emailAddressLabel: UITextField!
     
-    var interestsList: [String]!
-    
     @IBOutlet weak var changePassword: UIButton!
+    
     @IBOutlet weak var saveButton: UIButton!
+    
     @IBOutlet weak var emailField: UITextField!
+    
+    var loadingView: UIActivityIndicatorView!
+    
+    var interestsList: [String]!
     
     var email: String!
 
@@ -29,6 +34,14 @@ class AccountSettingsViewController: UIViewController {
         emailAddressLabel.layer.borderWidth = 2
         saveButton.layer.cornerRadius = 6
         changePassword.layer.cornerRadius = 6
+        
+        // initiate the activity indicator
+        loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.frame = self.view.frame
+        loadingView.center = self.view.center
+        loadingView.backgroundColor = UIColor.white
+        self.view.addSubview(loadingView)
+        loadingView.startAnimating()
         
         GIDSignIn.sharedInstance()?.presentingViewController = self
     }
@@ -52,6 +65,7 @@ class AccountSettingsViewController: UIViewController {
                      if let json = response.value as! NSDictionary? {
                         self.email = ResponseSerializer.getProfileEmail(json: json)
                         self.emailField.text = self.email
+                        self.loadingView.stopAnimating()
                      }
                      break
             default:

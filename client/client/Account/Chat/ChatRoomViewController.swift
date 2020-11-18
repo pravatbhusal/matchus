@@ -34,6 +34,14 @@ class ChatProfile {
 
 class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, WebSocketDelegate {
     
+    @IBOutlet weak var profileButton: UIBarButtonItem!
+    
+    @IBOutlet weak var chattingText: UITextField!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var loadingView: UIActivityIndicatorView!
+    
     var roomId: Int = 0
     
     var totalsChats: Int = 0
@@ -52,16 +60,18 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
     
     var isConnected: Bool = false
     
-    @IBOutlet weak var profileButton: UIBarButtonItem!
-    
-    @IBOutlet weak var chattingText: UITextField!
-    
-    @IBOutlet weak var tableView: UITableView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
+        // initiate the activity indicator
+        loadingView = UIActivityIndicatorView(style: .large)
+        loadingView.frame = self.view.frame
+        loadingView.center = self.view.center
+        loadingView.backgroundColor = UIColor.white
+        self.view.addSubview(loadingView)
+        loadingView.startAnimating()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -151,6 +161,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                             // scroll to the a view of the table before continuing to load any other pages
                             if initialLoad {
                                 self.scrollToBottom(animated: false)
+                                self.loadingView.stopAnimating()
                             } else {
                                 let indexPath = IndexPath(row: chats.count - 1, section: 0)
                                 self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
