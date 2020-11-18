@@ -35,8 +35,8 @@ class SignUpForm(RequestForm, VerifyCredentialsForm):
     location = forms.CharField(required=True, max_length=128, error_messages={
         "required": "Please input a location."
     })
-    latitude = forms.DecimalField(required=True, max_digits=16, decimal_places=12)
-    longitude = forms.DecimalField(required=True, max_digits=16, decimal_places=12)
+    latitude = forms.DecimalField(required=True)
+    longitude = forms.DecimalField(required=True)
 
     def save(self):
         """
@@ -100,8 +100,8 @@ class SettingsForm(RequestForm):
     interests = forms.JSONField(required=False)
     biography = forms.CharField(required=False)
     location = forms.CharField(required=False, max_length=128)
-    latitude = forms.DecimalField(required=False, max_digits=16, decimal_places=12)
-    longitude = forms.DecimalField(required=False, max_digits=16, decimal_places=12)
+    latitude = forms.DecimalField(required=False)
+    longitude = forms.DecimalField(required=False)
 
     def clean_email(self):
         if 'email' not in self.data:

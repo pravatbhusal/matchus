@@ -192,5 +192,4 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
             }
         }
     }
-
 }
