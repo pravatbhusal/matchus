@@ -78,10 +78,5 @@ class LoginViewController: UIViewController {
         if (GIDSignIn.sharedInstance()?.currentUser == nil) {
             GIDSignIn.sharedInstance()?.signIn()
         }
-        if let user = GIDSignIn.sharedInstance()?.currentUser {
-            let email: String = user.profile.email
-            let password: String = user.userID
-            loginUser(googleUserId: user.userID, email: email, password: password)
-        }
     }
 }

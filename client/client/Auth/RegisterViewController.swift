@@ -79,14 +79,6 @@ class RegisterViewController: UIViewController {
         if (GIDSignIn.sharedInstance()?.currentUser == nil) {
             GIDSignIn.sharedInstance()?.signIn()
         }
-        if let user = GIDSignIn.sharedInstance()?.currentUser {
-            let email: String = user.profile.email
-            let password: String = user.userID
-            self.googleUserId = user.userID
-            self.oAuthEmail = email
-            self.oAuthPassword = password
-            verifyCredentials(email: email, password: password)
-        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
