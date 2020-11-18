@@ -30,13 +30,29 @@ class ViewController: UIViewController {
         registerButton.layer.borderWidth = 2
         registerButton.layer.borderColor = UIColor.systemBlue.cgColor
         
-        autoLogin()
+        if (UserDefaults.standard.object(forKey: User.token) != nil) {
+            // auto login the user since this user's token is stored
+            self.verifyAuthentication()
+        }
     }
     
-    func autoLogin() {
-        // TODO: actually get this to work
-        if (UserDefaults.standard.object(forKey: User.token) != nil) {
-            print("auto login")
+    func verifyAuthentication() {
+        let token: String = UserDefaults.standard.string(forKey: User.token)!
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
+        
+        AF.request(APIs.verifyAuthentication, method: .post, parameters: nil, headers: headers).responseJSON { [self] response in
+            switch response.response?.statusCode {
+                case 200?:
+                    // the user is logged in with a valid token, so go straight to the dashboard
+                    let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let dashboardVC = storyboard.instantiateViewController(withIdentifier: "Dashboard") as! DashboardViewController
+                    self.navigationController?.pushViewController(dashboardVC, animated: true)
+                    break
+                default:
+                    // this user does not have a valid token, so remove the token and load the landing page normally
+                    UserDefaults.standard.removeObject(forKey: User.token)
+                    break
+            }
         }
     }
     

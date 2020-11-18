@@ -471,7 +471,7 @@
         <!--Dashboard-->
         <scene sceneID="Qrl-gE-qZ7">
             <objects>
-                <viewController id="IQl-M2-WPi" customClass="DashboardViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Dashboard" id="IQl-M2-WPi" customClass="DashboardViewController" customModule="Matchus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cli-b1-RUr">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

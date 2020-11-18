@@ -49,8 +49,8 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func loadProfiles(page: Int) {
         let token: String = UserDefaults.standard.string(forKey: User.token)!
-        let headers: HTTPHeaders = ["Authorization": "Token \(token)" ]
-        let url = "\(APIs.serverURI)/dashboard/\(String(page))"
+        let headers: HTTPHeaders = [ "Authorization": "Token \(token)" ]
+        let url = "\(APIs.dashboard)/\(String(page))"
         
         AF.request(url, method: .get, parameters: nil, headers: headers).responseJSON { [self]
          response in
