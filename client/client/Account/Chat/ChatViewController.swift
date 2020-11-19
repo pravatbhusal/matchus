@@ -60,7 +60,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 switch response.response?.statusCode {
                     case 200?:
                         if let json = response.value {
-                            self.chats = ResponseSerializer.getChatsList(json: json)!
+                            self.chats = ResponseSerializer.getChatsList(json: json, tableView: self.tableView)!
                             self.tableView.reloadData()
                             self.loadingView.stopAnimating()
                         }

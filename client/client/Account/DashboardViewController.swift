@@ -70,7 +70,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
                         self.totalProfiles = json["total_profiles"] as! Int
                         self.profilesPerPage = json["profiles_per_page"] as! Int
 
-                        let profiles: [DashboardProfile] = ResponseSerializer.getDashboardList(json: json["profiles"])!
+                        let profiles: [DashboardProfile] = ResponseSerializer.getDashboardList(json: json["profiles"], tableView: self.tableView)!
                         self.profiles = self.profiles + profiles
                         self.tableView.reloadData()
                     }

@@ -102,26 +102,6 @@ class ResponseSerializer {
         return interestsArray
     }
     
-    static func getChatsList(json: Any?) -> [RecentChat]? {
-        let chats = json as! [NSDictionary]
-        var chatsArray: [RecentChat] = []
-        
-        for chat in chats {
-            let recentChat: RecentChat = RecentChat()
-            recentChat.id = chat["id"] as! Int
-            recentChat.name = chat["name"] as! String
-            recentChat.message = chat["message"] as! String
-            
-            // download the profile photo
-            let profilePhotoURL: String = "\(APIs.serverURI)\(chat["profile_photo"] as! String)"
-            downloadChatImage(from: URL(string: profilePhotoURL)!, to: recentChat)
-            
-            chatsArray.append(recentChat)
-        }
-
-        return chatsArray
-    }
-    
     static func getChatHistory(json: Any?) -> [Chat]? {
         let chats = json as! [NSDictionary]
         var chatsArray: [Chat] = []
@@ -136,7 +116,27 @@ class ResponseSerializer {
         return chatsArray
     }
     
-    static func getDashboardList(json: Any?) -> [DashboardProfile]? {
+    static func getChatsList(json: Any?, tableView: UITableView) -> [RecentChat]? {
+        let chats = json as! [NSDictionary]
+        var chatsArray: [RecentChat] = []
+        
+        for chat in chats {
+            let recentChat: RecentChat = RecentChat()
+            recentChat.id = chat["id"] as! Int
+            recentChat.name = chat["name"] as! String
+            recentChat.message = chat["message"] as! String
+            
+            // download the profile photo
+            let profilePhotoURL: String = "\(APIs.serverURI)\(chat["profile_photo"] as! String)"
+            downloadChatImage(from: URL(string: profilePhotoURL)!, to: recentChat, tableView: tableView)
+            
+            chatsArray.append(recentChat)
+        }
+
+        return chatsArray
+    }
+    
+    static func getDashboardList(json: Any?, tableView: UITableView) -> [DashboardProfile]? {
         let dashboard = json as! [NSDictionary]
         var dashboardArray: [DashboardProfile] = []
         
@@ -147,14 +147,15 @@ class ResponseSerializer {
             
             // download the profile photo
             let profilePhotoURL: String = "\(APIs.serverURI)\(profile["profile_photo"] as! String)"
-            downloadDashboardImage(from: URL(string: profilePhotoURL)!, to: dashboardProfile, isProfilePhoto: true)
+            downloadDashboardImage(from: URL(string: profilePhotoURL)!, to: dashboardProfile, tableView: tableView, isProfilePhoto: true)
             
             // download the featured photo
             let photoURL: String = "\(APIs.serverURI)\(profile["photo"] as! String)"
-            downloadDashboardImage(from: URL(string: photoURL)!, to: dashboardProfile, isProfilePhoto: false)
+            downloadDashboardImage(from: URL(string: photoURL)!, to: dashboardProfile, tableView: tableView, isProfilePhoto: false)
             
             dashboardArray.append(dashboardProfile)
         }
+
         
         return dashboardArray
     }
@@ -163,7 +164,7 @@ class ResponseSerializer {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     
-    static func downloadDashboardImage(from url: URL, to profile: DashboardProfile, isProfilePhoto: Bool) {
+    static func downloadDashboardImage(from url: URL, to profile: DashboardProfile, tableView: UITableView, isProfilePhoto: Bool) {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
@@ -172,15 +173,17 @@ class ResponseSerializer {
                 } else {
                     profile.photo = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
                 }
+                tableView.reloadData()
             }
         }
     }
     
-    static func downloadChatImage(from url: URL, to chat: RecentChat) {
+    static func downloadChatImage(from url: URL, to chat: RecentChat, tableView: UITableView) {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
                 chat.profilePhoto = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                tableView.reloadData()
             }
         }
     }
