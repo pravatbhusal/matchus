@@ -169,9 +169,9 @@ class ResponseSerializer {
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
                 if isProfilePhoto {
-                    profile.profilePhoto = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                    profile.profilePhoto = UIImage(data: data)
                 } else {
-                    profile.photo = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                    profile.photo = UIImage(data: data)
                 }
                 tableView.reloadData()
             }
@@ -182,7 +182,7 @@ class ResponseSerializer {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                chat.profilePhoto = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                chat.profilePhoto = UIImage(data: data)
                 tableView.reloadData()
             }
         }

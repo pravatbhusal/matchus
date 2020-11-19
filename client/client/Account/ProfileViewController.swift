@@ -246,7 +246,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                imageView.image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                imageView.image = UIImage(data: data)
             }
         }
     }

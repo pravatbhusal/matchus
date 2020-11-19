@@ -221,7 +221,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                imageView.image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                imageView.image = UIImage(data: data)
             }
         }
     }
@@ -230,7 +230,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
-                imageView.setBackgroundImage(UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 370, height: 370)), for: .normal)
+                imageView.setBackgroundImage(UIImage(data: data), for: .normal)
             }
         }
     }
