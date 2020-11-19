@@ -39,7 +39,6 @@ class RegisterViewController: UIViewController {
         emailText.layer.borderColor = UIColor.black.cgColor
         passwordText.layer.borderWidth = 2
         passwordText.layer.borderColor = UIColor.black.cgColor
-        passwordText.textContentType = .oneTimeCode
         googleButton.layer.cornerRadius = 6
         nextButton.layer.cornerRadius = 6
         GIDSignIn.sharedInstance()?.presentingViewController = self

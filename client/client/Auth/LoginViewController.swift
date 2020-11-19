@@ -34,7 +34,6 @@ class LoginViewController: UIViewController {
         emailText.layer.borderColor = UIColor.black.cgColor
         passwordText.layer.borderWidth = 2
         passwordText.layer.borderColor = UIColor.black.cgColor
-        passwordText.textContentType = .oneTimeCode
         googleSignInButton.layer.cornerRadius = 6
         GIDSignIn.sharedInstance()?.presentingViewController = self
     }
