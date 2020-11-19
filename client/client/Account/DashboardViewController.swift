@@ -53,11 +53,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         loadingView.backgroundColor = UIColor.white
         self.view.addSubview(loadingView)
         loadingView.startAnimating()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        profiles = []
-        page = 1
+        
         loadProfiles(page: page)
     }
     
@@ -106,6 +102,7 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         if cell.profilePhoto.image == nil {
             downloadImage(from: URL(string: self.profiles[row].profilePhoto)!, to: cell.profilePhoto)
         }
+        
         // download the photo if it's already not downloaded
         if cell.photo.image == nil {
             downloadImage(from: URL(string: self.profiles[row].photo)!, to: cell.photo)
