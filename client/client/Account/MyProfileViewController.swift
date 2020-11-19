@@ -54,6 +54,12 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        // reset the images in case they were set before
+        self.image1.setBackgroundImage(nil, for: .normal)
+        self.image2.setBackgroundImage(nil, for: .normal)
+        self.image3.setBackgroundImage(nil, for: .normal)
+        self.image4.setBackgroundImage(nil, for: .normal)
+        
         loadProfile()
     }
     
@@ -76,12 +82,6 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
                             // set profile name
                             let profileName: String = ResponseSerializer.getProfileName(json: json)!
                             self.profileName.text = profileName
-                            
-                            // reset the images in case they were set before
-                            self.image1.setBackgroundImage(nil, for: .normal)
-                            self.image2.setBackgroundImage(nil, for: .normal)
-                            self.image3.setBackgroundImage(nil, for: .normal)
-                            self.image4.setBackgroundImage(nil, for: .normal)
                             
                             // get all photo urls, then download them and add to the scrollview
                             let featuredPhotoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
