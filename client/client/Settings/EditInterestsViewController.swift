@@ -21,7 +21,7 @@ class EditInterestsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var interestsList: [String] = []
     
-    let maxInterests: Int = 4
+    let minInterests: Int = 4
     
     let textCellIdentifier: String = "EditTextCell"
     
@@ -97,10 +97,7 @@ class EditInterestsViewController: UIViewController, UITableViewDelegate, UITabl
         var alertTitle: String?
         var alertMessage: String?
         
-        if interestsList.count >= maxInterests {
-            alertTitle = "Too many interests"
-            alertMessage = "Please enter only \(maxInterests) interests."
-        } else if(interestText.text == nil || interestText.text == "") {
+        if(interestText.text == nil || interestText.text == "") {
             alertTitle = "Invalid input"
             alertMessage = "Please enter text into the interest box."
         }
@@ -180,11 +177,11 @@ class EditInterestsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func savePressed(_ sender: Any) {
-        if interestsList.count == maxInterests {
+        if interestsList.count >= minInterests {
             updateInterests()
         } else {
             // create an alert that notifies the user they need more interests
-            let alert = UIAlertController(title: "Not enough interests", message: "Please input at least \(maxInterests) interests.", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Not enough interests", message: "Please input at least \(minInterests) interests.", preferredStyle: UIAlertController.Style.alert)
             
             // add an OK button to cancel the alert
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
