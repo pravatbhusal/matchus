@@ -20,8 +20,11 @@ class ChangePasswordViewController: UIViewController {
         super.viewDidLoad()
         saveButton.layer.cornerRadius = 6
         oldPassword.layer.borderWidth = 2
+        oldPassword.textContentType = .oneTimeCode
         newPassword.layer.borderWidth = 2
+        newPassword.textContentType = .oneTimeCode
         confirmPassword.layer.borderWidth = 2
+        confirmPassword.textContentType = .oneTimeCode
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

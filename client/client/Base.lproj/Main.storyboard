@@ -164,12 +164,6 @@
                                 <color key="textColor" red="0.59804537846957362" green="0.19053051993206749" blue="0.15690120828744475" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7pq-1s-KpN">
-                                <rect key="frame" x="16" y="336" width="382" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4dP-rK-Dc5">
                                 <rect key="frame" x="16" y="307" width="378" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -177,7 +171,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NDn-kY-zAj">
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NDn-kY-zAj">
                                 <rect key="frame" x="16" y="243" width="382" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -214,6 +208,12 @@
                                     <action selector="googleSignIn:" destination="ska-e7-uJe" eventType="touchUpInside" id="Zeq-hh-ZzB"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V0m-Wb-RNZ">
+                                <rect key="frame" x="16" y="336" width="382" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="sav-oa-0Vl"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -223,7 +223,7 @@
                         <outlet property="emailText" destination="NDn-kY-zAj" id="Gqf-E7-1Yn"/>
                         <outlet property="googleButton" destination="Fk8-A5-vqw" id="Bs0-aA-f9T"/>
                         <outlet property="nextButton" destination="oQM-Qd-0ei" id="xDW-2E-xw3"/>
-                        <outlet property="passwordText" destination="7pq-1s-KpN" id="Y5C-Hl-0rC"/>
+                        <outlet property="passwordText" destination="V0m-Wb-RNZ" id="CFF-Od-qfH"/>
                         <segue destination="F8d-rm-6as" kind="show" identifier="IdentitySegue" id="xD7-LX-tXa"/>
                     </connections>
                 </viewController>
@@ -1620,7 +1620,7 @@
         <segue reference="b98-gU-1Nj"/>
         <segue reference="Sdc-43-fWB"/>
         <segue reference="NGf-Pn-7My"/>
-        <segue reference="YrA-mJ-cFS"/>
+        <segue reference="q6S-yz-jLA"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.right" catalog="system" width="128" height="98"/>
