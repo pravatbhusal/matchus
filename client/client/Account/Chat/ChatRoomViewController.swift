@@ -73,11 +73,6 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         self.view.addSubview(loadingView)
         loadingView.startAnimating()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
         // reset this view whenever loading it again
         self.page = 1
         self.meProfile = ChatProfile()
@@ -93,6 +88,9 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
         self.socket.connect()
 
         loadChatHistory(page: page)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
