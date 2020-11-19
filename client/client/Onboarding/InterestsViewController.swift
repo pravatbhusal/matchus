@@ -35,7 +35,7 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     
     let textCellIdentifier: String = "TextCell"
     
-    let maxInterests: Int = 4
+    let minInterests: Int = 4
     
     let tableRowSpacing: CGFloat = 20
     
@@ -97,10 +97,7 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
         var alertTitle: String?
         var alertMessage: String?
         
-        if interests.count >= maxInterests {
-            alertTitle = "Too many interests"
-            alertMessage = "Please enter only \(maxInterests) interests."
-        } else if(interestText.text == nil || interestText.text == "") {
+        if(interestText.text == nil || interestText.text == "") {
             alertTitle = "Invalid input"
             alertMessage = "Please enter text into the interest box."
         }
@@ -179,11 +176,11 @@ class InterestsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     @IBAction func nextPressed(_ sender: Any) {
-        if interests.count == maxInterests {
+        if interests.count >= minInterests {
             registerUser(email: email, password: password, location: location, interests: interests)
         } else {
             // create an alert that notifies the user they need more interests
-            let alert = UIAlertController(title: "Not enough interests", message: "Please input at least \(maxInterests) interests.", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Not enough interests", message: "Please input at least \(minInterests) interests.", preferredStyle: UIAlertController.Style.alert)
             
             // add an OK button to cancel the alert
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
