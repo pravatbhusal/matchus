@@ -5,7 +5,10 @@
 //  Created by pbhusal on 11/1/20.
 //  Copyright © 2020 MatchUs. All rights reserved.
 //
+
 import Foundation
+import UIKit
+
 class ResponseSerializer {
     
     static func getToken(json: Any?) -> String? {
@@ -108,7 +111,11 @@ class ResponseSerializer {
             recentChat.id = chat["id"] as! Int
             recentChat.name = chat["name"] as! String
             recentChat.message = chat["message"] as! String
-            recentChat.profilePhoto = "\(APIs.serverURI)\(chat["profile_photo"] as! String)"
+            
+            // download the profile photo
+            let profilePhotoURL: String = "\(APIs.serverURI)\(chat["profile_photo"] as! String)"
+            downloadChatImage(from: URL(string: profilePhotoURL)!, to: recentChat)
+            
             chatsArray.append(recentChat)
         }
 
@@ -137,11 +144,44 @@ class ResponseSerializer {
             let dashboardProfile: DashboardProfile = DashboardProfile()
             dashboardProfile.id = profile["id"] as? Int
             dashboardProfile.name = profile["name"] as? String
-            dashboardProfile.profilePhoto = "\(APIs.serverURI)\(profile["profile_photo"] as! String)"
-            dashboardProfile.photo = "\(APIs.serverURI)\(profile["photo"] as! String)"
+            
+            // download the profile photo
+            let profilePhotoURL: String = "\(APIs.serverURI)\(profile["profile_photo"] as! String)"
+            downloadDashboardImage(from: URL(string: profilePhotoURL)!, to: dashboardProfile, isProfilePhoto: true)
+            
+            // download the featured photo
+            let photoURL: String = "\(APIs.serverURI)\(profile["photo"] as! String)"
+            downloadDashboardImage(from: URL(string: photoURL)!, to: dashboardProfile, isProfilePhoto: false)
+            
             dashboardArray.append(dashboardProfile)
         }
         
         return dashboardArray
+    }
+    
+    static func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    
+    static func downloadDashboardImage(from url: URL, to profile: DashboardProfile, isProfilePhoto: Bool) {
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async() {
+                if isProfilePhoto {
+                    profile.profilePhoto = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                } else {
+                    profile.photo = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+                }
+            }
+        }
+    }
+    
+    static func downloadChatImage(from url: URL, to chat: RecentChat) {
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async() {
+                chat.profilePhoto = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
+            }
+        }
     }
 }

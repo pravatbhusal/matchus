@@ -12,8 +12,8 @@ import Alamofire
 class DashboardProfile {
     var id: Int!
     var name: String!
-    var profilePhoto: String!
-    var photo: String!
+    var profilePhoto: UIImage!
+    var photo: UIImage!
 }
 
 class DashboardCell: UITableViewCell {
@@ -98,18 +98,11 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "DashboardCell", for: indexPath as IndexPath) as! DashboardCell
         let row = indexPath.row
         
-        // download the profile photo image if it's already not downloaded
-        if cell.profilePhoto.image == nil {
-            downloadImage(from: URL(string: self.profiles[row].profilePhoto)!, to: cell.profilePhoto)
-        }
-        
-        // download the photo if it's already not downloaded
-        if cell.photo.image == nil {
-            downloadImage(from: URL(string: self.profiles[row].photo)!, to: cell.photo)
-        }
-        
+        cell.profilePhoto.image = self.profiles[row].profilePhoto
+        cell.photo.image = self.profiles[row].photo
         cell.profileName.text = profiles[row].name
         cell.profileTag.text = "@\(profiles[row].name.lowercased())"
+        
         return cell
     }
     
@@ -142,17 +135,4 @@ class DashboardViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-    
-    func downloadImage(from url: URL, to imageView: UIImageView) {
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() {
-                imageView.image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
-                self.tableView.reloadData()
-            }
-        }
-    }
 }

@@ -338,7 +338,7 @@ class ChatRoomViewController: UIViewController, UITableViewDelegate, UITableView
                     // set the profile button's image to the other user's profile photo
                     self.profileButton.image = image?.withRenderingMode(.alwaysOriginal)
                 }
-                
+
                 self.tableView.reloadData()
             }
         }

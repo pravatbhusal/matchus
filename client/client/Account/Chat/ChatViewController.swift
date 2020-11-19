@@ -13,7 +13,7 @@ class RecentChat {
     var id: Int = 0
     var name: String = ""
     var message: String = ""
-    var profilePhoto: String = ""
+    var profilePhoto: UIImage!
 }
 
 class ChatCell: UITableViewCell {
@@ -87,14 +87,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "ChatCell", for: indexPath as IndexPath) as! ChatCell
         let row = indexPath.row
         
-        // to prevent continously downloading the image, only set the image if it hasn't been yet set
-        if cell.imageView?.image == nil {
-            downloadImage(from: URL(string: self.chats[row].profilePhoto)!, to: cell.imageView!)
-        }
-        
+        cell.profilePhoto.image = chats[row].profilePhoto
         cell.recentMessage.text = chats[row].message
         cell.name.text = chats[row].name
-        
+
         return cell
         
     }
@@ -116,17 +112,4 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
-    }
-    
-    func downloadImage(from url: URL, to imageView: UIImageView) {
-        getData(from: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async() {
-                imageView.image = UIImage(data: data)?.resizeImage(targetSize: CGSize(width: 75, height: 75))
-                self.tableView.reloadData()
-            }
-        }
-    }
 }
