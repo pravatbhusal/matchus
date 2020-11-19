@@ -17,6 +17,7 @@ Next, you need to run the Xcode simulator and register an account .
 2. Now open the Matchus.xcworkspace file with Xcode.  
 3. Run the app on an IPhone 11 Pro Max simulator on Xcode. If the build fails, you may want to use the Xcode Legacy Build system under Workspace Settings > Build System.  
 4. The app will load the landing page, click the "Register" button and fill out the form to register your account.
+  - Note: If you get issues with "Strong Password" then use the Software keyboard on the simulator to type into the text field instead because this is an issue with how Xcode handles the secure text field
 
 Once you are finished registering your account, you will be directed to the dashboard page. The dashboard page will be empty if there's no users near your
 location. Therefore, to test the dashboard out we need to register more users.
