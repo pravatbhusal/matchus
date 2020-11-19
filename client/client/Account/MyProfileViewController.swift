@@ -11,7 +11,6 @@ import Alamofire
 
 class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    
     @IBOutlet weak var settingsButton: UIButton!
     
     @IBOutlet weak var profilePhoto: UIImageView!
@@ -77,7 +76,12 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
                             // set profile name
                             let profileName: String = ResponseSerializer.getProfileName(json: json)!
                             self.profileName.text = profileName
-    
+                            
+                            // reset the images in case they were set before
+                            self.image1.setBackgroundImage(nil, for: .normal)
+                            self.image2.setBackgroundImage(nil, for: .normal)
+                            self.image3.setBackgroundImage(nil, for: .normal)
+                            self.image4.setBackgroundImage(nil, for: .normal)
                             
                             // get all photo urls, then download them and add to the scrollview
                             let featuredPhotoURLs: [String] = ResponseSerializer.getFeaturedPhotoURLs(json: json)!
@@ -91,7 +95,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
                             
                             // download each image that this user owns
                             while index < total {
-                                self.downloadtoUIbutton(from: URL(string: featuredPhotoURLs[featuredPhotoURLs.count - index - 1])!, to: imageViewsToLoad[index])
+                                self.downloadToUIbutton(from: URL(string: featuredPhotoURLs[featuredPhotoURLs.count - index - 1])!, to: imageViewsToLoad[index])
                                 index += 1
                             }
                             
@@ -226,7 +230,7 @@ class MyProfileViewController: UIViewController,  UITableViewDelegate, UITableVi
         }
     }
     
-    func downloadtoUIbutton(from url: URL, to imageView: UIButton) {
+    func downloadToUIbutton(from url: URL, to imageView: UIButton) {
         getData(from: url) { data, response, error in
             guard let data = data, error == nil else { return }
             DispatchQueue.main.async() {
